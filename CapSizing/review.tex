@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Section 2: Review
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work} \label{section:review}
+
+% \color{red} This needs to be updated - Alex has some additional references \color{black}.
+
+\subsection{ICS Approaches}
+
+\color{blue}
+% % A brief review on inter comp. reactive and static.
+ICSs preserve forward progress across frequent power interruptions caused by environmentally harvested power. 
+% The basic mechanism is to back up volatile computing state (lost if the supply fails) as nonvolatile state (preserved if the supply fails) during active periods; when the supply recovers, the lost volatile state is restored from the saved nonvolatile state to resume execution. 
+% The volatile state is lost when the supply voltage drops below the minimum operating threshold, while the saved state in NVM is retained. The saved state is restored from NVM when the supply voltage recovers to a restore threshold, and then the execution continues from the last saved point. 
+% Approaches in intermittent computing diversify with different strengths, such as minimizing programming effort, reducing hardware dependency, ensuring atomicity and memory consistency. 
+Approaches in ICSs can be classified as \textit{static} and \textit{reactive}~\cite{doi:10.1098/rsta.2019.0158}.\color{black} 
+
+% \subsubsection{Static ICS}
+Static approaches save state at points determined at design or compile time, either by inserting checkpoints~\cite{Ransford:2011:MSS:1950365.1950386, 7944791} or decomposing a program into atomic tasks~\cite{10.1145/3360285, Maeng:2017:AIE:3152284.3133920}. After a power interruption, progress rolls back and resumes from the last saved checkpoint or task boundary. This can introduce issues such as violation of data memory consistency, along with wasting energy on lost and re-executed progress.
+%Advantages include minimizing hardware dependency, and ensuring operation atomicity.However, progress rollback and re-execution
+% Static approaches save volatile state into NVM at points determined at design time or compile time, either by inserting checkpoints~\cite{Ransford:2011:MSS:1950365.1950386, 7944791, 222579} or decomposing a program into atomic tasks~\cite{10.1145/3022671.2983995, Maeng:2017:AIE:3152284.3133920}. After power interruptions, the progress rolls back and resumes from the last saved checkpoint or task boundary. Advantages of static approaches include minimizing hardware dependency and ensuring operation atomicity. However, the progress rollback and re-execution introduce violation of data memory consistency, and waste energy on lost and re-executed progress. 
+% % Also, if the consumption between two successive checkpoints or task boundaries exceeds the amount that the energy storage can guarantee, the progress may never proceed due to insufficient power input. 
+
+% \subsubsection{Reactive ICS}
+Conversely, reactive approaches monitor the supply voltage and only save state when it falls below a threshold~\cite{7442814, 7849206, 7807254}, which is set high enough to reliably save state even with a total and immediate drop-off in harvested energy. They will then enter a low-power mode, in many cases preserving the data in volatile memory and avoiding re-execution and memory inconsistency. These typically make more forward progress than static approaches, e.g. a 2.5$\times$ mean computational speedup~\cite{Maeng:2019:SPI:3314221.3314613}. 
+% In contrast to static approaches, reactive approaches only save volatile state in NVM when supply is about to fail by monitoring supply voltage~\cite{10.1145/2700249, 6960060}. Specifically, a reactive ICS saves volatile state and enters a low-power mode (execution halted) if the supply voltage falls below a save threshold. This save threshold is set high enough to successfully save volatile state before power fails. 
+% By entering the low-power mode, reactive approaches avoid re-execution and memory inconsistency, and hence typically make more forward progress than static approaches, e.g. a 2.5$\times$ mean computational speedup presented in~\cite{Maeng:2019:SPI:3314221.3314613}. 
+% % In a comparison between static~\cite{Maeng:2017:AIE:3152284.3133920} and reactive~\cite{10.1145/2700249} approaches, the reactive approach demonstrates a 2.5$\times$ mean speedup on computational workloads~\cite{Maeng:2019:SPI:3314221.3314613}. Therefore, we focus on reactive ICSs for modelling and validation in this paper. 
+
+\color{blue}
+\subsection{Design Exploration in ICSs}
+
+To explore forward progress of ICSs, simulation tools need to reflect the transient operations  (\SI{}{\micro\second}-\SI{}{\milli\second}) as well as the overall performance in a long term (up to years). 
+
+% A few models have been proposed for exploring system designs and parameters in ICSs to improve forward progress.
+Su et al.~\cite{Su:2019:TFR:3340300.3320270} provide a model dedicated to a dual-channel solar-powered nonvolatile sensor node. Jackson et al.~\cite{Jackson:2019:COC:3302506.3310400} propose a model to explore battery usage in ICSs. These two models are configured for long-term simulations and large energy storage from \SI{}{\milli\farad}-scale supercapacitors to batteries, and thus they cannot respond to frequent power interruptions and accurately estimate forward progress when using minimized energy storage (e.g. \SI{4.7}{\micro\farad}~\cite{10.1145/3281300}).
+% (e.g. \SI{16}{\micro\farad}~\cite{6960060}). 
+% Coarse-grained models~\cite{Su:2019:TFR:3340300.3320270, Jackson:2019:COC:3302506.3310400} can perform long-term simulations with large energy storage from \SI{}{\milli\farad}-scale supercapacitors to batteries, but they cannot respond to frequent power interruptions when using minimized energy storage (e.g. \SI{16}{\micro\farad} decoupling capacitance~\cite{6960060}). 
+In contrast, a set of fine-grained model are also proposed to accurately simulate the frequent micro operations in ICSs. 
+NVPsim~\cite{7428003} is a gem5-based simulator for nonvolatile processors.
+% and AES~\cite{10.1145/3279755.3279756}
+% , where NVPsim focuses on processor-wise simulation and AES additionally supports system-wise peripherals and modules.
+EH model~\cite{8574572} compares a range of ICS approaches in a single active period with the same energy budget and quantify forward progress by the energy spent on the effective execution. Fused~\cite{sliper2020fused} is a closed-loop simulator to allow interactions among power consumption, power supply, and forward progress output. However, these fine-grained simulators become time-consuming when processing long-term energy data, especially when iterative tests are needed for various system configurations. 
+% In contrast, fine-grained models~\cite{7428003, 10.1145/3279755.3279756, 8574572} can simulate frequent state-saving and -restoring operations, but simulations become time-consuming when processing long-term energy data, especially when multiple system configurations are to be tested iteratively. 
+
+Apart from models and simulation tools, hardware emulators of energy harvesters~\cite{10.1145/2668332.2668336, 10.1145/3356250.3360042} also support repeatable energy harvesting conditions for experimental comparisons. Though manifesting practical results, hardware emulations are limited by hardware options and impractical to perform a long-term trial. 
+
+% EH model~\cite{8574572} explores forward progress with different parameter settings, but the model only considers a single active period without considering interruption periods that scale down the effective forward progress. 
+
+% Jackson et al.~\cite{Jackson:2019:COC:3302506.3310400} also present a numerical model to explore energy storage effect, where they suggest that novel batteries are preferable in order to offer improve the completion rate of scheduled tasks. However, the model lacks a detailed state-saving and -restoring mechanism in ICSs, and thus cannot accurately reflect micro behaviours when energy storage is minimized. Furthermore, none of the above works provide guidance on sizing energy storage.
+% their reliability metric on real-time scheduled task completion is not compatible with energy-driven applications.
+
+% Su et al.~\cite{Su:2019:TFR:3340300.3320270} provide a model to explore the impact of sizing energy harvester and energy storage on a dual-channel solar-powered nonvolatile sensor node, but their exploring range of energy storage is \SIrange{10}{e4}{\farad} supercapacitors, which is significantly larger than a typical scale of energy storage (\SI{}{\micro\farad} to mF scale) in intermittent computing. 
+
+% What we did? What we did differently from them?
+% We provide a modelling approach to estimate forward progress of an ICS in real-world deployment, considering energy source conditions as well as the forward progressing behaviours intermittent computing. This model can be used to explore the effect of energy harvester and energy storage sizing on forward progress. Further, we provide an approach for sizing energy storage in intermittent systems. 
+
+% \subsection{Energy Storage in Intermittent Computing?}
+
+\color{black}

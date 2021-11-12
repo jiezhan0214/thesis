@@ -1,0 +1,135 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex
+%% ---------------------------------------------------------------- 
+\documentclass[sotoncolour]{uosthesis}      % Use the Thesis Style with custom link colour
+\graphicspath{{figures/}}   % Location of your graphics files
+% \usepackage[round]{natbib}            % Use Natbib style for the refs.
+\usepackage{bibentry}          % Use bibentry for prepublished works
+\nobibliography*               % Use bibentry for prepublished works
+\usepackage{attrib}            % Use the attrib package for quotations
+\hypersetup{colorlinks=true}   % Set to false for black/white printing
+\hypersetup{pdfstartpage=3}    % Set first page to skip copyright declaration
+\input{Definitions}            % Include your abbreviations
+
+%% -------------------- Additional Packages ------------------------
+\usepackage[square,sort,comma,numbers,compress]{natbib}% Use Natbib style for the refs.
+\usepackage{amsmath}
+\usepackage{wasysym} % diameter symbol
+\usepackage[range-units=single, range-phrase=--, detect-all, per-mode=symbol, binary-units=true]{siunitx} % SI units, e.g. celsius symbol
+\usepackage{float}
+% \usepackage[table,xcdraw]{xcolor}
+% \usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage{multirow} % multirow/multicol table
+\usepackage{pdfpages}
+\usepackage{notoccite}
+\usepackage{url}
+\usepackage[titletoc]{appendix}
+\usepackage{silence}
+\usepackage[euler]{textgreek}
+\usepackage{subcaption}
+\usepackage{array}
+% \usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{pgfgantt}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{cycle list/Set1}
+\usetikzlibrary{patterns}
+\pgfplotsset{compat=1.16}
+
+%% -------------------- THESIS/DOC INFORMATION --------------------
+\department  {School of Electronics and Computer Science}
+\DEPARTMENT  {\MakeUppercase{\deptname}}
+\group       {[Group name]}
+\GROUP       {\MakeUppercase{\groupname}}
+\faculty     {Faculty of Engineering and Physical Science}
+\FACULTY     {\MakeUppercase{\facname}}
+% \title      {Energy-Storage and -Harvester Sizing in Energy-Driven Computing}
+\title       {Efficient Energy Designs for Energy-Harvesting Intermittent Systems}
+%% TODO: Replace with your name removing []
+\authors    {Jie Zhan} % Use of Soton Email unadvised, use ORCiD instead.
+\addresses  {\groupname\\\deptname\\\univname}
+\date       {\today}
+%% Optional Fields TODO: Replace these fields with your own data
+
+% \qualifications{[Insert Previous Qualifications, for example MEng]}
+% \orcidid{0000-0002-9196-757X}
+% \doi{10.1002/0470841559.ch1}
+% \volume{n}{m} %Optional Volume Numbering Volume n of m
+\subject    {}
+\keywords   {}
+
+\begin{document}
+%% ------------------ FRONT MATTER ORGANISATION -------------------
+\pagenumbering{gobble} % removes page number
+% \copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
+% \raggedright                  %% Set the style to Left justification, remove for fill justification
+                              %% Must be done after copyrightDeclaration
+\frontmatter
+\maketitle
+\include{Abstract}
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents
+\listoffigures
+\listoftables
+%% The List of listings does not, by default, appear in the ToC, so....
+% \addtotoc{Listings}
+% \lstlistoflistings
+% \listofaddmaterial
+% \addtolom{Material Name e.g Map}
+% \addtolom{Material Name e.g CD}
+% \addtolom{Test Material}
+%% ---------- AUTHORSHIP DECLARATION/ ACKNOW. / DEDICATORY ----------
+%% Either include citations like below (as many as required spaced with commas or 'and').
+%% \bibentry command must be used here with prepublished papers
+% \authorshipdeclaration{\bibentry{Gunn:2001:pdflatex}\newline\bibentry{Lovell:2011:updated}\newline\bibentry{Gunn:2011:updated2}}
+%% Or state no citations like below
+%% \authorshipdeclaration{}
+%% -----------------------
+% \acknowledgements{Thanks to no one.}
+% \dedicatory{To \dots}
+%%Lightweight Definitions and Abbreviations see package:nomencl for alternative
+%% Include if relevant to discipline
+% \listofsymbols{ll}{$w$ & The weight vector\\$\S$ & If relevant to discipline}
+\mainmatter
+%% ------------------ MAIN MATTER (CONTENT) --------------------
+
+% Chapter 1
+\include{ch1_intro/Introduction}
+
+% Chapter 2
+\include{ch2_review/Review}
+
+
+% Chapter 3
+% \include{Work1}
+% \include{CapSizing/CapSizing}
+% \include{Work2}
+\include{ch3_sizingeffect/SizingEffect}
+
+% Chapter 4
+\include{ch4_sizingapproach/SizingApproach}
+
+% Chapter 5
+\include{ch5_repta/REPTA}
+
+% Chapter 6
+\include{ch6_conclusion/Conclusions}
+
+% \include{CapSizing/paper}
+% \begin{lstlisting}[caption=Listing of what an example listing would be like]
+% This is a test listing
+% The test listing has several lines
+% to show how the listings
+% will be displayed
+% \end{lstlisting}
+\appendix
+% \include{AppendixA}
+\backmatter
+% \chapter{Glossary [if relevant]}
+\bibliographystyle{unsrt} % was 'plainnat'
+\bibliography{UOS}
+% \chapter{Bibliography}
+% To use bibliography as well as the references section use the \texttt{multibbl} package.
+% \chapter{Index [if relevant]}
+\end{document}
+%% ----------------------------------------------------------------

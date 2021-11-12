@@ -1,0 +1,387 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Section 7: Sizing Demo
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sizing under Real-World Energy Conditions} \label{section:demo}
+
+% This section demonstrates the usage of the proposed sizing approach. 
+In this section, we model an ICS with a photovoltaic (PV) energy harvester to explore the energy storage sizing effect in real-world energy conditions, and demonstrate use of the proposed sizing approach. 
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=3.3in]{ch4_sizingapproach/figures/solarmodel4}
+    \caption{System model of a PV-based ICS.}
+    \label{fig:Model}
+\end{figure}
+
+\subsection{Simulation Configuration}
+
+We integrate the validated reactive ICS model into a system model with a PV energy-harvesting supply as shown in \figurename{~\ref{fig:Model}}. 
+The energy storage model and the intermittent load model are as presented in Section~\ref{section:exploration}. 
+
+We use a converter-less supply circuit where only a Schottky diode is connected to the energy harvester output in order to prevent current backflow. 
+The energy source conditions are imported from NREL outdoor solar irradiance data~\cite{stoffel1981nrel} and EnHANTs indoor irradiance data~\cite{6244798}. Four sets of light conditions are used to encompass different energy environments. 
+To convert irradiance into harvested power, we adopt a PV cell model~\cite{en9050326} which uses the parameters available in common datasheets, so it can easily be reconfigured to suit various devices. We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cell properties as shown in Table~\ref{tab:pvcell}. We set four cells in series (with $V_{oc}$ = 3.56V) to match the operating voltage of the MCU (maximum 3.6V), and model energy harvester sizing by scaling the cell area. 
+
+%The output current $I_{o}$ of the PV cell model can be described as:%
+%\begin{equation} \label{eq:pvcell}
+%    I_{o} = \frac{G}{G_{ref}} I_{sc} (1 - (1 - \frac{I_{mpp}}{I_{sc}}) ^ {\frac{V_{o}-V_{oc}}{V_{mpp} - V_{oc}}})
+%\end{equation}
+%where $V_{o}$ is the output voltage of the PV cell, $G$ is the ambient irradiance, $G_{ref}$ is the reference irradiance (normally 1000$W/m^2$), and $I_{sc}$, $V_{oc}$, $I_{mpp}$, $V_{mpp}$ are respectively short-circuit current, open-circuit voltage, and the current and voltage at maximum power point (MPP) given the reference irradiance. $V_{o}$ and $G$ are dynamic at run time, while other parameters in this model are constant. 
+
+%A PV panel is an array of PV cells, which amplifies voltage and current output by connecting PV cells in series or parallel. In a PV panel, the open-circuit voltage is proportional to the number of cells in series, and the short-circuit current is proportional to the area of each cell and the number of cells in parallel. 
+
+\begin{table}[!t]
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    % \caption{PV Cell Properties under AM1.5 1000W/m$^2$ Light Conditions.}
+    \caption{PV cell properties under a \SI{1000}{\watt\per\square\centi\meter}, AM-1.5 light source}
+    \label{tab:pvcell}
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Parameter} & \textbf{Value}\\
+    \hline
+    Open-Circuit Voltage & \SI{0.89}{\volt}/cell\\
+    Short-Circuit Current & \SI{14.8}{\milli\ampere\per\square\centi\meter}\\
+    Maximum Power Voltage & \SI{0.65}{\volt}/cell\\ 
+    Maximum Power Current & \SI{12.1}{\milli\ampere\per\square\centi\meter}\\
+    \hline
+    \end{tabular}
+\end{table}
+
+% \color{blue}
+% Our simulation tool can perform two simulation processes: (a) sort and process the time distribution of environmental conditions, and (b) simulate system state chronologically with a fine-grained time step. Process (a) reduces simulation time significantly, e.g. from hours to seconds, but ignores the restore operation after a brownout reset, hence overestimating forward progress, and it overestimates more with smaller capacitance and lower supply current. In the following results, \figurename{~\ref{fig:harvstor}} come from Process (a) for fast exploration, and \figurename{~\ref{fig:interruption}} and \figurename{~\ref{fig:tradeoff}} come from Process (b) for accurate records. 
+% \color{black}
+
+% Before the simulation, we developed and explored two simulation processes: (a) simulate system state chronologically with a fine-grained time step, and (b) sort energy source conditions into a distribution in time lengths and process the distribution. Process (b) shows a \SI{0.89}{\percent} mean absolute percentage error compared to Process (a), while reducing simulation time significantly (e.g. from several hours to several seconds in a one-year test). Hence, we use Process (b) in the following tests.
+
+\subsection{Exploration with Real-World Energy Source Conditions} \label{subsec:harvstor}
+
+% Goal: 
+% 1. to show that this model can help designers to find a suitable size of EH to achieve their desired performance;
+% 2. to show that sizing energy storage would have different degrees of impact on real deployment depending on the specific energy conditions;
+% 3. demonstrate sizing approach. 
+
+In real-world deployments, ambient energy source conditions are dependent on time and location. The energy harvester and storage need to be sized to achieve the desired forward progress across the range of expected conditions. 
+
+\subsubsection{Sizing the Energy Harvester}
+
+For the purposes of this exploration, three levels of baseline mean forward progress ($\alpha_{exe}$) are set as 0.1, 0.2, and 0.3. We use the system model to find the PV panel area that achieves the expected forward progress under the different energy source conditions with minimum energy storage. We scale the PV panel area to find that which achieves each baseline $\alpha_{exe}$. As shown in \figurename{~\ref{fig:harvstor}}, the energy harvester sizes that achieve the desired $\alpha_{exe}$ may span orders of magnitude given different energy source conditions from \SI{}{\square\milli\meter} for outdoor sources ((c) and (d)) to \SI{}{\square\centi\meter} for indoor sources ((a) and (b)). 
+% To explore the energy harvester size needed for the above forward progress targets, we plot the forward progress against energy harvester size and energy storage capacitance in \figurename{~\ref{fig:harvstor}}. 
+
+\subsubsection{Sizing the Energy Storage}
+
+Having obtained the energy harvester sizes for the baseline forward progress, we then use the modelling approach to size energy storage.
+% A table lists the PV panel area to achieve the target $\alpha_{exe}$ with minimum energy storage capacitance, the optimal capacitance with the forward progress improvement, and the alternative (decreased) PV panel area with the optimal capacitance. 
+We analyze the sizing effect of energy storage on forward progress given real-world energy conditions. \figurename{~\ref{fig:harvstor}} shows a 7.8-43.3\% improvement in forward progress by sizing energy storage under the given real-world energy conditions and baseline energy harvester sizes. 
+It can also be inferred that optimizing energy storage can either improve forward progress for a given energy harvester size, or reduce the energy harvester size that achieves the target forward progress. Given higher-power energy sources (e.g. Denver 2018 and Hawaii 2018 outdoor solar), increasing the harvester size efficiently improves forward progress with minor dimensional overheads, e.g. tens of \SI{}{\square\milli\meter}; however, given lower-power sources (e.g. EnHANTs Setup~A and Setup~D indoor light), optimizing energy storage capacitance can save tens of \SI{}{\square\centi\meter} of PV panel area to achieve the same forward progress.
+
+% Also, the progress improvement by sizing energy storage varies accordingly with energy source conditions. This improvement stems from the reduction of restore and save overheads when the device works in the Intermittent mode, so this improvement becomes significant when the device works mostly in the Intermittent mode (typically when energy source is scarce, e.g. indoor source 1 and 2), and insignificant when the device works mostly in the On and Off modes (e.g. outdoor source 1 and 2). 
+
+% \begin{figure}[!t]
+%     \centering
+%     \subfloat[EnHANTs Setup A]{\includegraphics[width=1.65in]{HarvStor3DEnAFig}
+%     \label{fig:harvstor1}}
+%     \subfloat[EnHANTs Setup D]{\includegraphics[width=1.65in]{HarvStor3DEnDFig}
+%     \label{fig:harvstor2}}
+%     \hfil
+%     \subfloat[NREL Denver 2018]{\includegraphics[width=1.65in]{HarvStor3DDenFig}
+%     \label{fig:harvstor3}}
+%     \subfloat[NREL Hawaii 2018]{\includegraphics[width=1.65in]{HarvStor3DHawFig}
+%     \label{fig:harvstor4}}
+%     \caption{Forward progress against energy harvester size and energy storage capacitance in real-world energy source conditions.} 
+%     \label{fig:harvstor}
+% \end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig1}
+        \caption{EnHANTs Setup A}
+        \label{fig:harvstor1}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig2}
+        \caption{EnHANTs Setup D}
+        \label{fig:harvstor2}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig3}
+        \caption{NREL Denver 2018}
+        \label{fig:harvstor3}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig4}
+        \caption{NREL Hawaii 2018}
+        \label{fig:harvstor4}
+    \end{subfigure}
+    \caption{Improvement of average forward progress by sizing energy storage given different PV panel areas under real-world energy source conditions. The model is able to find the PV panel area required for achieving the target mean forward progress. } 
+    \label{fig:harvstor}
+\end{figure}
+
+\subsubsection{Interruption Period} \label{subsubsec:intper}
+Besides forward progress, we also explore how the capacitance can change the interruption periods. 
+When interrupted by insufficient power supply, an ICS enters an interruption period where it saves its volatile state, waits for supply voltage to recover, and restores the state to resume execution, without making any forward progress. Applications that require frequent sensing may be negatively affected by long interruption periods. We measure an interruption period as \textit{the period between two successive execution periods}, e.g. a consecutive `SLR' period in \figurename{~\ref{fig:operatingCycle}} forms an interruption period. 
+We record all the interruption periods during a one-year simulation with \SIrange{10}{50}{\micro\farad} capacitors, the Denver 2018 dataset, and an \SI{80}{\square\milli\meter} PV panel. 
+\figurename{~\ref{fig:interruption}} presents the distribution of all the interruption periods. 
+With increased energy storage, the interruption period is prolonged. For example, the 90th percentile of interruption periods increases from \SI{32.2}{\milli\second} at \SI{10}{\micro\farad} to \SI{123.4}{\milli\second} at \SI{50}{\micro\farad} at an approximate rate of \SI{23}{\milli\second} per \SI{10}{\micro\farad}. 
+% The majority of the interruption periods are within \SI{200}{\milli\second}. 
+Facilitated by the simulator, developers are enabled to estimate whether the distribution of interruption periods meet their application requirement. 
+
+% Whether and how much this would affect  Time-sensitive applications may care 
+% the total number of interruptions is reduced,
+
+
+\begin{figure}[!t]
+    \centering
+    % \subfloat[a]{\includegraphics[width=2.8in]{IntPeriodFig}}
+    % \label{fig:distribution}
+    % \hfil
+    \includegraphics[width=3.2in]{ch4_sizingapproach/figures/IntPeriodOrdFig}
+    \caption{Distribution of interruption periods. }
+    \label{fig:interruption}
+\end{figure}
+
+
+% this will be a new one
+% \begin{table}[!t]
+%     \renewcommand{\arraystretch}{1.2}
+%     \centering
+%     \caption{Energy harvester size to achieve target $\alpha_{exe}$ with optimal energy storage capacitance to improve forward progress or reduce energy harvester size}
+%     \label{tab:harvstornew}
+%     \begin{tabular}{|cccc|}
+%     \hline
+%     \textbf{Target} & \textbf{PV Panel Area} & \textbf{Impr. of} $\pmb{\alpha_{exe}}$ & \textbf{Alternative} \\
+%     $\pmb{\alpha_{exe}}$ & \textbf{w/ Min. C} & \textbf{w/ Opt. C} & \textbf{Panel Area / C} \\
+%     % \multirow{2}{*}{\textbf{test}}
+%     % \textbf{$T_{on}$} & \textbf{$T_{switch}$} \\ 
+%     \hline 
+%     \multicolumn{4}{|c|}{Indoor Source 1, EnHANTs Setup A} \\
+%     \hline
+%     % 0.1 & 277 cm$^2$ & 44 \textmu F / +22.3\% & 226 cm$^2$ / 42 \textmu F \\ 
+%     % 0.2 & 570 cm$^2$ & 48 \textmu F / +15.2\% & 482 cm$^2$ / 48 \textmu F \\ 
+%     % 0.3 & 891 cm$^2$ & 42 \textmu F / + 7.5\% & 802 cm$^2$ / 44 \textmu F \\ 
+%     \hline
+%     \multicolumn{4}{|c|}{Indoor Source 2, EnHANTs Setup D} \\
+%     \hline
+%     % 0.1 &  59 cm$^2$ & 37 \textmu F / +16.9\% &  49 cm$^2$ / 34 \textmu F \\
+%     % 0.2 & 137 cm$^2$ & 45 \textmu F / +14.3\% & 116 cm$^2$ / 43 \textmu F \\
+%     % 0.3 & 235 cm$^2$ & 47 \textmu F / + 9.6\% & 203 cm$^2$ / 47 \textmu F \\
+%     \hline
+%     \multicolumn{4}{|c|}{Outdoor Source 1, NREL Denver 2018} \\
+%     \hline
+%     % 0.1 & 21 mm$^2$ & 46 \textmu F / +26.3\% & 18 mm$^2$ / 45 \textmu F \\
+%     % 0.2 & 35 mm$^2$ & 45 \textmu F / +11.6\% & 31 mm$^2$ / 45 \textmu F \\
+%     % 0.3 & 66 mm$^2$ & 45 \textmu F / + 5.5\% & 58 mm$^2$ / 45 \textmu F \\
+%     % \hline
+%     \multicolumn{4}{|c|}{Outdoor Source 2, NREL Hawaii 2018} \\
+%     \hline
+%     % 0.1 & 19 mm$^2$ & 48 \textmu F / +28.7\% & 16 mm$^2$ / 46 \textmu F \\
+%     % 0.2 & 30 mm$^2$ & 45 \textmu F / +12.9\% & 27 mm$^2$ / 46 \textmu F \\
+%     % 0.3 & 50 mm$^2$ & 45 \textmu F / + 5.8\% & 45 mm$^2$ / 45 \textmu F \\
+%     \hline
+%     \end{tabular} 
+% \end{table}
+
+% \begin{table}[!t]
+%     \renewcommand{\arraystretch}{1.2}
+%     \centering
+%     \caption{Sizing energy harvester and energy storage in real-world energy source conditions}
+%     \label{tab:harvstor}
+%     \begin{tabular}{cccc}
+%     \hline
+%     \textbf{PV Panel Area} & \textbf{Opt. C} & \textbf{Exe. Time Ratio} & \textbf{Impr. on Min. C} \\
+%     % \textbf{$T_{on}$} & \textbf{$T_{switch}$} \\ 
+%     \hline 
+%     \multicolumn{4}{c}{Outdoor Source 1, NREL 2018 Hawaii} \\
+%     \hline
+%     20 mm$^2$ & 47 \textmu F & 0.147 & 27.2 \% \\
+%     40 mm$^2$ & 45 \textmu F & 0.286 & 7.8 \% \\
+%     60 mm$^2$ & 43 \textmu F & 0.342 & 4.6 \% \\
+%     80 mm$^2$ & 45 \textmu F & 0.373 & 3.3 \% \\
+%     \hline
+%     \multicolumn{4}{c}{Outdoor Source 2, NREL 2018 Denver} \\
+%     \hline
+%     20 mm$^2$ & 45 \textmu F & 0.124 & 27.8 \% \\
+%     40 mm$^2$ & 44 \textmu F & 0.246 & 9.7 \% \\
+%     60 mm$^2$ & 44 \textmu F & 0.305 & 6.0 \% \\
+%     80 mm$^2$ & 44 \textmu F & 0.339 & 4.6 \% \\
+%     \hline
+%     \multicolumn{4}{c}{Indoor Source 1, EnHANTs Setup D} \\
+%     \hline
+%     20 cm$^2$ & 26 \textmu F & 0.052 & 11.9\% \\
+%     40 cm$^2$ & 31 \textmu F & 0.088 & 14.6\% \\
+%     60 cm$^2$ & 36 \textmu F & 0.119 & 17.0\% \\
+%     80 cm$^2$ & 37 \textmu F & 0.150 & 17.3\% \\
+%     \hline
+%     \multicolumn{4}{c}{Indoor Source 2, EnHANTs Setup A} \\
+%     \hline
+%     100 cm$^2$ & 31 \textmu F & 0.036 & 33.6\% \\
+%     200 cm$^2$ & 39 \textmu F & 0.088 & 25.1\% \\
+%     300 cm$^2$ & 44 \textmu F & 0.132 & 21.9\% \\
+%     400 cm$^2$ & 47 \textmu F & 0.170 & 19.7\% \\
+%     \hline
+%     \end{tabular} 
+% \end{table}
+
+% \begin{table}[!t]
+%     \renewcommand{\arraystretch}{1.2}
+%     \centering
+%     \caption{Energy harvester size to achieve target $\alpha_{exe}$ with optimal energy storage capacitance to improve forward progress or reduce energy harvester size}
+%     \label{tab:harvstornew}
+%     \begin{tabular}{|cccc|}
+%     \hline
+%     \textbf{Target} & \textbf{PV Panel Area} & \textbf{Impr. of} $\pmb{\alpha_{exe}}$ & \textbf{Alternative} \\
+%     $\pmb{\alpha_{exe}}$ & \textbf{w/ Min. C} & \textbf{w/ Opt. C} & \textbf{Panel Area / C} \\
+%     % \multirow{2}{*}{\textbf{test}}
+%     % \textbf{$T_{on}$} & \textbf{$T_{switch}$} \\ 
+%     \hline 
+%     \multicolumn{4}{|c|}{Indoor Source 1, EnHANTs Setup A} \\
+%     \hline
+%     0.1 & 277 cm$^2$ & 44 \textmu F / +22.3\% & 226 cm$^2$ / 42 \textmu F \\ 
+%     0.2 & 570 cm$^2$ & 48 \textmu F / +15.2\% & 482 cm$^2$ / 48 \textmu F \\ 
+%     0.3 & 891 cm$^2$ & 42 \textmu F / + 7.5\% & 802 cm$^2$ / 44 \textmu F \\ 
+%     \hline
+%     \multicolumn{4}{|c|}{Indoor Source 2, EnHANTs Setup D} \\
+%     \hline
+%     0.1 &  59 cm$^2$ & 37 \textmu F / +16.9\% &  49 cm$^2$ / 34 \textmu F \\
+%     0.2 & 137 cm$^2$ & 45 \textmu F / +14.3\% & 116 cm$^2$ / 43 \textmu F \\
+%     0.3 & 235 cm$^2$ & 47 \textmu F / + 9.6\% & 203 cm$^2$ / 47 \textmu F \\
+%     \hline
+%     \multicolumn{4}{|c|}{Outdoor Source 1, NREL Denver 2018} \\
+%     \hline
+%     0.1 & 21 mm$^2$ & 46 \textmu F / +26.3\% & 18 mm$^2$ / 45 \textmu F \\
+%     0.2 & 35 mm$^2$ & 45 \textmu F / +11.6\% & 31 mm$^2$ / 45 \textmu F \\
+%     0.3 & 66 mm$^2$ & 45 \textmu F / + 5.5\% & 58 mm$^2$ / 45 \textmu F \\
+%     \hline
+%     \multicolumn{4}{|c|}{Outdoor Source 2, NREL Hawaii 2018} \\
+%     \hline
+%     0.1 & 19 mm$^2$ & 48 \textmu F / +28.7\% & 16 mm$^2$ / 46 \textmu F \\
+%     0.2 & 30 mm$^2$ & 45 \textmu F / +12.9\% & 27 mm$^2$ / 46 \textmu F \\
+%     0.3 & 50 mm$^2$ & 45 \textmu F / + 5.8\% & 45 mm$^2$ / 45 \textmu F \\
+%     \hline
+%     \end{tabular} 
+% \end{table}
+
+% talking about range. what is the point of this paragraph?
+% The mean forward progress given target $\alpha_{exe}$ = 0.1 is plotted in \figurename{~\ref{fig:harvstorrange}}, with the 60th and 90th time percentiles of forward progress. In all the  above datasets, the energy source is absent and the system is off for around \SI{55}{\percent} of time, so we plot the percentiles from the 60th. The mean progress during the energy-available periods is averaged over the energy-absent periods, so the actual mean forward progress during the energy-available periods is nearly double the annual mean. 
+
+% Absolute improvement are different? Large variations? What other results can I add? 
+% The variations of forward progress are significant due to the large variations of energy source conditions, so practical implementation should consider such variation as .
+% The improved progress during the energy-available periods is averaged over the energy-absent periods, so the actual amount of improvement when energy is available is higher than the mean. (wrong statement)
+
+
+% \begin{figure}[!t]
+%     \centering
+%     \subfloat[EnHANTs Setup A]{\includegraphics[width=1.65in]{HarvStorRan2Fig1}
+%     \label{fig:harvstorrange1}}
+%     \subfloat[EnHANTs Setup D]{\includegraphics[width=1.65in]{HarvStorRan2Fig2}
+%     \label{fig:harvstorrange2}}
+%     \hfil
+%     \subfloat[NREL Denver 2018]{\includegraphics[width=1.65in]{HarvStorRan2Fig3}
+%     \label{fig:harvstorrange3}}
+%     \subfloat[NREL Hawaii 2018]{\includegraphics[width=1.65in]{HarvStorRan2Fig4}
+%     \label{fig:harvstorrange4}}
+%     \caption{Time percentiles of forward progress by sizing energy storage with target $\alpha_{exe}$ = 0.1 and the corresponding PV panel area listed in \figurename{~\ref{fig:harvstor}}. The percentiles start from the 60th as the system is off for around \SI{55}{\percent} of time due to insufficient energy source. }
+%     \label{fig:harvstorrange}
+% \end{figure}
+
+% \begin{table}[!t]
+%     \renewcommand{\arraystretch}{1.2}
+%     \centering
+%     \caption{PV panel area to achieve different $·\alpha_{exe}$ with minimum energy storage}
+%     \label{tab:sizeharv}
+%     \begin{tabular}{|c|ccc|}
+%     \hline 
+%     % \textbf{Dataset} & \multicolumn{3}{c}{\textbf{PV Panel Area}} \\
+%     % \textbf{Dataset} & \textbf{PV Panel Area} & \textbf{Actual Exe. Time Ratio} \\
+%     \textbf{Dataset} & \textbf{$\alpha_{exe}$} = 0.1 & $\alpha_{exe}$ = 0.2 & $\alpha_{exe}$ = 0.3 \\
+%     \hline
+%     EnHANTs A (Indoor)  & 277 cm$^2$ & 570 cm$^2$ & 891 cm$^2$ \\
+%     EnHANTs D (Indoor)  &  59 cm$^2$ & 137 cm$^2$ & 235 cm$^2$ \\
+%     Denver 2018 (Outdoor) &  21 mm$^2$ &  35 mm$^2$ &  66 mm$^2$ \\
+%     Hawaii 2018 (Outdoor) &  19 mm$^2$ &  30 mm$^2$ &  50 mm$^2$ \\
+%     \hline
+%     \end{tabular} 
+% \end{table}
+
+\subsection{Trading Forward Progress, Dimensions, and Interruption Period} \label{subsec:tradeoff}
+
+% Prior intermittent computing approaches adopt only the minimum energy storage capacitance so as to minimize device dimensions and interruption periods. 
+
+Although increasing energy storage capacitance improves forward progress, larger capacitance increases both dimensions and interruption periods. We evaluate the overheads of increased capacitor dimensions and interruption periods, and then trade them off against forward progress using a cost function to suggest an optimal capacitance value. 
+% We evaluate this impact
+
+\subsubsection{Metric of Dimensions}
+
+The overhead of capacitor dimensions is evaluated by characteristics of off-the-shelf tantalum capacitors. We narrow down the range of sample capacitors within a set of characteristics: low-profile, 10V rated voltage, and surface-mount package, and select six series of capacitors\footnote{The series of capacitor considered were: AVX TAJ, AVX TACmicrochip, AVX F92, Vishay 572D, Vishay 591D, and Vishay 592D.}. The volume and capacitance of these devices are plotted in \figurename{~\ref{fig:capvol}}. We use the regression of these data to approximate a capacitance-volume relationship.
+% ~\cite{tancap1, tancap2, tancap3, tancap4, tancap5, tancap6}
+% Among the common capacitor chemistries with \textmu F to mF capacitance, tantalum capacitors manifest low leakage 
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=3.2in]{ch4_sizingapproach/figures/CapVol2Fig2}
+    \caption{Tantalum capacitor volume against capacitance for the six series of capacitors analyzed. }
+    \label{fig:capvol}
+\end{figure}
+
+\subsubsection{Metric of Interruption Periods}
+
+% Definition/Measurement of interruption periods. recharging ability? Considering leakage?
+% why interruption periods is important, why we consider it.
+
+% , i.e. the period that does not make forward progress. The total interruption periods should be opposite to forward progress. 
+Applications may have various requirements on interruption periods. To demonstrate the usage of our sizing approach, we consider a designer requests the 90th percentile of all interruption periods as an example metric of interruption periods, denoted as $T_{int}$. This metric indicates 90\% of interruption periods are shorter than $T_{int}$. This metric can be adapted for particular application requirements. 
+% In We assume that $T_{interrupt}$ is preferable to be short for general application. 
+
+% metric of interruption periods 
+% Technically, the actual inactive period between two active periods depends on capacitance, the start and end voltage of recharging, and the current input and consumption. While the end voltage (restore voltage) and current consumption can be set or predicted, the start voltage and current flows vary with energy source conditions. Instead of evaluating the inactive period in complex conditions, we use the time between two successive execution intervals given \SI{0.5}{\milli\ampere} supply current in the Intermittent mode as a metric of interruption periods (or recharging ability). Using eqs.~(\ref{eq:texe}) and (\ref{eq:tperiod}), we can obtain this recharging period between two successive execution intervals in the Intermittent mode as: 
+
+% \begin{equation}
+%     \begin{aligned}
+%         T_{recharge} = & \quad T_{period} - T_{exe} \\
+%         = & \quad \frac{C(V_{r} - V_{s}) + T_{s}(I_{in} - I_{s})}{I_{in} - I_{lpm}} + T_{r}
+%     \end{aligned}
+% \end{equation}
+
+\subsubsection{Cost Function}
+
+From the previous observations (\figurename{~\ref{fig:maxfwp}}) we can see that achieving the optimal progress improvement costs much more capacitance (mean 3.2$\times$) than to achieve 95\% improvement. A trade-off is necessary to improve forward progress while restricting the overheads of increased capacitor volume and interruption periods. We use the cost function in (\ref{eq:tradeoff}) to trade off forward progress, capacitor volume, and interruption periods: 
+\begin{equation}
+    f = \frac{\alpha_{exe}}{k_1} - \left(\frac{v_{cap}}{k_2}\right) ^ {2} - \left(\frac{T_{int}}{k_3}\right) ^ {2} 
+    \label{eq:tradeoff}
+\end{equation}
+where $v_{cap}$ denotes capacitor volume and $T_{int}$ denotes interruption periods. $\alpha_{exe}$, $v_{cap}$, $T_{int}$ can be described as functions of $C$. $k_1$, $k_2$, and $k_3$ are independent factors used for normalizing each metric, and they are empirically determined according to applications. In this example, the undesirable parameters are expressed as quadratics to give an increasing cost to higher values. While only three parameters are considered here, others (such as the energy harvester size) could be included for a system-wise sizing scenario.
+% $\alpha_{exe}$ denotes normalized forward progress,
+% ; they can all be described as functions of $C$
+% , so comparing them is meaningless, e.g. $\frac{1}{k_1} / \frac{1}{k_2} = 1000$ does not mean that forward progress is 1000 times more important than capacitor volume in this cost function.
+% We configure the function by setting $k_1$ = 0.2, $k_2$ = 200, and $k_3$ = 1, where $v_{cap}$ is in \SI{}{\cubic\milli\meter} and $T_{recharge}$ is in s.
+As an example, we configure the function by setting $k_1$ = 0.2, $k_2$ = \SI{200}{\cubic\milli\meter}, and $k_3$ = \SI{500}{\milli\second}. 
+%, i.e.:
+%\begin{equation}
+%    f = \frac{\alpha_{exe}}{0.2} - (\frac{v_{cap}}{200}) ^ {2} - T_{recharge} ^ {2} 
+%    \label{eq:tradeoffuse}
+%\end{equation}
+% where $v_{cap}$ is in \SI{}{\cubic\milli\meter} and $T_{recharge}$ is in second. Here, $\frac{1}{k_1} / \frac{1}{k_2}$ equals 1000, but this does not mean that forward progress is 1000 times more important than capacitor volume.
+
+\subsubsection{Results}
+
+The effect of the trade-off is plotted in \figurename{~\ref{fig:tradeoff}} using the Denver 2018 energy source dataset. Compared to the capacitor size that solely maximizes forward progress, on average, an appropriately-sized capacitor achieves 93\% of the maximum forward progress, while saving 83\% of capacitor volume and 91\% of interruption periods. Compared to the minimum storage case, the appropriately-sized capacitor improves forward progress by 12-124\% with energy storage increased from \SI{6.2}{\micro\farad} to \SI{30}{\micro\farad}.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=3.3in]{ch4_sizingapproach/figures/Tradeoff3Fig}
+    \caption{The sizing approach trades off forward progress, capacitor volume, and interruption periods. The results are plotted against a range of PV panel area, given Denver 2018 energy source dataset. }
+    \label{fig:tradeoff}
+\end{figure}
+
+As shown in \figurename{~\ref{fig:capvol}}, the closest available capacitance that satisfies the \SI{6.2}{\micro\farad} minimum capacitance is \SI{6.8}{\micro\farad}, whereas the closest available capacitance to the appropriate \SI{30}{\micro\farad} is \SI{33}{\micro\farad}. The minimum volumes of \SI{6.8}{\micro\farad} and \SI{33}{\micro\farad} capacitors are both \SI{2.75}{\cubic\milli\meter}, which means using the appropriate capacitance, instead of the minimum one, may not incur dimensional overhead. 
+% For \SI{47}{\micro\farad}, the absolute volume (\SI{5.12}{\cubic\milli\meter}) is insignificant compared to the device as a whole, e.g. an MSP430FR6989 MCU chip alone occupies \SI{274.4}{\cubic\milli\meter} (14 $\times$ 14 $\times$ 1.4). 
+The regressed volume of the above two capacitance values are \SI{8.1}{\cubic\milli\meter} and \SI{23.8}{\cubic\milli\meter} respectively. However, the selection of capacitors can be dependent on factors other than physical volume, such as reliability, operation temperature, and more specific application needs. These factors can also be added into the cost function if necessary. 
+% Again, such a volume scale is still insignificant in a whole device. 
+

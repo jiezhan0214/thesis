@@ -1,0 +1,33 @@
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=1.0\columnwidth, height=5cm,
+        ybar,
+        ymin=0,
+        ymax=600,
+        enlarge x limits=0.3,
+        legend style={at={(0.5,1.2)},
+        anchor=north,legend columns=-1},
+        ylabel={No. completions},
+        symbolic x coords={\SI{100}{\micro\ampere},\SI{300}{\micro\ampere},\SI{500}{\micro\ampere}},
+        xtick=data,
+    ]
+    % Samoyed
+    \addplot
+        plot [black,fill=Set1-A,postaction={pattern=dots},error bars/.cd,y dir=both,y explicit]
+        table [x=current,y=samoyed_perf,y error plus=samoyed_perf_err+, y error minus=samoyed_perf_err-, col sep=comma] {ch5_repta/figures/model_time/model_time.csv};
+    % DEBS
+    \addplot
+        plot [black,fill=Set1-B,postaction={pattern=north east lines},error bars/.cd,y dir=both,y explicit]
+        table [x=current,y=debs_perf,y error plus=debs_perf_err+, y error minus=debs_perf_err-, col sep=comma] {ch5_repta/figures/model_time/model_time.csv};
+    % Adaptive
+    \addplot
+        plot [black,fill=Set1-C,postaction={pattern=north west lines},error bars/.cd,y dir=both,y explicit]
+        table [x=current,y=opta_perf,y error plus=opta_perf_err+, y error minus=opta_perf_err-, col sep=comma] {ch5_repta/figures/model_time/model_time.csv};
+    \legend{Samoyed, DEBS, Adaptive}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Dynamic execution time.}
+    \label{fig:model_time}
+\end{figure} 

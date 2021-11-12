@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Section 1: Introduction 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction} \label{section:intro}
+
+% \IEEEPARstart{T}{o} establish a ubiquitous Internet of Things (IoT), tens of billions of devices are to be installed, and possibly at hard-to-reach locations~\cite{6064380, 7347318, 7954016, 7488250}. Using non-rechargeable batteries constrains the lifespan of these devices and brings impractical battery replacement work. Enabling IoT devices to harvest ambient energy becomes a solution to circumvent the limited battery lifespan. 
+
+\IEEEPARstart{I}{nternet} of Things (IoT) devices are becoming ubiquitous, with tens of billions of devices to be installed, many of which will be in potentially hard-to-reach locations~\cite{7954016, sundmaeker2010vision, dave2011next}.
+% ~\cite{6064380, 7347318, 7954016, 7488250}. 
+Conventionally, these devices are battery-powered, and thus have constrained lifespans, necessitating the inconvenience of periodic replacement. To circumvent the limited battery lifespan, energy-harvesting IoT devices become a solution. 
+
+Environmentally harvested power is intrinsically variable and intermittent~\cite{4494336}. Traditionally, large energy storage devices in the form of rechargeable batteries or supercapacitors are adopted to buffer the variability and provide a continuous supply of power that is free from interruptions~\cite{5522465, Kansal:2007:PME:1274858.1274870, Buchli:2014:DPM:2668332.2668333, Wagemann:2017:OER:3136518.3078631, Jiang:2005:PEP:1147685.1147765, Simjee:2006:ELS:1165573.1165619}. Unfortunately, such types of energy storage raise pollution concerns~\cite{LIU2014210}, increase cost and device dimensions~\cite{4494753}, and still have limited lifespans~\cite{AKHTAR2015769, 4494753}. 
+% yet using an energy-harvesting supply without energy buffering hinders execution by frequent power interruptions. 
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Recent research has developed \textit{intermittent computing} for energy harvesting devices to maintain execution despite frequent power interruptions by saving and restoring system volatile computing state through non-volatile memory (NVM)~\cite{Ransford:2011:MSS:1950365.1950386, 6733152, 6960060, Lucia:2015:SSP:2737924.2737978, 6341281}. 
+% % In particular, if the supply voltage is charged above a restore threshold, such systems wake up and execute. 
+% During active periods, the systems save volatile state (e.g. CPU registers, RAM data) into NVM either at pre-installed points (\textit{static}) or when the supply is about to fail (\textit{reactive}). If the supply voltage drops below the minimum operating threshold, the systems lose all volatile state and shut down, with data in NVM preserved. After the supply voltage recovers to a restore threshold, the systems restore the saved state from NVM and continue execution from the last saved point. Thereby, despite frequent supply interruptions, forward execution is preserved without large energy storage. 
+%%%%%%%%%%%%%%%%%%%%%%
+
+% To remove large energy storage while maintain execution despite frequent power interruptions, recent research has developed \textit{intermittent computing} (also known as \textit{intermittent computing}), which saves and restores system volatile computing state (e.g. CPU register data, RAM data) through nonvolatile memory (NVM)~\cite{Ransford:2011:MSS:1950365.1950386, 6733152, 6960060, Lucia:2015:SSP:2737924.2737978, 6341281, 199319}. During active periods, the system volatile state is saved into NVM either at pre-installed points (\textit{static}) or just before the power supply fails (\textit{reactive})~\cite{Sliper:2019:ESR:3316781.3317812}. The volatile state is lost when the supply voltage drops below the minimum operating threshold, while the saved state in NVM is retained. The saved state is restored from NVM when the supply voltage recovers to a restore threshold, and then the execution continues from the last saved point. Therefore, forward execution is preserved without large energy storage despite frequent supply interruptions. In intermittent computing, forward progress denotes the effective program progress, as opposed to re-executed progress, lost progress, and the progress of state-saving and -restoring operations~\cite{7478428, 7056060}. The amount of forward progress directly determines application performance (e.g. program iteration rate or task completion time). 
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Recently, \textit{intermittent computing systems} (ICSs) have been proposed to remove large energy storage devices while maintaining execution across frequent power interruptions~\cite{Ransford:2011:MSS:1950365.1950386, 6733152, 6960060, Lucia:2015:SSP:2737924.2737978, 6341281, 199319}. ICSs save volatile system computing state, e.g. CPU registers and RAM contents, into nonvolatile memory (NVM) either at pre-installed points (\textit{static methods}) or when the supply is about to fail (\textit{reactive methods})~\cite{Sliper:2019:ESR:3316781.3317812, doi:10.1098/rsta.2019.0158}. 
+% The volatile state is lost when the supply voltage drops below the minimum operating threshold, while the saved state in NVM is retained. The saved state is restored from NVM when the supply voltage recovers to a restore threshold, and then the execution continues from the last saved point. 
+% Therefore, forward execution is preserved. 
+In ICSs, \textit{forward progress} denotes the effective application progress, excluding re-executed progress, lost progress, and state-saving and -restoring operations~\cite{7478428, 7056060}. The amount of forward progress directly determines application performance, e.g. program iteration rate or task completion time. In this paper, we define normalised forward progress as \textit{the ratio of the effective execution time to the total elapsed time}, without being restricted to a specific workload. 
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% turn into the main topic now: modelling progress, improvement by sizing energy storage 
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modelling and estimating forward progress of an energy-harvesting intermittent computing (EHIC) device is crucial to evaluation of whether the device can achieve expected performance with variable energy source conditions after deployment, while requires considerations on energy source variability and understanding of intermittent computing systems. 
+% However, traditional computer models are not able to achieve this due to lack of considerations on energy source variability and understanding of intermittent computing systems. 
+
+Current ICS approaches typically adopt only a minimum amount of energy storage, which is just enough for the most energy-expensive atomic operation\footnote{Atomic operations in ICSs denote operations that should be completed in one continuous period. If an atomic operation is interrupted by a power interruption, it should be re-executed rather than resumed. Examples of atomic operations include saving and restoring volatile state, transmitting and receiving packets, and sampling sensors. }, with the goal of minimising device dimensions and recharging time~\cite{6960060, 6733152, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+% \cite{7442814}
+% \cite{7403941}
+% With the goal of minimising device dimensions and recharging time, previous designs in intermittent computing typically adopt only a minimum amount of energy storage, e.g. a decoupling capacitor, which is just enough for the most energy-expensive atomic operation\footnote{Atomic operations in intermittent computing denote operations that should be completed in one continuous period. If an atomic operation is interrupted by a power interruption, it should be re-executed rather than resumed. One example of atomic operations is saving and restoring volatile state. }~\cite{6960060, 7442814, 7403941, 6733152, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+However, in this paper we show that a system with minimum energy storage has to frequently go through a cycle of \{wake up, restore state, execute program, save state, and halt\}, thereby causing high overheads in time and energy. We propose that provisioning more energy storage can prolong the operating cycles and reduce the frequency of interruptions, hence reducing overheads and improving forward progress. 
+% However, larger energy storage also increases leakage current, occupies greater volume, and requires longer recharging time. 
+Such a relationship between energy storage capacity and forward progress remains unexplored in ICSs, and the challenge of sizing energy storage to improve forward progress while moderating the physical size and recharging time is unaddressed. 
+% when power production is less than power consumption (which is common in energy-harvesting devices). 
+
+This paper presents a model-based approach for sizing energy storage in ICSs, which quantifies and trades off forward progress, capacitor volume, and recharging time. 
+% We develop a theoretical model of reactive intermittent computing to estimate forward progress. Taking advantage of the theoretical model, we explore the effect of energy storage capacity on forward progress with respect to supply current and volatile state size. We further propose an approach for identifying the proper energy storage size for deploying energy-harvesting intermittent computing (EHIC) devices, which improves forward progress while balances dimensions and recharging time. We integrate the reactive intermittent computing model into a photovoltaic-based (PV-based) EHIC device framework. We demonstrate the sizing approach with the framework given various real-world indoor and outdoor light source datasets. 
+In summary, the main contributions of this paper are: 
+% \begin{enumerate} [leftmargin = 0.7cm]
+\color{blue}
+\begin{itemize}
+    \item A model-based approach that identifies appropriate energy storage capacity in ICSs (Section~\ref{section:approach}). On average, this achieves \SI{98.3}{\percent} of the maximum forward progress while the capacitor volume remains insignificant as simulated with real energy availability data (Section~\ref{section:demo}). 
+    % while reduces capacitor volume by \SI{71.7}{\percent} and recharging time by \SI{83.8}{\percent} as simulated with real energy availability data (Section~\ref{section:demo}). 
+    % that trades off forward progress, capacitor volume, and recharging time in ICSs . 
+    \item An abstract reactive ICS model which accurately estimates forward progress (Section~\ref{section:model}). Experimental validation shows a \SI{0.5}{\percent} mean absolute percentage error (Section~\ref{section:experiment}).
+    \item An exploration based on the model, where we analyse the energy storage sizing effect on forward progress with respect to supply current and volatile state size, showing up to \SI{64.9}{\percent} forward progress improvement (Section~\ref{section:exploration}). 
+    % \item A demonstration of the sizing approach with the theoretical model integrated into a photovoltaic-based (PV-based) ICS model under various real-world light source datasets, where the suggested capacity achieves \SI{98.3}{\percent} of the maximum forward progress while saves \SI{71.7}{\percent} capacitor volume and \SI{83.8}{\percent} recharging time (Section~\ref{section:demo}). 
+    % results show that sizing energy storage can improve annual mean forward progress by \SIrange{7.8}{43.3}{\percent}.
+
+    % \item Experimental validation of the theoretical model, which shows high accuracy with \SI{0.5}{\percent} mean absolute percentage error, and a \SI{43}{\micro\farad} capacitor suggested by the sizing approach improves forward progress by up to \SI{55.2}{\percent} and \SI{30.4}{\percent} compared to a theoretical minimum \SI{6.2}{\micro\farad} one and an on-board \SI{10}{\micro\farad} one across various levels of supply current. 
+
+    % \item where we found that a properly sized capacitor results in up to 30.4\% more forward progress in experiment compared to an on-board one, and improves mean forward progress by up to 35.0\% over one-year indoor and outdoor light energy harvesting simulation compared to a minimum one. 
+    
+    % \item experiments: which was experimentally validated with accuracy of 0.5\% mean absolute percentage error across various current input. 
+
+    % \item We validate our formulation and model via experiments based on a TI MSP430FR6989 microcontroller, where the results show that 
+\end{itemize}
+\color{black}
+% \end{enumerate}
+
+
+% \begin{enumerate}
+%     \list 1
+%     \list 2
+%     \list 3
+% \end{enumerate}
+
+% The rest of this paper is organized as follows. Background and related work on intermittent computing and its modelling approaches are provided in Section~\ref{section:review}. The device framework and the theoretical model are illustrated in Section~\ref{section:model}. The sizing approach is presented in Section~\ref{section:approach}. Model configuration and simulation setup are explained in Section~\ref{section:setup}. Design exploration and demonstration of the sizing approach are presented in Section~\ref{section:exploration}. The theoretical model is experimentally validated in Section~\ref{section:experiment}. Finally, Section~\ref{section:conclusion} concludes this paper. 
+
+% Design considerations: forward progress, energy storage, energy harvester
+% Design specifications in intermittent computing devices typically focus on three things according to applications: forward progress, recharging time, and device dimensions. 
+% recharging time denotes the time required to wake up the device when there is power available. In some event-driven applications, recharging time should be reduced to ensure timely event handling. Device dimensions are restricted in some size-constrained applications, for example, wearable devices or in-body sensing. Sizing energy harvester and energy storage impacts these design specifications. 
+
+% Besides energy storage, the size of energy harvester dominates the harvested power scale. Oversized energy harvester unnecessarily increases device costs, providing excess energy beyond the necessary amount to satisfy forward progress requirement. However, there is not a method for designers to seek a cost-efficient energy harvester size to meet their design specifications in real-world deployment. 
+
+% A general problem statement. A general summary of this work. 
+% In the deployment of intermittent computing devices, it is a challenge for designers to determine the sizes of energy harvester and energy storage to both satisfy application specifications and achieve cost-efficiency. 
+% perhaps explain this cost-efficiency somewhere before this place, say that using minimum storage require perhaps a large energy harvester to achieve the performance spec, but increasing storage reduce that cost without dimensional penalty. 
+% In this paper, we propose a modelling approach to explore the design space in sizing energy harvester and energy storage in the deployment of intermittent computing devices. 

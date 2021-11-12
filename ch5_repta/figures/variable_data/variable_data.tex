@@ -1,0 +1,27 @@
+\begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+            width=1.0\columnwidth,
+            height=5cm,
+            ymin=0,
+            ymax=200,
+            xmin=0,
+            xmax=4,
+            xlabel=Data Size (KiB),
+            ylabel=$\Delta V_{\text{task}}$ (mV),
+            legend style={at={(0.05,0.95)},
+            anchor=north west,legend columns=1},
+        ]
+        \addplot
+            plot [black,only marks]
+            table [x=data_size, y=voltage_drop,col sep=comma] {ch5_repta/figures/variable_data/variable_data.csv};
+        \addplot
+            plot [black]
+            {44.3 * x + 16.9};
+        \legend{Measurements, Linear Fit}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Voltage drop vs data size.}
+    \label{fig:variable_datasize}
+\end{figure}

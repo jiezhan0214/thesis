@@ -1,0 +1,106 @@
+\newpage
+\section{Experimental Evaluation}
+
+\subsection{Benchmark and Comparisons}
+
+Benchmark: 
+
+\begin{itemize}
+    \item AES encryption
+    \item AES decryption
+    \item RF transmission
+    \item UART send
+    \item DMA (a very lightweight/efficient task, probably not ideal for the reliability test)
+\end{itemize}
+
+Comparisons:
+
+DEBS, Samoyed (later), Plain C (for evaluating overheads)
+
+We may temporarily overlook Samoyed as its implementation is a bit more complex and its threshold setting is unclear. 
+Samoyed scales down the atomic task if it fails to complete (but never scale back). 
+It uses an "energy profiler" in previous work to test the whether the smallest scale of all peripheral tasks and randomized inputs can successfully complete. 
+They suggested it is appropriate to set an energy capacity that can run the smallest scale of an operation for hundreds of times in one energy cycle. 
+Hence, it does not look for a threshold for a task with a specific configuration, but instead its aim is to minimize the chance of non-termination in practice by giving a high margin.
+
+\subsection{Profiling Accuracy}
+
+Question: How does our profiling approach perform in terms of accuracy?
+
+Accuracy compared to manual measurement.
+
+Figure shows:
+\begin{itemize}
+    \item Profiling results (average of 10)
+    \item Each profiling reading (range)
+    \item Dynamic threshold (Perhaps add horizontal lines as configurable thresholds in figures)
+    \item Actual voltage drop (average of 5 manual readings)
+\end{itemize}
+
+\input{ch5_repta/figures/dma_profiling/dma_profiling.tex}
+\input{ch5_repta/figures/aes_profiling/aes_profiling.tex}
+\input{ch5_repta/figures/uart_profiling/uart_profiling.tex}
+
+\subsection{Reliability with Dynamic Energy Consumption}
+
+Question: Can it still make forward progress correctly with changes (as listed below) while other SoA approaches can't? 
+
+Number of failures?
+
+Cases of changes and experiments:
+
+\subsubsection{New devices / operations (once)}
+
+- Show the voltage trace that illustrates how it profiles and adapts on new devices or new operations. 
+
+\subsubsection{Variability in capacitance due to ageing / tolerance (slowly changing)}
+
+- Profile the tasks for DEBS with the target end voltage at 1.8V (need explanation on this) and 30uF capacitance. 
+
+- Build a capacitor bank with a better granularity. The potential testing range of capacitance should be 20-30uF, so we probably use a combination of 2x10uF + 10x1uF capacitors, with some 0.1uF capacitors where necessary. 
+
+- Decrease the capacitance step by step. Record the capacitance where DEBS fails, the adaptive thresholds, and a voltage trace that shows what happens. 
+
+\subsubsection{Variability in peripheral configurations (single threshold for a rarely/slightly-changing configuration, multiple thresholds for frequently-changing configurations)}
+
+- Profile the tasks for DEBS with the target end voltage at 1.8V and a "default" configuration. 
+    
+- Presumably DEBS can only complete the tasks with configurations that consumes the same or less energy as it was profiled, while OPTA adapts the threshold. 
+
+\subsubsection{Variability in the amount of data to process (fast changing, but perhaps could be an unsuitable test case for reliability as it should violate the API requirement to make it fail)}
+    
+- This would be similar to the capacitance test but with a less granularity needed.
+
+
+\subsection{Efficiency}
+
+Question: Does it run faster than other SoA approaches (make more progress under the same energy condition) under conditions that all approaches can make forward progress?
+
+Comparisons: DEBS, Samoyed.
+
+Test conditions:
+    
+- (1) A constant data size (2) Randomized data sizes (DEBS threshold configured for the largest data size)
+
+- A few levels of input current
+
+\subsection{Overheads}
+
+- Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
+
+Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 
+
+The energy/charge consumption can also be calculated. 
+
+- Memory overhead. Check the section sizes of the compiled code. Compared it to a PlainC version and a Hibernus-like IC version.  
+
+\subsection{Correctness of computational results (test its intermittent computing functionality, might not be important)}
+
+Question: does it produce correct results from atomic functions across power failures?
+
+Compare the output of our approach with intermittent supply vs Plain C solution with continuous supply. Use a computational workload probably, as an atomic function should be guaranteed to finish. 
+
+
+\subsection{Case Study}
+
+Apply the proposed approach on an application that includes multiple atomic operations and the device runs with dynamic energy consumption due to operating conditions. 
