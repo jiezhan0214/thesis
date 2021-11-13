@@ -62,11 +62,9 @@ An inherent limitation of storage-less energy harvesting computing is that the s
   
   The application aims to capture kitchen events (e.g. dishwasher working, fan on, refrigerator cooling) to record equipment usage. As such events usually last for from tens of seconds to a few hours, the device does not need to operate immediately after the event occurs or disappears. An implementation of this application is shown by Maeng et al.~\cite{maeng2019supporting}. The device iterates the following tasks in turn during power-available periods: sampling acoustic information from microphone input, classifying kitchen events with a pre-trained model, and transmitting the results in Bluetooth Low-Energy (BLE) packets to an always-on server. The device harvests RF energy from a dedicated RFID reader, and the packets are transmitted every a few seconds as reported. A specification for this application is to complete program iterations as frequently as possible so as to improve the accuracy of event records. 
 
-  \hfill
-
   \textbf{Use case 2: Temperature monitor for air conditioning}
 
-  The application aims to monitor indoor temperature for air conditioning. As the temperature does not usually change over a few minutes, the temperature monitor does not need to wake up frequently or periodically. An implementation of this application is shown by Colin et al.~\cite{colin2018reconfigurable}. During power-available periods, the device samples temperature by an external analog sensor. If the temperature is detected to be out of a pre-defined range, the device send a BLE packet to alarm the server. The device is also powered by a dedicated RFID reader. Similar to use case 1, the device is expected to maximise sampling frequency in order to capture out-of-range temperature as soon as possible.
+  The application aims to monitor indoor temperature for air conditioning. As the temperature does not usually change over a few minutes, the temperature monitor does not need to wake up frequently or periodically. An implementation of this application is shown by Colin et al.~\cite{colin2018reconfigurable}. During power-available periods, the device samples temperature by an external analog sensor. If the temperature is detected to be out of a pre-defined range, the device send a BLE packet to alarm the server. The device is also powered by a dedicated RFID reader. Similar to use case 1, the device is expected to maximize sampling frequency in order to capture out-of-range temperature as soon as possible.
 
   \item \textbf{Category 2: Application activity in correlation with available power.}
   
@@ -102,61 +100,76 @@ As shown in the above use cases, a common application specification of storage-l
 %   \label{Figure:architecture}
 % \end{figure}
 
-% The energy harvester is the only power source in such nodes. The harvested power is then transferred to the energy storage, in some cases through a PMU. The function of PMU is to efficiently convert harvested voltage and current to an operational state for the energy storage and the load, e.g. to maximise the harvested power from the energy harvester by controlling operating voltage in systems powered by photovoltaic (PV) panels~\cite{wang2016storage, sun2017maximum, patel2008maximum}. The energy storage acts as a buffer to smooth out the inevitable and frequent temporal disparity between power harvested and power consumed, which is designed as either a rechargeable battery with a large capacity and a short lifetime, or a supercapacitor with a small capacity and a long lifetime, or in a hybrid form~\cite{xie2013charge}. With recent advances in IC, this energy storage can be minimised to a decoupling capacitor or even eliminated (no additional storage). The energy in the storage is then consumed by the load. Usually, when the terminal voltage of the energy storage does not match the operating voltage of the load, voltage conversion circuits (such as a voltage regulator, a DC-DC converter, or a low-dropout regulator) are required to provide a voltage output within the load operating range~\cite{naderiparizi2015wispcam, gomez2016dynamic, wu2012efficient}. The load, in a typical IoT application, is normally a microcontroller (MCU) with one or a few sensors and a radio. 
+% The energy harvester is the only power source in such nodes. The harvested power is then transferred to the energy storage, in some cases through a PMU. The function of PMU is to efficiently convert harvested voltage and current to an operational state for the energy storage and the load, e.g. to maximize the harvested power from the energy harvester by controlling operating voltage in systems powered by photovoltaic (PV) panels~\cite{wang2016storage, sun2017maximum, patel2008maximum}. The energy storage acts as a buffer to smooth out the inevitable and frequent temporal disparity between power harvested and power consumed, which is designed as either a rechargeable battery with a large capacity and a short lifetime, or a supercapacitor with a small capacity and a long lifetime, or in a hybrid form~\cite{xie2013charge}. With recent advances in IC, this energy storage can be minimized to a decoupling capacitor or even eliminated (no additional storage). The energy in the storage is then consumed by the load. Usually, when the terminal voltage of the energy storage does not match the operating voltage of the load, voltage conversion circuits (such as a voltage regulator, a DC-DC converter, or a low-dropout regulator) are required to provide a voltage output within the load operating range~\cite{naderiparizi2015wispcam, gomez2016dynamic, wu2012efficient}. The load, in a typical IoT application, is normally a microcontroller (MCU) with one or a few sensors and a radio. 
 
 \section{Research Justification}
 
-Self-powered devices solely rely on energy harvesters to power themselves. Energy harvesting power supply varies over time due to uncontrollable environmental conditions. Due to the lifespan, pollution, dimension problems of batteries and supercapacitors, there is a demand for adapting computing architecture to energy harvesting supply with small storage, e.g. a capacitor. Various approaches in intermittent computing and PN computing emerge to enable and improve energy harvesting computing in the scenario of minimised storage in order to reduce dimensions and cost as well as to increase lifespan of IoT devices. However, a larger storage than the minimum one can reduce the frequency of power outages and increase flexibility in power management, which may benefit the application throughput. Hence, there is a trade-off in sizing energy storage. Apart from energy storage, the size of energy harvesters should also be considered based on a set of factors, such as system power consumption, performance requirements, energy utilization, device dimensions, and cost. A gap of study exists in how to determine the size of energy storage and energy harvesters. The research gap is further described as listed below:
+Self-powered devices solely rely on energy harvesters to power themselves. Energy harvesting power supply varies over time due to uncontrollable environmental conditions. Due to the lifespan, pollution, dimension problems of batteries and supercapacitors, there is a demand for adapting computing architecture to energy harvesting supply with small storage, e.g. a capacitor. Various approaches in intermittent computing and PN computing emerge to enable and improve energy harvesting computing in the scenario of minimized storage in order to reduce dimensions and cost as well as to increase lifespan of IoT devices. However, a larger storage than the minimum one can reduce the frequency of power outages and increase flexibility in power management, which may benefit the application throughput. Hence, there is a trade-off in sizing energy storage. Apart from energy storage, the size of energy harvesters should also be considered based on a set of factors, such as system power consumption, performance requirements, energy utilization, device dimensions, and cost. A gap of study exists in how to determine the size of energy storage and energy harvesters. The research gap is further described as listed below:
 \begin{itemize}
-  \item [1.] A variety of methods in intermittent computing have been proposed to overcome power outages during execution, ensuring forward execution~\cite{ransford2012mementos}, memory consistency~\cite{lucia2015simpler}, peripheral re-configuration~\cite{liu2019130}, etc. Such approaches usually adopt only a minimum amount of energy storage which only allow systems to complete state saving and restoring operations before and after power outages. However, provisioning a certain amount of storage reduces the overhead of intermittent operations. This effect is especially noticeable in reactive intermittent systems (Section \ref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of intermittently-powered systems~\cite{colin2018reconfigurable, wu2018extensible}. The trade-off of scaling energy storage in intermittent computing systems should be fully studied. 
+  \item [1.] A variety of methods in intermittent computing have been proposed to overcome power outages during execution, ensuring forward execution~\cite{ransford2012mementos}, memory consistency~\cite{lucia2015simpler}, peripheral re-configuration~\cite{liu2019130}, etc. Such approaches usually adopt only a minimum amount of energy storage which only allow systems to complete state saving and restoring operations before and after power outages. However, provisioning a certain amount of storage reduces the overhead of intermittent operations. This effect is especially noticeable in reactive intermittent systems (Section \ref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of IPSs~\cite{colin2018reconfigurable, wu2018extensible}. The trade-off of scaling energy storage in intermittent computing systems should be fully studied. 
   \item [2.] The size of energy harvesters significantly determines the amount of harvested power. Undersized energy harvesters constrain available power, affecting the maximum performance of devices; oversized energy harvesters provides redundant energy, which cannot be consumed on useful work and is wasted in circuitry or never harvested, affecting the utilization of energy harvesters and unnecessarily increasing device costs. Besides, the size of energy harvesters contributes to a large part in device dimensions, which may violate the size constraint of autonomous devices~\cite{buchli2014dynamic}. Therefore, there is a trade-off between under-provisioning and over-provisioning energy harvesters in energy harvesting devices, and this trade-off should be thoroughly studied. 
-  \item [3.] Current power management techniques in energy harvesting computing rely on the feedback of the dynamic detection of available energy in energy storage, whether in EN systems~\cite{kansal2007power, wagemann2018operating} or in PN systems~\cite{balsamo2016graceful, fletcher2017power}. Scaling the capacity of energy storage may change the responsiveness of such energy detection, and consequently, have an impact on performance adaptation and system application throughput. This impact exhibits more significant in PN computing than in EN computing as the allocated energy storage in PN systems is minimised and energy detection is more acute. 
+  \item [3.] Current power management techniques in energy harvesting computing rely on the feedback of the dynamic detection of available energy in energy storage, whether in EN systems~\cite{kansal2007power, wagemann2018operating} or in PN systems~\cite{balsamo2016graceful, fletcher2017power}. Scaling the capacity of energy storage may change the responsiveness of such energy detection, and consequently, have an impact on performance adaptation and system application throughput. This impact exhibits more significant in PN computing than in EN computing as the allocated energy storage in PN systems is minimized and energy detection is more acute. 
 \end{itemize}
 
 \section{Research Questions}
 
-Based on the research justification, three research questions are listed below:
+Motivated by the previous discussion, the following three research questions are derived:
 
 % Questions
-% 1. Does the energy storage size affect the performance of intermittent computing? how/why? 
+% 1. Does sizing the energy storage capacity has an effect on the performance of IPSs? If so, why and how? 
 % 2. How can developers decide the size of energy storage? (This question may be challenged by “what about other energy storage architecture?”)
 % 3. After addressing the efficiency of computing tasks, how can the devices perform atomic tasks, e.g. peripheral operations. (After this question, my previous questions may be challenged by “why doesn’t that encompass atomic tasks?”)
 
+% \item[1.] What is the effect of energy storage capacity and energy harvester size on the behaviours of intermittent computing systems?
 
-\begin{itemize}
+% Adding energy storage to intermittent computing systems may reduce state saving and restoring overheads and tolerate larger atomic operations, but may also increase leakage power, device dimensions, and undermine system reactivity. Energy harvester sizing also affects multiple outcomes, such as system performance requirement, device dimensions, and costs. System behaviours include application throughput, active time, reactivity, frequency and overheads of state saving and restoring operations, and energy utilization. 
 
-  % \item[1.] What is the effect of energy storage capacity and energy harvester size on the behaviours of intermittent computing systems?
-  
-  % Adding energy storage to intermittent computing systems may reduce state saving and restoring overheads and tolerate larger atomic operations, but may also increase leakage power, device dimensions, and undermine system reactivity. Energy harvester sizing also affects multiple outcomes, such as system performance requirement, device dimensions, and costs. System behaviours include application throughput, active time, reactivity, frequency and overheads of state saving and restoring operations, and energy utilization. 
+% \item[2.] How can designers size energy harvesters and energy storage in IC systems to maximize application throughput while meeting requirements for device dimensions and costs?
 
-  % \item[2.] How can designers size energy harvesters and energy storage in IC systems to maximise application throughput while meeting requirements for device dimensions and costs?
-  
-  % Based on the analysis of sizing effect on system behaviours, this question focuses on practical concerns when deploying IoT sensor nodes. A sizing tool should be provided, where the user should import the energy source conditions at the deploying location. This tool should provide a spectrum of energy harvester and storage sizes with corresponding outcomes of each sizing choice.
+% Based on the analysis of sizing effect on system behaviours, this question focuses on practical concerns when deploying IoT sensor nodes. A sizing tool should be provided, where the user should import the energy source conditions at the deploying location. This tool should provide a spectrum of energy harvester and storage sizes with corresponding outcomes of each sizing choice.
 
-  \item[1.] What is the effect of energy storage capacity on the forward progress of intermittent-powered systems? 
-  
-  The amount of forward progress directly determines application performance, e.g. program iteration rate or task completion time. 
-  Most intermittent-powered systems minimise energy storage capacity so as to minimise device dimensions and interruption periods~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
-  However, increasing energy storage capacity can also benefit forward progress. 
-  Our goal is to explore and quantify the relationship between energy storage capacity and forward progress and to analyse the reasons behind this relationship. 
+\begin{enumerate}
 
-  \item[2.] How can developers size energy storage in intermittently-powered systems to trade off forward progress against device dimensions and interruption periods?
-  
-  Based on the knowledge of sizing effect on forward progress, this question encompass more design factors in sizing energy storage when deploying intermittently-powered systems. 
-  A simulation tool of intermittently-powered systems should be provided, where users can define energy source conditions and energy harvester sizes. 
-  The tool should be able to output the physical size of energy storage and interruption periods in certain metrics. 
-  An appropriate size of energy storage can be suggested by this tool with a cost function to trade off multiple factors. 
+\item What is the effect of sizing the energy storage capacity on the performance of IPSs? 
 
-  \item[3.] How can intermittent-powered systems exploit energy storage so as to perform atomic operations and cope with capacitor degradation? 
+Specifically, the energy storage capacity in IPSs is presented as the capacitance between \nm{V}{cc} and ground. 
+In IPSs, \textit{forward progress} denotes the effective application progress, excluding re-executed progress, lost progress, and state-saving and -restoring operations~\cite{7478428}.
+The forward progressing rate directly determines application performance, e.g. program iteration rate or task completion time, and hence is regarded as the performance metric in this study. 
+The goal is to explore whether sizing the energy storage capacity can change the forward progressing rate in IPSs, and if so, to study and quantify the relationship between them. 
+
+\item How may the energy storage of IPSs be sized to trade off forward progress against device dimensions and interruption periods?
+
+While the last question explores the energy storage sizing effect on computational performance, this question encompasses more design factors in IPSs that a larger capacitor can affect. 
+Increasing energy storage capacity may benefit forward progress, but may also exhibit side effects. 
+A larger capacitor typically has larger physical dimensions, which are an key factor that IPSs should minimize in some application scenarios, e.g. wearable and implantable sensors. 
+Also, a larger capacitor also leads to longer charge-discharge cycles, and thus prolongs interruption periods and undermines system reactivity to external events. 
+The goal is to study the trade-off and to propose an approach that recommends an energy storage size for practical deployment.
+% Most IPSs minimize energy storage capacity so as to minimize device dimensions and interruption periods~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+% A simulation tool of IPSs should be provided, where users can define energy source conditions and energy harvester sizes. 
+% The tool should be able to output the physical size of energy storage and interruption periods in certain metrics. 
+% An appropriate size of energy storage can be suggested by this tool with a cost function to trade off multiple factors. 
+
+\item How can an IPS profile energy consumption of tasks at runtime? 
+
+Energy profiling of tasks is done at design time in SoA approaches. 
+Energy profiling is typically necessary for tasks that are intended to complete within one active cycle, i.e. they are not supposed to be interrupted by a checkpoint or stop due to energy depletion. 
+The consumption of a task can vary at runtime due to the variability in data amounts to process, peripheral configurations, devices, and capacitor degradation. 
+It becomes necessary for IPSs to have runtime energy profiling functionality so as to overcome the impractical efforts of design-time profiling and adapt to tasks' latest energy consumption.
+
+\item How can an IPS efficiently and safely adapts its voltage threshold to minimize non-termination while maintain high energy efficiency? 
+
+% Atomic operations in IPSs denote operations that should be completed in one continuous period. 
+% If an atomic operation is interrupted by a power failure, it should be re-executed rather than resumed. 
+Current approaches handle atomic operations by accumulating energy to a predefined voltage threshold; after reaching that threshold, the system starts execution and re-executes the atomic section if the power fails. 
+Fixed low thresholds can be violated when any runtime variability increases energy consumption, leading to non-termination. 
+On the other hand, a universal high voltage threshold, though probably avoids non-termination, can result in long charging time, slowing down the system execution or even leaving the system in an infinite wait at low input power.
+The goal is to discover an adaptive threshold adaptation scheme that allocates an just-enough energy budget that avoids non-termination and maintain high system energy efficiency. 
+
+% However, this threshold is typically set high enough for all atomic operations in a program, so the systems usually wait for a long charging period which wastes energy and impedes response time. 
+% Also, when capacitor degrades, the predefined threshold may not provide enough energy for the same operations, so that the system cannot make forward progress. 
+% A new method of utilizing energy storage to solve these two problems is necessary. 
   
-  Atomic operations in intermittent-powered systems denote operations that should be completed in one continuous period. 
-  If an atomic operation is interrupted by a power failure, it should be re-executed rather than resumed. 
-  Current approaches handle atomic operations by accumulating energy to a predefined voltage threshold; after reaching that threshold, the system starts execution and re-executes the atomic section if the power fails. 
-  However, this threshold is typically set high enough for all atomic operations in a program, so the systems usually wait for a long charging period which wastes energy and impedes response time. 
-  Also, when capacitor degrades, the predefined threshold may not provide enough energy for the same operations, so that the system cannot make forward progress. 
-  A new method of utilizing energy storage to solve these two problems is necessary. 
-  
-\end{itemize}
+\end{enumerate}
 
 \section{Contributions}
 
@@ -165,7 +178,7 @@ Based on the research justification, three research questions are listed below:
 The contributions done to the address the research questions in this thesis are:
 \begin{itemize}
   \item[1.] Exploration and analysis of the energy storage sizing effect on reactive intermittent computing system, where we quantify and explain the relationship between energy storage capacity and forward progress.
-  \item[2.] A method and a simulation tool for sizing energy storage in deploying intermittent-powered systems, where forward progress, dimensions, and interruption periods are traded off in a cost function.
+  \item[2.] A method and a simulation tool for sizing energy storage in deploying IPSs, where forward progress, dimensions, and interruption periods are traded off in a cost function.
   \item[3.] An online task profiling and voltage threshold adaptation approach for efficiently performing atomic operations and coping with capacitor degradation. 
   % \item[4.] A configurable model of reactive IC systems, including the interrelationship among energy harvesting supply, energy storage, and a processing load.
 \end{itemize}
