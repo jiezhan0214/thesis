@@ -7,7 +7,6 @@ The promising expansion of the Internet of Things (IoT) has drawn research inter
 Such a scenario generates considerations on how to enable the devices in networks to operate independently and effectively and how to construct a long-life, maintenance-free, environmentally friendly, and low-cost IoT.
 
 % \section{Energy Harvesting and Energy-Neutral Operation}
-
 One of the most significant concerns in deploying IoT devices is how to power numerous low-power devices (tens of billions expected~\cite{hahm2016operating, adegbija2017microprocessor, shi2016edge}). 
 Traditional wired electricity limits flexibility of deployment and involve expensive wiring costs~\cite{rabaey2000picoradio}. 
 Traditional primary batteries (i.e. non-rechargeable batteries) are not suitable for such a large number of devices. 
@@ -37,21 +36,33 @@ Supercapacitors in such a scale occupy large volume in contrast to small IoT dev
 
 \section{Energy-Harvesting Intermittently-Powered Systems}
 
-\subsection{Storage-Less Energy Harvesting Computing}
-
+% \subsection{Storage-Less Energy Harvesting Computing}
 % and hence, hinders forward execution if directly connected (without energy buffering) to loads.
 
-To circumvent the lifetime, pollution, and volume problems in rechargeable batteries and supercapacitors, a recent research trend of energy harvesting sensor nodes switches towards eliminating the demand for energy storage and adopting only a minimum amount of energy storage (denoted as storage-less, where energy storage is only enough for ensuring the most energy-expensive atomic\footnote{In this context, an operation is atomic if it should be completed in one consecutive period without power interrupts; otherwise, if interrupted, it should be re-executed from the beginning. Example atomic operations in IoT devices can be peripheral operations and nonvolatile memory read/write operations.} operation of systems), typically in the form of a capacitor. However, given a negligible amount of energy storage, it becomes a major research concern that how to guarantee forward execution and functionality of energy harvesting sensor nodes .
-
-Avoiding large energy storage makes IoT devices long-life, maintenance-free, environmentally friendly, and compact (small in dimensions). However, in energy harvesting sensor nodes, replacing batteries and supercapacitors with small capacitors considerably limits the buffering capacity for varying harvested power, and hence, the variable power is directly given to the load. This violates the demand for stable power supply in conventional computing architecture and causes program execution to be frequently stranded in the same portion of code due to recurring power outages. 
+To circumvent the lifetime, pollution, and volume problems in rechargeable batteries and supercapacitors, a research trend in energy-harvesting sensor nodes moved towards eliminating the demand for energy storage and adopting only a minimum amount of energy storage, where the energy storage is only enough for ensuring the most energy-expensive atomic operation\footnote{In this context, an operation is atomic if it should be completed in one consecutive period without power interrupts; otherwise, if interrupted, it should be re-executed from the beginning. Example atomic operations in IoT devices can be peripheral operations and nonvolatile memory read/write operations.}, typically in the form of a \SI{}{\micro\farad}-level capacitor. 
+% Avoiding large energy storage makes IoT devices long-life, maintenance-free, environmentally friendly, and compact (small in dimensions). 
+\todo[inline]{Capacitors have longer lifetime, smaller volume, blabla... Reference for lifetime of electrolytic capacitors. Seems a bit contradictory to contribution 3. }
+Despite the benefits of small capacitors over batteries and supercapacitors, they considerably limit the buffering capacity for varying harvested power. 
+Thus, the variable harvesting power is almost directly connected to the load, e.g. with only a decoupling capacitor. 
+This violates the demand for stable power supply in conventional computing systems.
+Without any modifications, a conventional system can only work when input power is higher than system power consumption (which is rare for an energy-harvesting supply), and cannot boot up when input power is lower than system power consumption. 
+Hence, it becomes a major concern that how to guarantee forward execution and functionality of such systems with only minimum energy storage.
+% and causes program execution to be frequently stranded in the same portion of code due to recurring power outages. 
 
 % When the number of deployed sensor nodes in IoT increases in orders of magnitude, network data traffic and energy consumption in communication will increase accordingly and become a serious issue.
 % However, improving local data processing ability of sensor nodes is crucial to reducing energy consumed in communication and data traffic in sensor networks~\cite{akyildiz2002wireless}.
 % include not only basic sensing and communicating functions, but also stronger local data processing and controlling ability. 
 
-However, ensuring and improving local processing ability of sensor nodes is crucial for the following reasons. First, sensor nodes should be able to process sensing data on-site and transmit only the useful information, such that the network traffic volume and energy consumption is reduced~\cite{shi2016edge}. Second, advanced communications techniques (such as scheduling, routing, coding, decoding) require local computing ability to ensure timeliness and efficiency in networking~\cite{akyildiz2002wireless}. Third, IoT objects are also expected to be able to trigger actions in reaction to the physical reality by either receiving commands from other nodes and servers or making a decision based on locally acquired data~\cite{miorandi2012internet}. 
+Ensuring and improving local processing ability of sensor nodes is crucial for a few reasons. First, to reduce network traffic volume and energy consumption, sensor nodes should be able to process sensing data on-site and transmit only the useful information, typically when the number of sensor nodes increases in orders of magnitude~\cite{shi2016edge}. Second, advanced communications techniques, such as scheduling, routing, coding, and decoding, require local computing ability to ensure timeliness and efficiency in networking~\cite{akyildiz2002wireless}. Third, IoT devices are also expected to be able to trigger actions in reaction to the physical world by either receiving commands from other nodes and servers or making a decision based on locally acquired data~\cite{miorandi2012internet}. 
 
-In order to adapt conventional computing architecture to energy harvesting power supply without large energy storage, many methodologies for storage-less energy harvesting computing have emerged in the past few years, with considerations on forward execution, computation correctness, and improving execution speed. Recently, there are two research topics in storage-less energy harvesting computing: intermittent computing (IC) and power-neutral (PN) computing. A summary of this research trend in energy harvesting computing is shown in~\fref{Figure:paradigm}.
+With an energy-harvesting supply and small energy buffering capacitance, a system is powered up \textit{intermittently} once a small amount of energy is accumulated in the capacitor. 
+The system has to utilize these intermittent power-on cycles to make application progress. 
+To this end, many methodologies for energy-harvesting Intermittently-Powered Systems (IPS) have been proposed in the past few years. 
+
+% correctness and performance
+
+
+Recently, there are two research topics in storage-less energy harvesting computing: intermittent computing (IC) and power-neutral (PN) computing. A summary of this research trend in energy harvesting computing is shown in~\fref{Figure:paradigm}.
 % Briefly speaking, intermittent computing maintains system computing state after power outages, and PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously.
 
 \begin{figure}[!htb]
