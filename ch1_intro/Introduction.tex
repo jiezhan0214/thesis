@@ -110,45 +110,75 @@ In IPSs, the load is typically a microcontroller (MCU) with NVM to sustain compu
 
 % PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously. PN computing dynamically adapts system performance, typically by scaling CPU clock frequency, to match the instantaneous system power consumption with the instantaneous harvested power~\cite{balsamo2016graceful, fletcher2017power}. By such performance adaptation, PN systems immediately consume excessive harvested power, prolong system active time when the harvested power drops, and reduce the frequency of system state saving and restoring operations.
 
-\subsection{Application Suitability of Storage-less Energy Harvesting Computing}
+\subsection{Application Suitability of Energy-Harvesting IPSs}
+% This part intends to illustrate the key performance metric of IPSs through example applications, but it doesn't achieve it yet. 
 
-An inherent limitation of storage-less energy harvesting computing is that the systems can only execute when there is available power, as opposed to EN computing where the EN systems can still executes with buffered energy if ambient power is not available. This limitation thereby requires that \textit{application operation periods and power availability should be compatible in time}. While there are various needs of application operation periods for various applications scenarios, the power availability is constrained and determined by the availability of the target energy source in the deployed environment. The applications of storage-less energy harvesting computing should be adapted or selected to suit the power availability. Under this consideration, there are two typical categories of application scenarios according to recent publications. 
+An inherent limitation of IPSs is that the system can only execute when there is available power, as opposed to an EN system where it can still executes with buffered energy if ambient power is not available. 
+This limitation thereby indicates that \textit{application operation periods and power availability should be compatible in time}. 
+While there are various needs of operation periods for various application scenarios, the power availability is constrained and determined by the availability of the target energy source in the deployed environment. 
+Hence, the applications of IPSs should suit, or be adapted to suit, the power availability. 
+Under this consideration, there are two typical categories of application scenarios as seen in recent publications. 
 
 \begin{itemize}
 
   \item \textbf{Category 1: Applications with flexible time requirements.}
   
-  Applications with flexible requirements on operating periods tolerate the intermittency of energy harvesting sources. In such applications, energy-harvesting devices are allowed to wait for power-available periods to execute.
+  Applications with flexible requirements on operating periods tolerate the intermittency of energy sources. In such applications, devices are allowed to wait for power-on periods to execute.
   % Example energy sources could be outdoor solar energy, indoor radio-frequency (RF) energy, and human body thermal energy. Given such energy conditions, the application can process information irrelevant to the energy sources. As such energy sources are probably available in scattered and irregular periods, the application should wait for energy-available periods to activate execution. Delay-insensitive applications tolerate flexible operation periods, and hence, are suitable for such energy conditions.
 
-  \textbf{Use case 1: Kitchen event detection} 
+  \textbf{Application 1: Kitchen event detection} 
   
-  The application aims to capture kitchen events (e.g. dishwasher working, fan on, refrigerator cooling) to record equipment usage. As such events usually last for from tens of seconds to a few hours, the device does not need to operate immediately after the event occurs or disappears. An implementation of this application is shown by Maeng et al.~\cite{maeng2019supporting}. The device iterates the following tasks in turn during power-available periods: sampling acoustic information from microphone input, classifying kitchen events with a pre-trained model, and transmitting the results in Bluetooth Low-Energy (BLE) packets to an always-on server. The device harvests RF energy from a dedicated RFID reader, and the packets are transmitted every a few seconds as reported. A specification for this application is to complete program iterations as frequently as possible so as to improve the accuracy of event records. 
+  This application intends to capture kitchen events, such as dishwasher working, fan on, and refrigerator cooling, to record equipment usage. 
+  As such events usually last for tens of seconds to a few hours, the device does not need to operate immediately after the event occurs or disappears. 
+  An implementation of this application is shown by Maeng et al.~\cite{maeng2019supporting}. 
+  The device iterates the following tasks in turn during power-on periods: sampling acoustic information from a microphone, classifying kitchen events with a pre-trained model, and transmitting the results in Bluetooth Low-Energy (BLE) packets to an always-on server. 
+  The device harvests RF energy from a dedicated RFID reader, and the packets are transmitted every a few seconds as reported. 
+  This application is to complete program iterations as frequently as possible so as to improve the accuracy of event records. 
 
-  \textbf{Use case 2: Temperature monitor for air conditioning}
+  \textbf{Application 2: Temperature monitor for air conditioning}
 
-  The application aims to monitor indoor temperature for air conditioning. As the temperature does not usually change over a few minutes, the temperature monitor does not need to wake up frequently or periodically. An implementation of this application is shown by Colin et al.~\cite{colin2018reconfigurable}. During power-available periods, the device samples temperature by an external analog sensor. If the temperature is detected to be out of a pre-defined range, the device send a BLE packet to alarm the server. The device is also powered by a dedicated RFID reader. Similar to use case 1, the device is expected to maximize sampling frequency in order to capture out-of-range temperature as soon as possible.
+  This application intends to monitor indoor temperature for air conditioning. 
+  As the room temperature does not usually change over a few minutes, the temperature monitor does not need to wake up frequently or periodically. 
+  An implementation of this application is shown by Colin et al.~\cite{colin2018reconfigurable}. 
+  During power-on periods, the device samples temperature by an external analog sensor. 
+  If the temperature is detected to be out of a pre-defined range, the device sends a BLE packet to alarm the server. 
+  The device is also powered by a dedicated RFID reader. 
+  Similar to Application 1, the device is expected to maximize sampling frequency in order to capture out-of-range temperature as soon as possible.
 
   \item \textbf{Category 2: Application activity in correlation with available power.}
   
-  In such applications, the application operations correlates with power-available periods. This correlation is typically linked by an event with harvestable power. When the event occurs, the device is activated by harvesting the power of the event at the same time to start operating. Therefore, the application operation periods and the power availability are inherently simultaneous in such applications. 
+  In such applications, the required operation periods correlate with power-on periods. 
+  This correlation is typically linked by an event that comes with harvestable power. 
+  When the event occurs, the device is activated by harvesting the power of the event at the same time to start operating. 
+  Therefore, the application operation periods and the power availability are inherently simultaneous in such applications. 
 
-  \textbf{Use case 3: Bicycle trip counter}
+  \textbf{Application 3: Bicycle trip counter}
 
-  The bicycle trip counter aims to calculate cycling speed and traveled distance. The wheel rotation brings energy for the device to sense the cycling speed; the device does not need to operate without cycle movement. The trip counter is designed as a nail-sized chip installed on the frame of a bicycle, with a magnet on the wheel for gaining energy~\cite{bing2018energy}. Every wheel rotation activates the trip counter to calculate the current speed and log traveled distance. After collecting enough energy over a few cycling rounds, the trip counter transmits the logged information. This application is also expected to complete computing tasks faster and report results as frequently as possible. 
+  The bicycle trip counter intends to read cycling speeds and calculate total travelled distances. 
+  The wheel rotation brings energy for the device to sense the cycling speed; the device does not need to operate without cycle movement. 
+  The trip counter is designed as a nail-sized board installed on the frame of a bicycle, with a magnet on the wheel that brings electromagnetic energy to the system~\cite{bing2018energy}. 
+  Every round of wheel rotation activates the trip counter to calculate the current speed and log the traveled distance. 
+  After collecting enough energy over a few cycling rounds, the trip counter transmits the logged information. 
+  This application is also expected to report results as frequently as possible. 
 
-  \textbf{Use case 4: Power meter}
+  \textbf{Application 4: Power meter}
 
-  The power meter measures the power flow of a main load wire. The AC power in the wire can be harvested by a coil to activate the power meter. A design is shown in Monjolo~\cite{debruin2013monjolo}, where the power meter transmits a plain packet to a server once it collects a preset amount of energy. The server then calculates the elapsed time between the recent two packets to estimate the main load power. 
+  The power meter measures the power flow of a main load wire. 
+  The AC power in the wire can be harvested by a coil to activate the power meter. 
+  A design is shown in Monjolo~\cite{debruin2013monjolo}, where the power meter transmits a plain packet to a server once it collects a preset amount of energy. 
+  The server then calculates the elapsed time between the recent two packets to estimate the main load power. 
 
 \end{itemize}
   
-As shown in the above use cases, a common application specification of storage-less energy harvesting computing is to do as much 'work' as possible under the same energy conditions, e.g. completing program iterations as frequently as possible, because the energy cannot be saved for later use. Other 'work' could include improving sensing accuracy or processing offloaded tasks received from other devices. To summarize the application suitability of storage-less energy harvesting computing, a diagram is shown in~\fref{Figure:appsuit}. An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{Figure:appsuit}).
+As shown in the above application, a common application specification of IPSs is to do as much 'work' as possible under the same energy conditions, e.g. completing program iterations as frequently as possible, because the energy cannot be saved for later use. 
+Other types of 'work' could include improving sensing accuracy or processing offloaded tasks received from other devices. 
+To summarize the application suitability of IPSs, a diagram is shown in~\fref{Figure:appsuit}. 
+An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{Figure:appsuit}).
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=0.7\columnwidth]{figure/intro/appsuit2}
-  \caption{Application Suitability of Storage-less Energy Harvesting Computing.}
+  \caption{Application Suitability of Energy-Harvesting IPSs.}
   \label{Figure:appsuit}
 \end{figure}
 
