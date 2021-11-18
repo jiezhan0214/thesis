@@ -55,26 +55,60 @@ Hence, it becomes a major concern that how to guarantee forward execution and fu
 
 Ensuring and improving local processing ability of sensor nodes is crucial for a few reasons. First, to reduce network traffic volume and energy consumption, sensor nodes should be able to process sensing data on-site and transmit only the useful information, typically when the number of sensor nodes increases in orders of magnitude~\cite{shi2016edge}. Second, advanced communications techniques, such as scheduling, routing, coding, and decoding, require local computing ability to ensure timeliness and efficiency in networking~\cite{akyildiz2002wireless}. Third, IoT devices are also expected to be able to trigger actions in reaction to the physical world by either receiving commands from other nodes and servers or making a decision based on locally acquired data~\cite{miorandi2012internet}. 
 
+\todo[inline]{Need many citations in the next paragraph.}
+
 With an energy-harvesting supply and small energy buffering capacitance, a system is powered up \textit{intermittently} once a small amount of energy is accumulated in the capacitor. 
 The system has to utilize these intermittent power-on cycles to make application progress. 
-To this end, many methodologies for energy-harvesting Intermittently-Powered Systems (IPS) have been proposed in the past few years. 
-
-% correctness and performance
-
-
-Recently, there are two research topics in storage-less energy harvesting computing: intermittent computing (IC) and power-neutral (PN) computing. A summary of this research trend in energy harvesting computing is shown in~\fref{Figure:paradigm}.
-% Briefly speaking, intermittent computing maintains system computing state after power outages, and PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously.
+To this end, many approaches for energy-harvesting Intermittently-Powered Systems (IPS) have been proposed in the past few years. 
+The majority of these approaches have been addressing how to sustain computational progress throughout intermittent power-on cycles by correctly and efficiently saving and restoring volatile computing state. 
+The volatile computing state includes CPU registers, Static RAM (SRAM) data, and perhaps peripheral configurations and data, i.e. the volatile part that cannot sustain after a power failure. 
+The volatile state is saved into and restored from non-volatile memory (NVM), where most published approaches use Ferroelectric RAM (FRAM). 
+According to the style of saving and restoring state, approaches in IPSs can be categorized as \textit{proactive} and \textit{reactive}. 
+Proactive approaches save and restore state at design-time or compile-time defined points, whilst reactive approaches do that upon an imminent power failure when supply falls below a low threshold (\nm{V}{cc}$<$\nm{V}{L}). 
+Details of these approaches are illustrated in \cref{Chapter:Review}.
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.7\columnwidth]{figure/intro/paradigm}
-  \caption{Research trend in energy harvesting computing: towards minimizing energy storage.}
-  \label{Figure:paradigm}
+  \includegraphics[width=\columnwidth]{ch1_intro/figures/IPSarch}
+  \caption{A conceptual architecture of an IPS.}
+  \label{fig:ips_arch}
 \end{figure}
 
-Intermittent computing aims to maintain system volatile state after power outages with low time and energy overheads, so as to ensure forward execution and computation correctness of applications~\cite{ransford2012mementos}. Approaches in intermittent computing fundamentally diverge due to different design goals and can be classified into five categories: checkpointing, reactive, harvest-store-use, task-based, and non-volatile processors. Each of these approaches has one or a few advantages on reducing the number of system snapshots during a power cycle, reducing the size of system snapshots, minimizing hardware dependency, etc~\cite{sliper2018enabling}. 
+A conceptual architecture of an typical energy-harvesting IPS is shown in \fref{fig:ips_arch}.
+The power frontend is an energy harvester, which transduces an ambient energy source into electric power. 
+Then, a power regulator converts the harvested power to a suitable voltage that charges up the energy storage.
+The type of the power regulator depends on the pattern of the power input, which can be an AC-DC converter for AC input (e.g. a rectenna), or a DC-DC converter or a diode for DC input (e.g. a PV panel). 
+The energy storage is in the form of a \SI{}{\micro\farad}-level capacitor, which buffers a small amount of energy for the load to operate intermittently in short active cycles.
+The power given to the load is usually conditioned through a low-dropout regulator (LDO) to lower down supply voltage, and hence current consumption. 
+IPSs are usually equipped with a voltage detection circuit so as to wake up or power up the load when the voltage of the energy storage reaches a threshold. 
+In IPSs, the load is typically a microcontroller (MCU) with NVM to sustain computing state, and with many on-chip or external peripherals, e.g. sensors and wireless transceivers (TRX). 
 
-PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously. PN computing dynamically adapts system performance, typically by scaling CPU clock frequency, to match the instantaneous system power consumption with the instantaneous harvested power~\cite{balsamo2016graceful, fletcher2017power}. By such performance adaptation, PN systems immediately consume excessive harvested power, prolong system active time when the harvested power drops, and reduce the frequency of system state saving and restoring operations.
+%%% Further explanation on proactive and reactive IPSs
+
+% Proactive approaches can be further divided into \textit{checkpointing} and \textit{task-based} ones. 
+% The checkpointing approaches save and restore the whole volatile state at programmer-inserted \textit{checkpoints} (in the form of a function call), whereas task-based approaches transfer modified data at \textit{task boundaries} and are technically implemented as compiler support and programming models. 
+% Once the program passes a checkpoint or task boundary, a certain amount of forward progress is achieved; otherwise, if interrupted by a power failure, the program rolls back to the last checkpoint or task boundary. 
+% Both checkpoints and tasks boundaries should be carefully placed to meet atomicity and idempotency, and avoid non-termination due to energy depletion. 
+
+% Reactive approaches can also be further divided into 
+
+
+
+%%% Old writing
+
+% Recently, there are two research topics in storage-less energy harvesting computing: intermittent computing (IC) and power-neutral (PN) computing. 
+% A summary of this research trend in energy harvesting computing is shown in~\fref{Figure:paradigm}. 
+% Briefly speaking, intermittent computing maintains system computing state after power outages, and PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously.
+% \begin{figure}[!htb]
+%   \centering
+%   \includegraphics[width=0.7\columnwidth]{figure/intro/paradigm}
+%   \caption{Research trend in energy harvesting computing: towards minimizing energy storage.}
+%   \label{Figure:paradigm}
+% \end{figure}
+
+% Intermittent computing aims to maintain system volatile state after power outages with low time and energy overheads, so as to ensure forward execution and computation correctness of applications~\cite{ransford2012mementos}. Approaches in intermittent computing fundamentally diverge due to different design goals and can be classified into five categories: checkpointing, reactive, harvest-store-use, task-based, and non-volatile processors. Each of these approaches has one or a few advantages on reducing the number of system snapshots during a power cycle, reducing the size of system snapshots, minimizing hardware dependency, etc~\cite{sliper2018enabling}. 
+
+% PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously. PN computing dynamically adapts system performance, typically by scaling CPU clock frequency, to match the instantaneous system power consumption with the instantaneous harvested power~\cite{balsamo2016graceful, fletcher2017power}. By such performance adaptation, PN systems immediately consume excessive harvested power, prolong system active time when the harvested power drops, and reduce the frequency of system state saving and restoring operations.
 
 \subsection{Application Suitability of Storage-less Energy Harvesting Computing}
 
@@ -109,11 +143,11 @@ An inherent limitation of storage-less energy harvesting computing is that the s
 
 \end{itemize}
   
-As shown in the above use cases, a common application specification of storage-less energy harvesting computing is to do as much 'work' as possible under the same energy conditions, e.g. completing program iterations as frequently as possible, because the energy cannot be saved for later use. Other 'work' could include improving sensing accuracy or processing offloaded tasks received from other devices. To summarise the application suitability of storage-less energy harvesting computing, a diagram is shown in~\fref{Figure:appsuit}. An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{Figure:appsuit}).
+As shown in the above use cases, a common application specification of storage-less energy harvesting computing is to do as much 'work' as possible under the same energy conditions, e.g. completing program iterations as frequently as possible, because the energy cannot be saved for later use. Other 'work' could include improving sensing accuracy or processing offloaded tasks received from other devices. To summarize the application suitability of storage-less energy harvesting computing, a diagram is shown in~\fref{Figure:appsuit}. An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{Figure:appsuit}).
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=12cm]{figure/intro/appsuit2}
+  \includegraphics[width=0.7\columnwidth]{figure/intro/appsuit2}
   \caption{Application Suitability of Storage-less Energy Harvesting Computing.}
   \label{Figure:appsuit}
 \end{figure}
