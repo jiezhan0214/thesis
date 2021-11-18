@@ -197,11 +197,31 @@ An example unsuitable application can be a periodic sensing task without periodi
 
 \section{Research Justification}
 
-Self-powered devices solely rely on energy harvesters to power themselves. Energy harvesting power supply varies over time due to uncontrollable environmental conditions. Due to the lifespan, pollution, dimension problems of batteries and supercapacitors, there is a demand for adapting computing architecture to energy harvesting supply with small storage, e.g. a capacitor. Various approaches in intermittent computing and PN computing emerge to enable and improve energy harvesting computing in the scenario of minimized storage in order to reduce dimensions and cost as well as to increase lifespan of IoT devices. However, a larger storage than the minimum one can reduce the frequency of power outages and increase flexibility in power management, which may benefit the application throughput. Hence, there is a trade-off in sizing energy storage. Apart from energy storage, the size of energy harvesters should also be considered based on a set of factors, such as system power consumption, performance requirements, energy utilization, device dimensions, and cost. A gap of study exists in how to determine the size of energy storage and energy harvesters. The research gap is further described as listed below:
+\todo{Need changes on story}
+
+Self-powered devices solely rely on energy harvesters to power themselves. 
+Energy harvesting power supply varies over time due to uncontrollable environmental conditions. 
+Due to the lifespan, pollution, dimension problems of batteries and supercapacitors, there is a demand for adapting computing architecture to energy harvesting supply with small storage, e.g. a capacitor. 
+Various approaches in intermittent computing and PN computing emerge to enable and improve energy harvesting computing in the scenario of minimized storage in order to reduce dimensions and cost as well as to increase lifespan of IoT devices. 
+However, a larger storage than the minimum one can reduce the frequency of power outages and increase flexibility in power management, which may benefit the application throughput. 
+Hence, there is a trade-off in sizing energy storage. 
+Apart from energy storage, the size of energy harvesters should also be considered based on a set of factors, such as system power consumption, performance requirements, energy utilization, device dimensions, and cost. 
+A gap of study exists in how to determine the size of energy storage and energy harvesters. The research gap is further described as listed below:
+
 \begin{itemize}
-  \item [1.] A variety of methods in intermittent computing have been proposed to overcome power outages during execution, ensuring forward execution~\cite{ransford2012mementos}, memory consistency~\cite{lucia2015simpler}, peripheral re-configuration~\cite{liu2019130}, etc. Such approaches usually adopt only a minimum amount of energy storage which only allow systems to complete state saving and restoring operations before and after power outages. However, provisioning a certain amount of storage reduces the overhead of intermittent operations. This effect is especially noticeable in reactive intermittent systems (Section \ref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of IPSs~\cite{colin2018reconfigurable, wu2018extensible}. The trade-off of scaling energy storage in intermittent computing systems should be fully studied. 
-  \item [2.] The size of energy harvesters significantly determines the amount of harvested power. Undersized energy harvesters constrain available power, affecting the maximum performance of devices; oversized energy harvesters provides redundant energy, which cannot be consumed on useful work and is wasted in circuitry or never harvested, affecting the utilization of energy harvesters and unnecessarily increasing device costs. Besides, the size of energy harvesters contributes to a large part in device dimensions, which may violate the size constraint of autonomous devices~\cite{buchli2014dynamic}. Therefore, there is a trade-off between under-provisioning and over-provisioning energy harvesters in energy harvesting devices, and this trade-off should be thoroughly studied. 
-  \item [3.] Current power management techniques in energy harvesting computing rely on the feedback of the dynamic detection of available energy in energy storage, whether in EN systems~\cite{kansal2007power, wagemann2018operating} or in PN systems~\cite{balsamo2016graceful, fletcher2017power}. Scaling the capacity of energy storage may change the responsiveness of such energy detection, and consequently, have an impact on performance adaptation and system application throughput. This impact exhibits more significant in PN computing than in EN computing as the allocated energy storage in PN systems is minimized and energy detection is more acute. 
+  \item [1.] A variety of methods in intermittent computing have been proposed to overcome power outages during execution, ensuring forward execution~\cite{ransford2012mementos}, memory consistency~\cite{lucia2015simpler}, peripheral re-configuration~\cite{liu2019130}, etc. 
+  Such approaches usually adopt only a minimum amount of energy storage which only allow systems to complete state saving and restoring operations before and after power outages. 
+  However, provisioning a certain amount of storage reduces the overhead of intermittent operations. 
+  This effect is especially noticeable in reactive intermittent systems (\sref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. 
+  On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of IPSs~\cite{colin2018reconfigurable, wu2018extensible}. 
+  The trade-off of scaling energy storage in intermittent computing systems should be fully studied. 
+  \item [2.] The size of energy harvesters significantly determines the amount of harvested power. 
+  Undersized energy harvesters constrain available power, affecting the maximum performance of devices; oversized energy harvesters provides redundant energy, which cannot be consumed on useful work and is wasted in circuitry or never harvested, affecting the utilization of energy harvesters and unnecessarily increasing device costs. 
+  Besides, the size of energy harvesters contributes to a large part in device dimensions, which may violate the size constraint of autonomous devices~\cite{buchli2014dynamic}. 
+  Therefore, there is a trade-off between under-provisioning and over-provisioning energy harvesters in energy harvesting devices, and this trade-off should be thoroughly studied. 
+  \item [3.] Current power management techniques in energy harvesting computing rely on the feedback of the dynamic detection of available energy in energy storage, whether in EN systems~\cite{kansal2007power, wagemann2018operating} or in PN systems~\cite{balsamo2016graceful, fletcher2017power}. 
+  Scaling the capacity of energy storage may change the responsiveness of such energy detection, and consequently, have an impact on performance adaptation and system application throughput. 
+  This impact exhibits more significant in PN computing than in EN computing as the allocated energy storage in PN systems is minimized and energy detection is more acute. 
 \end{itemize}
 
 \section{Research Questions}
@@ -271,7 +291,9 @@ The goal is to devise an approach that can enable IPSs to run with variable ener
   
 \end{enumerate}
 
-\section{Contributions}
+\section{Research Contributions}
+
+\todo[inline]{Need more explanation}
 
 % \footnote{With the limits on portability of different IC approaches, Question 1 and 2 are studied based on reactive IC methodology}
 
@@ -279,10 +301,22 @@ The contributions done to the address the research questions in this thesis are:
 \begin{itemize}
   \item[1.] Exploration and analysis of the energy storage sizing effect on reactive intermittent computing system, where we quantify and explain the relationship between energy storage capacity and forward progress.
   \item[2.] A method and a simulation tool for sizing energy storage in deploying IPSs, where forward progress, dimensions, and interruption periods are traded off in a cost function.
-  \item[3.] An online task profiling and voltage threshold adaptation approach for efficiently performing atomic operations and coping with capacitor degradation. 
+  \item[3.] A runtime energy profiling and voltage threshold adaptation approach for efficiently performing atomic operations and coping with capacitor degradation. 
   % \item[4.] A configurable model of reactive IC systems, including the interrelationship among energy harvesting supply, energy storage, and a processing load.
 \end{itemize}
 
-% \section{Thesis Organization}
+
+\section{Publications}
+
+The research presented in this thesis were published in the following papers:
+
+\begin{itemize}
+    \item J. Zhan, G. V. Merrett, and A. S. Weddell. "Exploring the Effect of Energy Storage Sizing on Intermittent Computing System Performance." \textit{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, 2021.
+
+    \item J. Zhan, A. S. Weddell, and G. V. Merrett. "Adaptive Energy Budgeting for Atomic Operations in Intermittently-Powered Systems." In \textit{Proceedings of the 8th International Workshop on Energy Harvesting and Energy-Neutral Sensing Systems (ENSsys '20)}, pp.82-83, 2020.
+\end{itemize}
+
+
+\section{Thesis Structure}
 
 % The remaining part of this report is structured as followed. Chapter~\ref{Chapter:Review} reviews the research progress in energy harvesting computing, such as EN computing, intermittent computing, and PN computing, as well as an introduction of various energy harvesters and energy storage used in energy harvesting computing. Chapter~\ref{Chapter:Work1} analyses the effect of scaling energy storage and energy harvesters in intermittent computing systems, and provides a method of designing these two elements for IoT deployment. Chapter~\ref{Chapter:Work2} presents a study on how the energy storage capacity affects the application throughput in PN systems. Chapter~\ref{Chapter:Conclusion} concludes this thesis and plans future research. 
