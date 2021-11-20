@@ -29,7 +29,7 @@ Recently, \textit{intermittent computing systems} (ICSs) have been proposed as a
 % ~\cite{Ransford:2011:MSS:1950365.1950386, 10.1145/2700249, 6960060, Lucia:2015:SSP:2737924.2737978, 6341281, 199319}
 
 Static approaches save state at points determined at design or compile time, either by inserting checkpoints~\cite{Ransford:2011:MSS:1950365.1950386, 7944791} or decomposing a program into atomic tasks\footnote{Atomic operations in ICSs denote operations that should be completed in one continuous period. If an atomic operation is interrupted by a power failure, it should be re-executed rather than resumed. Examples of atomic operations include saving and restoring volatile state, transmitting and receiving packets, and sampling sequences of data from sensors.}~\cite{10.1145/3360285, Maeng:2017:AIE:3152284.3133920}. After a power interruption, progress rolls back and resumes from the last saved checkpoint or task boundary. This can introduce issues such as violation of data memory consistency, along with wasting energy on lost and re-executed progress.
-%Advantages include minimizing hardware dependency, and ensuring operation atomicity.However, progress rollback and re-execution
+% Advantages include minimizing hardware dependency, and ensuring operation atomicity.However, progress rollback and re-execution
 % Static approaches save volatile state into NVM at points determined at design time or compile time, either by inserting checkpoints~\cite{Ransford:2011:MSS:1950365.1950386, 7944791, 222579} or decomposing a program into atomic tasks~\cite{10.1145/3022671.2983995, Maeng:2017:AIE:3152284.3133920}. After power interruptions, the progress rolls back and resumes from the last saved checkpoint or task boundary. Advantages of static approaches include minimizing hardware dependency and ensuring operation atomicity. However, the progress rollback and re-execution introduce violation of data memory consistency, and waste energy on lost and re-executed progress. 
 % % Also, if the consumption between two successive checkpoints or task boundaries exceeds the amount that the energy storage can guarantee, the progress may never proceed due to insufficient power input. 
 
@@ -66,14 +66,15 @@ In ICSs, \textit{forward progress} denotes the effective application progress, e
 % What we did? What we did differently from them?
 % We provide a modelling approach to estimate forward progress of an ICS in real-world deployment, considering energy source conditions as well as the forward progressing behaviours intermittent computing. This model can be used to explore the effect of energy harvester and energy storage sizing on forward progress. Further, we provide an approach for sizing energy storage in intermittent systems. 
 
-With the goal of minimizing device dimensions and interruption periods, most ICS approaches adopt a minimum amount of energy storage~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. This is typically just sufficient for the most energy-expensive atomic operation. 
+With the goal of minimizing device dimensions and interruption periods, most ICS approaches adopt a minimum amount of energy storage~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+This is typically just sufficient for the most energy-expensive atomic operation. 
 % \cite{6960060} // hibernus
 % \cite{7403941} // graceful
 % \cite{10.1145/3281300} // momentum
 % \cite{7442814} // hibernus++
 % With the goal of minimizing device dimensions and interruption periods, previous designs in intermittent computing typically adopt only a minimum amount of energy storage, e.g. a decoupling capacitor, which is just enough for the most energy-expensive atomic operation\footnote{Atomic operations in intermittent computing denote operations that should be completed in one continuous period. If an atomic operation is interrupted by a power interruption, it should be re-executed rather than resumed. One example of atomic operations is saving and restoring volatile state. }~\cite{6960060, 7442814, 7403941, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
-However, our assertion is that this can be \textit{inherently inefficient in terms of time and energy}. We show that a system with minimum energy storage frequently goes through a cycle of: wake up; restore state; execute program; save state; halt.
-
+However, our assertion is that this can be \textit{inherently inefficient in terms of time and energy}. 
+We show that a system with minimum energy storage frequently goes through a cycle of: wake up, restore state, execute program, save state, and halt.
 We propose that provisioning \textit{slightly more} energy storage can prolong the operating cycles, reduce the frequency of interruptions, and hence improve forward progress. We show with modelled and experimental results that (\figurename{~\ref{fig:imprvalid1}}) using efficiently-sized energy storage capacitance (\SI{43}{\micro\farad}) achieves up to a 55\% improvement in forward progress compared against using the theoretical minimum amount of capacitance (\SI{6.2}{\micro\farad}). This improvement is more significant with a weaker supply. 
 %our modelled and experimental results show that 
 %and \SI{30.4}{\percent}  and on-board respectively
