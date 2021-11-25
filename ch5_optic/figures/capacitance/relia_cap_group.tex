@@ -1,10 +1,207 @@
 
+% \begin{figure*}[t]
+%     \centering
+%     \begin{tikzpicture}
+%     \begin{groupplot}[
+%         group style={group size=1 by 2,vertical sep=2pt},
+%         width=0.5\columnwidth,
+%         xmin=0,xmax=80,
+%         every tick label/.append style={font=\small},
+%         minor x tick num=0,
+%         ]
+
+%         % (a) upper
+%         \nextgroupplot[
+%             const plot,
+%             height=4cm,
+%             ymin=-0.2,ymax=1.2,
+%             ytick distance=1,
+%             xticklabel=\empty,
+%             yticklabels={,Fail,Done},
+%             legend style={
+%                 anchor=west,
+%                 at={(0.02,0.5)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \legend{\nn{},\debs{}}
+
+%         % (b) upper
+%         \nextgroupplot[
+%             const plot,
+%             height=4cm,
+%             ymin=-0.2,ymax=1.2,
+%             ytick distance=1,
+%             xticklabel=\empty,
+%             yticklabels={,Fail,Done},
+%             legend style={
+%                 anchor=west,
+%                 at={(0,0.5)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         % \legend{\nn{},\debs{}}
+
+%         % (a) lower
+%         \nextgroupplot[
+%             height=6cm,
+%             title={(a) DMA},
+%             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
+%             ymin=1.7,ymax=2.5,
+%             xlabel={Capacitance Reduction},
+%             ylabel={Start \& End Voltage (V)},
+%             ytick distance=0.2,
+%             xlabel style={yshift=3pt,},
+%             xticklabel={\pgfmathprintnumber\tick\%},
+%             legend style={
+%                 anchor=north west,
+%                 at={(0.02,0.98)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=*]
+%             table [x=cap_reduction,y=opta_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square*]
+%             table [x=cap_reduction,y=debs_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
+%         \draw [thick,dashed] (axis cs:0,2) -- (axis cs:80,2);
+%         \node [anchor=north east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
+%         \draw [thick,dashed] (axis cs:0,1.8) -- (axis cs:80,1.8);
+%         \node [anchor=north east,font=\small] at (axis cs:80,1.8) {Fail};
+%         \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
+
+%         % (b) lower
+%         \nextgroupplot[
+%             height=6cm,
+%             title={(b) AES},
+%             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
+%             ymin=1.55,ymax=3.7,
+%             xlabel={Capacitance Reduction},
+%             ytick distance=0.5,
+%             extra y ticks={1.8},
+%             xlabel style={yshift=3pt,},
+%             xticklabel={\pgfmathprintnumber\tick\%},
+%             legend style={
+%                 anchor=north west,
+%                 at={(0,1)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=*]
+%             table [x=cap_reduction,y=opta_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square*]
+%             table [x=cap_reduction,y=debs_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+%         \draw [thick,dashed] (axis cs:0,2) -- (axis cs:80,2);
+%         \node [anchor=south east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
+%         \draw [thick,dashed] (axis cs:0,1.8) -- (axis cs:80,1.8);
+%         \node [anchor=north east,font=\small] at (axis cs:80,1.8) {Fail};
+%         % \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
+
+%         % (c) upper
+%         \nextgroupplot[
+%             const plot,
+%             height=4cm,
+%             ymin=-0.2,ymax=1.2,
+%             ytick distance=1,
+%             xticklabel=\empty,
+%             yticklabels={,Fail,Done},
+%             legend style={
+%                 anchor=west,
+%                 at={(0,0.5)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         % \legend{\nn{},\debs{}}
+        
+%         % (c) lower
+%         \nextgroupplot[
+%             height=6cm,
+%             title={(c) RF},
+%             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
+%             ymin=1.72,ymax=3.3,
+%             xlabel={Capacitance Reduction},
+%             ylabel={Start \& End Voltage (V)},
+%             ytick distance=0.4,
+%             extra y ticks={1.9},
+%             xlabel style={yshift=3pt,},
+%             xticklabel={\pgfmathprintnumber\tick\%},
+%             legend style={
+%                 anchor=north west,
+%                 at={(0,1)},
+%                 font=\footnotesize,
+%                 legend columns=2,
+%             },
+%             ]
+%         \addplot 
+%             plot [Set1-B,mark=*]
+%             table [x=cap_reduction,y=opta_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         \addplot 
+%             plot [Set1-B,mark=o]
+%             table [x=cap_reduction,y=opta_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square*]
+%             table [x=cap_reduction,y=debs_v_start,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         \addplot 
+%             plot [Set1-A,mark=square]
+%             table [x=cap_reduction,y=debs_v_end,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+%         \draw [thick,dashed] (axis cs:0,2) -- (axis cs:80,2);
+%         \node [anchor=south east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
+%         \draw [thick,dashed] (axis cs:0,1.9) -- (axis cs:80,1.9);
+%         \node [anchor=north east,font=\small] at (axis cs:80,1.9) {Fail};
+%         % \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
+
+%     \end{groupplot}
+%     \end{tikzpicture}
+%     \caption{Capacitance test. }
+%     \label{fig:capacitance_test}
+% \end{figure*}
+
+
+
 \begin{figure*}[t]
     \centering
     \begin{tikzpicture}
     \begin{groupplot}[
-        group style={group size=3 by 2,vertical sep=2pt},
-        width=0.72\columnwidth,
+        group style={group size=1 by 2,vertical sep=2pt},
+        width=0.7\columnwidth,
         xmin=0,xmax=80,
         every tick label/.append style={font=\small},
         minor x tick num=0,
@@ -13,7 +210,7 @@
         % (a) upper
         \nextgroupplot[
             const plot,
-            height=3cm,
+            height=4cm,
             ymin=-0.2,ymax=1.2,
             ytick distance=1,
             xticklabel=\empty,
@@ -33,56 +230,9 @@
             table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_dma.csv};
         \legend{\nn{},\debs{}}
 
-        % (b) upper
-        \nextgroupplot[
-            const plot,
-            height=3cm,
-            ymin=-0.2,ymax=1.2,
-            ytick distance=1,
-            xticklabel=\empty,
-            yticklabels={,Fail,Done},
-            legend style={
-                anchor=west,
-                at={(0,0.5)},
-                font=\footnotesize,
-                legend columns=2,
-            },
-            ]
-        \addplot 
-            plot [Set1-B,mark=o]
-            table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
-        \addplot 
-            plot [Set1-A,mark=square]
-            table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
-        % \legend{\nn{},\debs{}}
-
-        % (c) upper
-        \nextgroupplot[
-            const plot,
-            height=3cm,
-            ymin=-0.2,ymax=1.2,
-            ytick distance=1,
-            xticklabel=\empty,
-            yticklabels={,Fail,Done},
-            legend style={
-                anchor=west,
-                at={(0,0.5)},
-                font=\footnotesize,
-                legend columns=2,
-            },
-            ]
-        \addplot 
-            plot [Set1-B,mark=o]
-            table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
-        \addplot 
-            plot [Set1-A,mark=square]
-            table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
-        % \legend{\nn{},\debs{}}
-
-
         % (a) lower
         \nextgroupplot[
-            height=5cm,
+            height=6cm,
             title={(a) DMA},
             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
             ymin=1.7,ymax=2.5,
@@ -116,9 +266,50 @@
         \node [anchor=north east,font=\small] at (axis cs:80,1.8) {Fail};
         \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
 
+    \end{groupplot}
+\end{tikzpicture}
+\caption{Capacitance test. }
+\label{fig:capacitance_test_a}
+\end{figure*}
+
+
+\begin{figure*}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{groupplot}[
+        group style={group size=1 by 2,vertical sep=2pt},
+        width=0.7\columnwidth,
+        xmin=0,xmax=80,
+        every tick label/.append style={font=\small},
+        minor x tick num=0,
+        ]
+
+        % (b) upper
+        \nextgroupplot[
+            const plot,
+            height=4cm,
+            ymin=-0.2,ymax=1.2,
+            ytick distance=1,
+            xticklabel=\empty,
+            yticklabels={,Fail,Done},
+            legend style={
+                anchor=west,
+                at={(0,0.5)},
+                font=\footnotesize,
+                legend columns=2,
+            },
+            ]
+        \addplot 
+            plot [Set1-B,mark=o]
+            table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+        \addplot 
+            plot [Set1-A,mark=square]
+            table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_aes.csv};
+        \legend{\nn{},\debs{}}
+
         % (b) lower
         \nextgroupplot[
-            height=5cm,
+            height=6cm,
             title={(b) AES},
             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
             ymin=1.55,ymax=3.7,
@@ -150,15 +341,58 @@
         \node [anchor=south east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
         \draw [thick,dashed] (axis cs:0,1.8) -- (axis cs:80,1.8);
         \node [anchor=north east,font=\small] at (axis cs:80,1.8) {Fail};
-        % \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
+        \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
 
+    \end{groupplot}
+\end{tikzpicture}
+\caption{Capacitance test. }
+\label{fig:capacitance_test_b}
+\end{figure*}
+
+
+
+\begin{figure*}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{groupplot}[
+        group style={group size=1 by 2,vertical sep=2pt},
+        width=0.7\columnwidth,
+        xmin=0,xmax=80,
+        every tick label/.append style={font=\small},
+        minor x tick num=0,
+        ]
+
+        % (c) upper
+        \nextgroupplot[
+            const plot,
+            height=4cm,
+            ymin=-0.2,ymax=1.2,
+            ytick distance=1,
+            xticklabel=\empty,
+            yticklabels={,Fail,Done},
+            legend style={
+                anchor=west,
+                at={(0,0.5)},
+                font=\footnotesize,
+                legend columns=2,
+            },
+            ]
+        \addplot 
+            plot [Set1-B,mark=o]
+            table [x=cap_reduction,y=opta_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+        \addplot 
+            plot [Set1-A,mark=square]
+            table [x=cap_reduction,y=debs_perf,col sep=comma] {ch5_optic/figures/capacitance/cap_test_radio.csv};
+        % \legend{\nn{},\debs{}}
+        
         % (c) lower
         \nextgroupplot[
-            height=5cm,
+            height=6cm,
             title={(c) RF},
             title style={at={(0.5,0)},anchor=north,yshift=-30pt,},
             ymin=1.72,ymax=3.3,
             xlabel={Capacitance Reduction},
+            ylabel={Start \& End Voltage (V)},
             ytick distance=0.4,
             extra y ticks={1.9},
             xlabel style={yshift=3pt,},
@@ -187,9 +421,8 @@
         \draw [thick,dashed] (axis cs:0,1.9) -- (axis cs:80,1.9);
         \node [anchor=north east,font=\small] at (axis cs:80,1.9) {Fail};
         % \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
-
     \end{groupplot}
-    \end{tikzpicture}
-    \caption{Capacitance test. }
-    \label{fig:capacitance_test}
+\end{tikzpicture}
+\caption{Capacitance test. }
+\label{fig:capacitance_test_c}
 \end{figure*}
