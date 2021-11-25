@@ -1,0 +1,37 @@
+\begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=\columnwidth,
+        height=5cm,
+        ymin=0,ymax=65,
+        xmin=2,xmax=12,
+        xlabel={System Capacitance (\SI{}{\micro\farad})},
+        ylabel={Completion rate (Hz)},
+        % legend style={at={(0.05,0.95)},
+            % anchor=north west,legend columns=1},
+        % scaled y ticks=manual:{}{%
+        %     \pgfmathparse{#1/13.8}%
+        % },
+        legend style={at={(0.5,1.05)},
+            anchor=south,legend columns=2,
+            /tikz/every even column/.append style={column sep=0.1cm}},
+        ]
+        \addplot
+            plot [Set1-B,mark=*]
+            table [x=capacitance, y=opta_perf,col sep=comma] {figures/capacitance/relia_cap_dma.csv};
+        \addplot
+            plot [Set1-B,mark=square*]
+            table [x=capacitance, y=opta_perf,col sep=comma] {figures/capacitance/relia_cap_aes.csv};
+        \addplot
+            plot [Set1-A,mark=*,dashed]
+            table [x=capacitance, y=debs_perf,col sep=comma] {figures/capacitance/relia_cap_dma.csv};
+        \addplot
+            plot [Set1-A,mark=square*,dashed]
+            table [x=capacitance, y=debs_perf,col sep=comma] {figures/capacitance/relia_cap_aes.csv};
+        \legend{REPA DMA, REPA AES, DEBS DMA, DEBS AES}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Completion rate on variable capacitance.}
+    \label{fig:reliability_capacitance_performance}
+\end{figure}

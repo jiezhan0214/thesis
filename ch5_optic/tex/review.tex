@@ -1,0 +1,52 @@
+\section{Related Work}
+
+% Outline
+% Review the profiling methods/concepts in prior work.
+% Peripheral papers
+%   1. How they manage to do peripheral operations?
+%   2. Are they supposed to fail in our scenarios?
+%       - DEBS fails (if no margin) or inefficient (if large margin)
+%       - Samoyed is not likely to fail because of large energy storage and subdivision, but inefficient charging because of large energy budget
+%       - Samoyed and RESTOP have overheads: saving state, and restoring state if interrupted. RESTOP: redo-logging, Samoyed: undo-logging. 
+%   Threshold setting: low - risky, efficient vs high - safe, inefficient
+
+
+% \subsection{Intermittent Peripheral Operations}
+
+% Intro
+% While prior work in intermittent computing have been able to efficiently maintain forward progress on computational workloads, intermittent peripheral operations are not widely studied. 
+% This is typically achieved by carefully saving volatile computing state (e.g. data in CPU registers, SRAM) into NVM before a power failure, and restoring it on power recovery. 
+% Some of the published approaches intrinsically guarantee the atomicity and termination of peripheral operations, while others focus on computational workloads without support for peripherals. 
+Several existing designs have been able to handle atomic peripheral operations in intermittent systems, where energy profiling of workloads is an inherent part of their methodologies.
+
+% DEBS
+DEBS~\cite{gomez2016dynamic} experimentally profiles the energy consumption of each task at design time, and designates a threshold to each task individually.
+After completing an operation, DEBS enters a low-power mode (LPM) and waits for energy to be replenished to the next threshold. 
+
+% RESTOP (similar to re-execution)
+RESTOP~\cite{rodriguez2018restop} provides programmer-configurable rules that track the instructions issued to peripherals through serial interfaces in a history table.
+On power recovery, RESTOP re-issues instructions saved in the history table and then resumes the interrupted operation. 
+At design time, RESTOP needs to profile the worst-case energy consumption for restoring peripheral state to identify the minimum (most-efficient) restore threshold. 
+
+% Samoyed, Alpaca
+Samoyed~\cite{maeng2019supporting} utilizes a custom design-time \textit{energy profiler}~\cite{colin2016energy-interference-free} to find out an energy storage size that suffices to run an adequate number (hundreds, as suggested) of peripheral operations in one active cycle. 
+At runtime, Samoyed starts execution when energy is refilled to a certain threshold, and keeps executing until energy is depleted. 
+% Samoyed is a proactive approach where the program knows the boundaries of atomic operations, such that it only outputs valid data on the completion of an atomic operation and disables checkpoints during execution. 
+Samoyed differs from most static intermittent computing approaches, e.g. Alpaca~\cite{maeng2017alpaca}, mainly on handling computational workloads where it reactively checkpoints when the buffered energy is below a threshold, and supports user-customized subdivision of peripheral operations when the operation cannot complete in one active cycle. 
+% Samoyed is unlikely to fail (non-termination) because it assumes a very large capacitor and supports, but it can be inefficient due to the poor charging efficiency (or you need an EMU, like bq25504, which also consumes energy).
+
+% Review Adaptive?
+% Online profiling but inefficient for long, low-power operations
+
+% Review other papers about or support peripherals
+%   Karma? Sytare?
+
+
+As reviewed above, prior work profiles the energy consumption of atomic peripheral operations at design time to determine a voltage threshold or a capacitor size that avoids non-termination. 
+However, this does not actually guarantee the completion of every atomic operation because energy consumption can change with any runtime conditions different to the profiling setup (demonstrated in Section~\ref{subsec:dynamic_energy_consumption}). 
+% Hence, previous designs typically achieve atomicity by carefully managing the system state, such that the atomic operation does not output valid data until completion, and, if a power failure happens during the operation, the system state rolls back to the start of the operation upon power recovery (rather than checkpoint and resume). 
+Hence, previous designs should usually leave an inefficiently large margin when allocating energy budgets, such that dynamic variation can be mostly tolerated. 
+If this large margin is not given, they can cause either non-termination or high overheads of tracking and restoring state, where RESTOP re-issues peripheral instructions and Samoyed undo-logs the NVM data. 
+
+% Comments: Justify Samoyed and DEBS as comparisons in this paper? 
+

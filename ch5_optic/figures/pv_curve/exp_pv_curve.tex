@@ -1,0 +1,27 @@
+\begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+            width=1.0\columnwidth,
+            height=5cm,
+            ymin=0,
+            ymax=75,
+            xmin=0,
+            xmax=5.5,
+            xlabel=Voltage (V),
+            ylabel=Current (\SI{}{\micro\ampere}),
+            legend style={at={(0.05,0.05)},
+            anchor=south west,legend columns=1},
+        ]
+        \addplot
+            plot [black,only marks]
+            table [x=v, y=i,col sep=comma] {ch5_optic/figures/pv_curve/exp_pv_curve.csv};
+        \addplot
+            plot [gray,ultra thick,domain=0:4,on layer=foreground]
+            {-2.64 * x + 68.76};
+        \legend{Measurements, Linear Fit for \SIrange{0}{4}{\volt}}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{An I-V curve of an amorphous PV panel (Sanyo AM-1417CA) under an LED condition.}
+    \label{fig:exp_pv_iv}
+\end{figure}

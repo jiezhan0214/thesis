@@ -1,0 +1,38 @@
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=1.0\columnwidth, height=5cm,
+        ybar,
+        ymin=0,
+        ymax=1.1,
+        enlarge x limits=0.5,
+        legend style={at={(0.5,1.05)},
+            anchor=south,legend columns=-1,
+            /tikz/every even column/.append style={column sep=0.2cm}},
+        legend image code/.code={
+            \draw [#1] (0cm,-0.1cm) rectangle (0.2cm,0.25cm);},
+        ylabel={Relative Completion Rate},
+        symbolic x coords={AES,RF},
+        xtick=data,
+        tick align=inside,
+        ]
+    \pgfplotstableread[col sep=comma]{ch5_optic/figures/datasize/datasize.csv}{\mytable};
+    % Samoyed
+    \addplot
+        plot [black,fill=Set1-A,postaction={pattern=north east lines}]
+        table [x index=0,y expr=\thisrowno{3} / \thisrowno{1}] {\mytable};
+    % DEBS
+    \addplot
+        plot [black,fill=Set1-B,postaction={pattern=dots}]
+        table [x index=0,y expr=\thisrowno{2} / \thisrowno{1}] {\mytable};
+    % OPTA
+    \addplot
+        plot [black,fill=Set1-C,postaction={pattern=north west lines}]
+        table [x index=0,y expr=\thisrowno{1} / \thisrowno{1}] {\mytable};
+    \legend{Samoyed, \debs{}, \nn{}}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Data size test.}
+    \label{fig:datasize}
+\end{figure} 

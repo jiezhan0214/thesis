@@ -31,10 +31,21 @@
 % \usepackage[caption=false,font=footnotesize]{subfig}
 \usepackage{pgfgantt}
 \usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
 \usepgfplotslibrary{colorbrewer}
 \pgfplotsset{cycle list/Set1}
 \usetikzlibrary{patterns}
 \pgfplotsset{compat=1.16}
+\usepackage{pgfplotstable}
+\pgfplotsset{
+    layers/my layer set/.define layer set={
+        background,
+        main,
+        foreground
+    }{},
+    % activate the newly created layer set
+    set layers=my layer set,
+}
 \usepackage{todonotes}
 
 %% -------------------- THESIS/DOC INFORMATION --------------------
@@ -109,7 +120,7 @@
 \include{ch4_sizingapproach/SizingApproach}
 
 % Chapter 5
-\include{ch5_repta/REPTA}
+\include{ch5_optic/OPTIC}
 
 % Chapter 6
 \include{ch6_conclusion/Conclusions}

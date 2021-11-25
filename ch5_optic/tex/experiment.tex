@@ -1,0 +1,121 @@
+\newpage
+\section{Experimental Evaluation} \label{sec:experiment}
+
+\subsection{Benchmark and Comparisons}
+
+Benchmark: 
+
+\begin{itemize}
+    \item AES encryption. Default 128-bit 4KB.
+    \item RF transmission. Default 32B payload, 2Mbps.
+    \item DMA
+    \item Sensor? (possible)
+\end{itemize}
+
+Comparisons:
+
+DEBS, Samoyed (later), Plain C (for evaluating overheads)
+
+We may temporarily overlook Samoyed as its implementation is a bit more complex and its threshold setting is unclear. 
+Samoyed scales down the atomic task if it fails to complete (but never scale back). 
+It uses an "energy profiler" in previous work to test the whether the smallest scale of all peripheral tasks and randomized inputs can successfully complete. 
+They suggested it is appropriate to set an energy capacity that can run the smallest scale of an operation for hundreds of times in one active cycle. 
+Hence, it does not look for a threshold for a task with a specific configuration, but instead its aim is to minimize the chance of non-termination in practice by giving a high margin.
+
+\subsection{Profiling Accuracy}
+
+Question: How does our profiling approach perform in terms of accuracy?
+
+Accuracy compared to manual measurement.
+
+Figure shows:
+\begin{itemize}
+    \item Profiling results (average of 10)
+    \item Each profiling reading (range)
+    \item Dynamic threshold (Perhaps add horizontal lines as configurable thresholds in figures)
+    \item Manually profiled voltage drop (average of 5 readings)
+    \item Comparison against
+\end{itemize}
+
+\input{ch5_optic/figures/profiling_accuracy/profiling_accuracy.tex}
+
+\subsection{Reliability with Dynamic Energy Consumption}
+
+Question: Can it still make forward progress correctly with changes (as listed below) while other SoA approaches can't? 
+
+
+New categories:
+
+\begin{itemize}
+    \item Changing once: new operations, device/components variability (including capacitor tolerance).
+    \item Changing slowly: capacitor ageing, device ageing, temperature, long-term configuration.
+    \item Changing frequently: Data size, configurations. 
+\end{itemize}
+
+
+Cases of changes and experiments:
+
+\subsubsection{New devices / operations (once)}
+
+- Show the voltage trace that illustrates how it profiles and adapts on new devices or new operations. 
+
+\subsubsection{Variability in capacitance due to ageing / tolerance (slowly changing)}
+
+- Profile the tasks for DEBS with the target end voltage at 1.8V (need explanation on this) and 30uF capacitance. 
+
+- Build a capacitor bank with a better granularity. The potential testing range of capacitance should be 1.5-11.5uF, with 1uF capacitors per step. 
+
+- Decrease the capacitance step by step. Record the capacitance where DEBS fails, the performance, the adaptive thresholds, and possibly a voltage trace that shows what happens. 
+
+% \input{figures/capacitance/relia_cap_perf.tex}
+% \input{figures/capacitance/relia_cap_thresh.tex}
+
+\input{ch5_optic/figures/capacitance/relia_cap_group.tex}
+
+Note that the threshold settings in this experiment are different from the profiling results due to different system capacitance, operating voltage, allowing some switching overheads, and the comparator precision and resolution. 
+
+\subsubsection{Variability in peripheral configurations (single threshold for a rarely/slightly-changing configuration, multiple thresholds for frequently-changing configurations)}
+
+- Profile the tasks for DEBS with the target end voltage at 1.8V and a "default" configuration. 
+    
+- Presumably DEBS can only complete the tasks with configurations that consumes the same or less energy as it was profiled, while OPTA adapts the threshold. 
+
+\subsubsection{Variability in the amount of data to process (fast changing, but perhaps could be an unsuitable test case for reliability as it should violate the API requirement to make it fail)}
+    
+- This would be similar to the capacitance test but with a less granularity needed.
+
+\input{ch5_optic/figures/pv_curve/exp_pv_curve.tex}
+\input{ch5_optic/figures/datasize/datasize.tex}
+
+\subsection{Efficiency}
+
+Question: Does it run faster than other SoA approaches (make more progress under the same energy condition) under conditions that all approaches can make forward progress?
+
+Comparisons: DEBS, Samoyed.
+
+Test conditions:
+    
+- (1) A constant data size (2) Randomized data sizes (DEBS threshold configured for the largest data size)
+
+- A few levels of input current
+
+\subsection{Overheads}
+
+- Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
+
+Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 
+
+The energy/charge consumption can also be calculated. 
+
+- Memory overhead. Check the section sizes of the compiled code. Compared it to a PlainC version and a Hibernus-like IC version.  
+
+\subsection{Correctness of computational results (test its intermittent computing functionality, might not be important)}
+
+Question: does it produce correct results from atomic functions across power failures?
+
+Compare the output of our approach with intermittent supply vs Plain C solution with continuous supply. Use a computational workload probably, as an atomic function should be guaranteed to finish. 
+
+
+\subsection{Case Study}
+
+Apply the proposed approach on an application that includes multiple atomic operations and the device runs with dynamic energy consumption due to operating conditions. 

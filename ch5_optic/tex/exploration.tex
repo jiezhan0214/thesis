@@ -1,0 +1,184 @@
+\section{Design Exploration} 
+\label{sec:design_exploration}
+
+In this section, we study the variability in intermittent systems that can violate a predefined fixed threshold. 
+We then investigate how this variability can make existing approaches failed or inefficient, and explore the potential of threshold adaptation. 
+
+\subsection{Variability in Intermittent Systems} 
+\label{subsec:dynamic_energy_consumption}
+ 
+Design-time profiling of workload consumption in the prior work can be violated by the variability of intermittent systems.
+To study and demonstrate the variability, we chose the AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
+The example AES function encrypts data in the Cypher Block Chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
+In the following experiments, we measured $\Delta \symb{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy}, which directly determines the minimum voltage threshold that safely guarantee the completion of an atomic operation. 
+We used Device 1 in Table~\ref{tab:device}, which has \SI{35}{\micro\farad} system capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
+We looked at variable data amounts, peripheral configurations, devices variability, and capacitor degradation and tolerance, all of which can change $\Delta \symb{V}{task}$. 
+
+% 22 uF extra capacitance, or 33 uF extra capacitance
+% the MCU board has a 10 + 1.5 uF capacitance
+
+
+\subsubsection{Variable Data Sizes}
+
+A peripheral function can accept a runtime variable amount of data, such as a variable data size to encrypt or different lengths of packets for a radio to transmit. 
+An example of this is plotted in Figure~\ref{fig:variable_datasize}, where the size of the square dots represent a \SI{5}{\milli\volt} precision error of the scope. 
+We observed that $\Delta \symb{V}{task}$ has a linear relationship with the data size, with an offset energy consumption that accounts for the initialization. 
+The dynamic range of $\Delta \symb{V}{task}$ is \SIrange{17}{194}{\milli\volt}.
+This typically comes from linearly scaled run time. 
+
+\input{ch5_optic/figures/variable_data/variable_data.tex}
+
+\subsubsection{Variability in Peripheral Configurations}
+
+A peripheral can run with variable configurations at runtime, and demonstrate variable performance and energy consumption. 
+For example, as shown in Table~\ref{tab:configurations}, an AES accelerator can encrypt data with 128-, 192-, or 256-bit keys. 
+A longer key provides more security, but also takes more time and energy to complete.
+The dynamic range of configuration variability in this case can be a 26\% increase in $\Delta \symb{V}{task}$ and a 33\% increase in run time.
+% Can refer to "A control flow" for the need of runtime configurations
+
+\begin{table}[!t]
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \caption{$\Delta \symb{V}{task}$ Varying with Configurations in AES 4KB Encryption}
+    \label{tab:configurations}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Configuration} & \textbf{$\Delta \symb{V}{task}$} & \textbf{Run Time} \\
+    \hline
+    128-bit key & \SI{194}{\milli\volt} & \SI{6.479}{\milli\second} \\
+    192-bit key & \SI{230}{\milli\volt} & \SI{7.638}{\milli\second} \\
+    256-bit key & \SI{245}{\milli\volt} & \SI{8.606}{\milli\second} \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Device Variability}
+
+Devices have their variation in power consumption, even with the same part number. 
+A threshold profiled on one device can be inadequate on another. 
+We did a test on three developments boards of the same MCU, where it runs 128-bit AES encryption on 4KB data. 
+As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \symb{V}{task}$ is up to 8\% among the three devices, though with almost the same run time (0.5\% variation). 
+% This has been moderated by the larger on-board capacitance on Device 1 -- the actual charge consumption is supposed to be 31\% larger than Device 3.
+It should be noticed that device variability can also present across platforms that can run the same or similar code. 
+
+\begin{table}[!t]
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \caption{$\Delta \symb{V}{task}$ Varying among Devices in AES 128-bit 4KB Encryption}
+    \label{tab:device}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Device No.} & \textbf{$\Delta \symb{V}{task}$} & \textbf{Run Time} \\
+    \hline
+    % 1 & \SI{764}{\micro\ampere}\\
+    % 2 & \SI{773}{\micro\ampere}\\
+    % 3 & \SI{756}{\micro\ampere}\\
+    1 & \SI{194}{\milli\volt} & \SI{6.479}{\milli\second} \\
+    2 & \SI{185}{\milli\volt} & \SI{6.444}{\milli\second} \\
+    3 & \SI{179}{\milli\volt} & \SI{6.462}{\milli\second} \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Capacitor Ageing and Tolerance}
+\label{subsubsec:capacitance_variability}
+
+As a component for buffering energy in intermittent systems, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in most commercial capacitors. 
+Capacitors also age over time. 
+It is shown that capacitance can decrease by 7.2\% in 3000 hours under a \SI{25}{\celsius} ambient temperature in experiments~\cite{kulkarni2010experimental}, and by 50\% within 10 years under \SI{40}{\celsius} as manufacturers stated~\cite{vishaycapacitor}.
+A degraded capacitor does not change the load consumption, but can increase $\Delta \symb{V}{task}$, and hence makes the pre-defined voltage threshold unsafe or inefficient. 
+
+\subsubsection{Other (tentative)}
+
+Clock frequency? Voltage? Temperature? Silicon ageing?
+% 1MHz: 757uA (This should be checked later as it takes the same time to complete).
+
+
+The above study present that the variability of intermittent systems can make a predefined $\Delta \symb{V}{task}$ unsafe. 
+Profiling the $\Delta \symb{V}{task}$ in each scenario at design time is unrealistic in practice, and still cannot encompass unexpected situations, necessitating a runtime energy profiling approach. 
+Next, we explore how existing approaches can fail or run inefficiently under such variability. 
+
+
+
+% Simulation
+\subsection{Performance Improvement with Adaptive Thresholds}
+
+Having presented the variability in intermittent systems, we explore in modelling and simulation the potential of adaptive thresholds on coping with such variability, as opposed to the fixed-threshold approaches.
+
+% i.e. the system always set the lowest possible threshold for the next operation.
+
+\subsubsection{Power Analysis}
+
+As suggested in prior work, operating at a lower voltage can improve system energy efficiency due to a higher charging efficiency and a lower power consumption.
+
+We analyzed the charging characteristic of a glass-type PV panel in an indoor office environment. 
+We used the PV panel to charge a \SI{10}{\micro\farad} capacitor from \SI{0}{\volt} to around \SI{5.5}{\volt} where the capacitor cannot be charged up anymore. 
+The time trace of capacitor voltage is differentiated to gain an I-V curve that represents the energy harvester (Figure~\ref{fig:pv_iv}). 
+The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
+We did a linear regression for the data in \SIrange{0}{4}{\volt}, which matches with the operating voltage range of the MCU, such that the power supply in simulation has a linearly-scaling supply current with the operating voltage.
+
+\input{ch5_optic/figures/pv_curve/pv_curve.tex}
+
+In our MSP430FR5994 platform, we did not find a significant change in current consumption with supply voltage (up to 2\%). 
+This is majorly due to an on-chip low-dropout output (LDO) that droops down the external supply voltage to a constant internal supply voltage, and hence maintaining a relatively stable current draw as the external supply voltage changes. 
+Hence, we omitted the voltage effect on current consumption in this simulation. 
+
+We took the data of AES accelerator encryption in Section~\ref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 
+The current draw remains constant during one operation, but vary with dynamic data sizes and configurations due to the variable charge consumption and run time.
+
+\subsubsection{Runtime Control Models}
+
+We modelled an ideal adaptive threshold scheme against three other fixed-threshold schemes.
+We focussed on the effect of control logic and threshold settings, and omitted the state managing overhead as it can be dependent on the actual implementation. 
+We modelled two cases of DEBS, named as DEBS Low and DEBS High.
+DEBS Low represents the original idea of DEBS, where it sets the minimum threshold for a fixed operation.  
+We assumed its threshold was profiled with 1KB data and a 128-bit key length without considering any variability. 
+We also explored DEBS High, as a case where it foresees the possible dynamic increase in workload consumption and capacitance reduction, and sets the threshold to be the highest operating voltage.
+Samoyed differs from DEBS and the adaptive scheme in its control, where, when completing an operation, it keeps executing until it dies rather than sleeps and waits for the next threshold.
+Samoyed also suggests an abundant energy budget, so its threshold is also set to the highest operating voltage.
+In the ideal adaptive scheme, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold for that. 
+
+\subsubsection{Simulation Setup}
+
+The system has \SI{10}{\micro\farad} system capacitance without charge at the start. 
+The shutdown threshold is \SI{1.8}{\volt}, against which DEBS Low and the adaptive scheme set their threshold, with a \SI{10}{\milli\volt} small margin. 
+The system consumes \SI{10}{\micro\ampere} when it is inactive.
+The workload has a random data amount to process from 16B to 4080B (1 to 255 blocks of data, 16B per block), and also a random 128-, 192-, or 256-bit key length, both uniformly distributed.
+We tested three capacitance conditions with 0\%, 30\%, and 60\% reduction, in line with the maximum possible reduction shown in Section~\ref{subsubsec:capacitance_variability}. 
+We ran 10 rounds of simulations for each capacitance condition, and each round simulates for \SI{2}{\second}. 
+In each round, all the schemes take the same random series of data sizes and configurations.
+
+\subsubsection{Results}
+
+% Separate figures
+% \input{figures/exploration_results/failures.tex}
+% \input{figures/exploration_results/completions.tex}
+% Figure~\ref{fig:failure}
+% Figure~\ref{fig:completion}
+
+% Grouped figure
+\input{ch5_optic/figures/exploration_results/grouped.tex}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{ch5_optic/figures/voltage_traces.pdf}
+    \caption{An instance of supply voltage traces in simulation (to be updated with a consistent style). }
+    \label{fig:simulation_voltage}
+\end{figure}
+
+% DEBS High is probably not the most efficient DEBS. This is a bit unfair. Hope they can't find it.
+
+
+Figure~\ref{fig:simulation} shows the mean, maximum, and minimum numbers of completed and failed operations in the 10-round tests for each capacitance condition. 
+DEBS Low cannot terminate when it ever encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
+DEBS Low can only occasionally get progress on lightweight operations before non-termination. 
+Samoyed also suffers performance loss from waiting for a high energy threshold, and failing an operation at the end of an active cycle. 
+DEBS High runs relatively efficiently because it does not usually fail due to an abundant energy budget and a sleep-after-completion control. 
+It fails when the capacitance decreases extremely (60\% reduction), where it also falls into non-termination like DEBS Low.  
+The adaptive scheme works the most efficiently among these four.
+It runs at minimized operating voltage that improves system energy efficiency, and also guarantees the completion of every task by setting a minimized but safe threshold.
+The adaptive scheme achieves more completed operations over Samoyed by 33-58\% and DEBS High by 13-23\% on average.
+
+The above exploration presents that using a fixed low threshold can leave the system in non-termination but allocating an abundant energy budget compromises system efficiency. 
+An adaptive threshold can overcome both problems.
+Motivated by the previous examples of variable energy consumption and the benefit of an adaptive threshold, we propose \nn{}, a new methodology for profiling energy consumption of tasks at runtime and adapting energy budgets to variable energy consumption of tasks. 

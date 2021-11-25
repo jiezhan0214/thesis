@@ -1,0 +1,69 @@
+\section{Old Stuff}
+
+\subsection{Dynamic energy/charge cost}
+
+\begin{itemize}
+    \item Current consumption can be device-dependent.
+    \item Capacitors degrade over time. (slow)
+    \item Dynamic data size (is this allowed for atomic operations? is this necessary?).
+    \item Peripheral configurations.
+\end{itemize}
+
+These reasons lead to problems of a fixed threshold profiled at design time not being able to guarantee atomicity.
+
+DEBS profiles each atomic operation and set a threshold for each one in order to complete the task in each burst.
+Samoyed profiles the number of the smallest atomic sub-operation that can be done in one energy cycle, so as to find a capacitor size that can run an adequate number of times of that operation. 
+
+\subsection{Labour cost of profiling at design time}
+
+You need to profile each device at design time a threshold for each atomic operation.
+
+What are 'atomic operations'?
+See Section II.
+
+Do you really need to profile each device every time?
+Need examples and experiments. In my impression this could change by around 10\% for AES and radio modules. 
+
+How much is this 'labour cost'? How to quantify it? Is it significant?
+Argue that this is infeasible.
+
+\subsection{Dynamic energy budgets improves efficiency}
+
+An adaptive energy budget mechanism allows the MCU to dynamically allocate a threshold based on the conditions (e.g. data size, temperature) when an atomic function starts. 
+
+What is 'efficiency'? Metric?
+
+Why does it improve in principles? How much is the cost for such an approach? (This depends on implementation and will need experimental validation later)
+
+Samoyed executes with a fixed energy burst which is the maximum that a device can provide. 
+
+
+
+\subsection{Atomic operations and some temporary references}
+
+"In computer programming, an operation done by a computer is considered atomic if it is guaranteed to be isolated from other operations that may be happening at the same time. Put another way, atomic operations are indivisible." 
+[\url{https://spin.atomicobject.com/2016/01/06/defining-atomic-object/}]
+Here, it stresses its "indivisibility" feature compared to other operations, such that it won't be interrupted/pre-empted by other operations that use the same resources (e.g. memory). 
+This is more like in a concurrent computing context. In intermittent computing context, this interruption/pre-emption refers to the power interruption, where the system will backup essential data and wait for power recovery. 
+
+"In our model, a sequence of actions is atomic if code outside the sequence — i.e., code executing after a reboot — cannot observe its effects until all operations in the sequence complete."~\cite{lucia2015simpler}
+Here, it emphasizes "data consistency", i.e. data is only valid after the completion of the operation. 
+
+Samoyed~\cite{maeng2019supporting} defines a peripheral function as an atomic function, but it can also be decomposed (run with a smaller data size for multiple times) if it requires more energy than a device can provide. 
+"An atomic function contains code that should execute without checkpoints, permitting safe peripheral accesses."
+"This paper focuses on blocking, request-and-response style peripherals: the MCU configures and activates a peripheral, later awaiting its response while halted, asleep, or spin-waiting. Arbitrary parallel execution and interrupt-driven concurrency are out of scope."
+
+To summarise, "either all done, or nothing done"
+\begin{enumerate}
+    \item A set of operations that should be done without interruption; 
+    \item If not completed, all data should remain unchanged;
+    \item Other operations can't observe updates before it completes, or can only read the version of data before the atomic operation starts;
+\end{enumerate}
+
+In our context, we don't consider multi-threading and parallel computing. We are preventing atomic functions from being interrupted by power failures and checkpoints, or, if interrupted, it should restart, rather than checkpoint and resume, as if nothing happened (nothing updated to valid non-volatile memory). If this atomic function is for peripherals, we considering the CPU to be "halted, asleep, or spin-waiting"~\cite{maeng2019supporting}. A peripheral function is considered as an atomic operation because we can't checkpoint during its operation (see reasons in Samoyed).
+
+Correspondence of Atomicity in Intermittent Computing against that in Database system and Concurrent computing:
+
+With Database system: No valid data can be seen until the completion of an atomic operation.
+
+With Concurrent computing: Atomic operations cannot be interrupted by a power failure, checkpointed, and resumed on recovery.

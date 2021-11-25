@@ -1,0 +1,83 @@
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=1.0\columnwidth, height=5cm,
+        ybar,
+        ymin=0,
+        ymax=60,
+        enlarge x limits=0.3,
+        legend style={at={(1,1.07)},
+            anchor=south east,legend columns=-1,
+            /tikz/every even column/.append style={column sep=0.2cm}},
+        legend image code/.code={
+            \draw [#1] (0cm,-0.1cm) rectangle (0.2cm,0.25cm);},
+        ylabel={No. Completed Operations},
+        xlabel={Reduction of Capacitance},
+        symbolic x coords={0\%,30\%,60\%},
+        xtick=data,
+        ]
+    % DEBS low
+    \addplot
+        plot [black,fill=Set1-A,postaction={pattern=dots},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=debs_l_perf,y error plus=debs_l_perf+, y error minus=debs_l_perf-, col sep=comma] {figures/exploration_results/results.csv};
+    % Samoyed
+    \addplot
+        plot [black,fill=Set1-B,postaction={pattern=north east lines},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=samoyed_perf,y error plus=samoyed_perf+, y error minus=samoyed_perf-, col sep=comma] {figures/exploration_results/results.csv};
+    % DEBS high
+    \addplot
+        plot [black,fill=Set1-C,postaction={pattern=north west lines},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=debs_h_perf,y error plus=debs_h_perf+, y error minus=debs_h_perf-, col sep=comma] {figures/exploration_results/results.csv};
+    % REPA
+    \addplot
+        plot [black,fill=Set1-D,postaction={pattern=grid},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=repa_perf,y error plus=repa_perf+, y error minus=repa_perf-, col sep=comma] {figures/exploration_results/results.csv};
+    \legend{DEBS Low, Samoyed , DEBS High , REPA}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Completions.}
+    \label{fig:completion}
+\end{figure} 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=1.0\columnwidth, height=5cm,
+        ybar,
+        ymin=0,
+        ymax=25,
+        enlarge x limits=0.3,
+        legend style={at={(1,1.07)},
+            anchor=south east,legend columns=-1,
+            /tikz/every even column/.append style={column sep=0.2cm}},
+        legend image code/.code={
+            \draw [#1] (0cm,-0.1cm) rectangle (0.2cm,0.25cm); },
+        ylabel={No. Failed Operations},
+        xlabel={Reduction of Capacitance},
+        symbolic x coords={0\%,30\%,60\%},
+        xtick=data,
+        ]
+    % DEBS low
+    \addplot
+        plot [black,fill=Set1-A,postaction={pattern=dots},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=debs_l_fail,y error plus=debs_l_fail+, y error minus=debs_l_fail-, col sep=comma] {figures/exploration_results/results.csv};
+    % Samoyed
+    \addplot
+        plot [black,fill=Set1-B,postaction={pattern=north east lines},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=samoyed_fail,y error plus=samoyed_fail+, y error minus=samoyed_fail-, col sep=comma] {figures/exploration_results/results.csv};
+    % DEBS high
+    \addplot
+        plot [black,fill=Set1-C,postaction={pattern=north west lines},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=debs_h_fail,y error plus=debs_h_fail+, y error minus=debs_h_fail-, col sep=comma] {figures/exploration_results/results.csv};
+    % REPA
+    \addplot
+        plot [black,fill=Set1-D,postaction={pattern=grid},error bars/.cd,y dir=both,y explicit]
+        table [x=cap_reduct,y=repa_fail,y error plus=repa_fail+, y error minus=repa_fail-, col sep=comma] {figures/exploration_results/results.csv};
+    \legend{DEBS Low, Samoyed, DEBS High, REPA}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Failures.}
+    \label{fig:failure}
+\end{figure} 

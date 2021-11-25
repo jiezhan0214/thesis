@@ -1,0 +1,53 @@
+\begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}
+    \pgfplotsset{set layers}
+    \begin{axis}[
+        scale only axis,
+        width=0.7\columnwidth,
+        height=4cm,
+        ymin=0,ymax=200,
+        xmin=0,xmax=4,
+        axis y line*=left,
+        y axis line style={Set1-A},
+        xlabel=Data Size to Encrypt (KiB),
+        ylabel=$\Delta V_{\text{task}}$ (mV),
+        legend style={at={(0.05,0.95)},
+        anchor=north west,legend columns=1},
+        ]
+        \addplot
+            plot [Set1-A,only marks,mark=square]
+            table [x=data_size, y=voltage_drop,col sep=comma] {ch5_optic/figures/variable_data/variable_data.csv};
+            \label{delta_V_task}
+        \addplot
+            plot [Set1-A]
+            {44.31027668 * x + 16.926383399209485};
+        % \legend{$\Delta V_{\text{task}}$}
+    \end{axis}
+    \begin{axis}[
+        scale only axis,
+        width=0.7\columnwidth,
+        height=4cm,
+        ymin=0,ymax=7,
+        xmin=0,xmax=4,
+        axis y line*=right,
+        y axis line style={Set1-B},
+        axis x line=none,
+        ylabel=Run Time (ms),
+        legend style={at={(0.95,0.05)},
+        anchor=south east,legend columns=1},
+        ]
+        \addlegendimage{/pgfplots/refstyle=delta_V_task}\addlegendentry{$\Delta V_{\text{task}}$}
+        \addplot
+            plot [Set1-B,only marks,mark=o] 
+            table [x=data_size, y=time,col sep=comma] {ch5_optic/figures/variable_data/variable_data.csv};
+            \addlegendentry{Run Time}
+        \addplot
+            plot [Set1-B]
+            {1.60436561 * x + 0.07670306324110676};
+        % \legend{Run Time}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{$\Delta V_{\text{task}}$ varying linearly with the data size in AES 128-bit encryption.}
+    \label{fig:variable_datasize}
+\end{figure}

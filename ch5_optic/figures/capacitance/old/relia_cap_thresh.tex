@@ -1,0 +1,32 @@
+\begin{figure}[!t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=\columnwidth,
+        height=5cm,
+        ymin=1.8,ymax=4,
+        xmin=2,xmax=12,
+        xlabel={System Capacitance (\SI{}{\micro\farad})},
+        ylabel={Voltage thresholds (V)},
+        legend style={at={(0.5,1.05)},
+            anchor=south,legend columns=2,
+            /tikz/every even column/.append style={column sep=0.1cm}},
+        ]
+        \addplot
+            plot [Set1-B,mark=square*]
+            table [x=capacitance, y=opta_thresh,col sep=comma] {figures/capacitance/relia_cap_aes.csv};
+        \addplot
+            plot [Set1-B,mark=*]
+            table [x=capacitance, y=opta_thresh,col sep=comma] {figures/capacitance/relia_cap_dma.csv};
+        \addplot
+            plot [Set1-A,mark=square*,dashed]
+            table [x=capacitance, y=debs_thresh,col sep=comma] {figures/capacitance/relia_cap_aes.csv};
+        \addplot
+            plot [Set1-A,mark=*,dashed]
+            table [x=capacitance, y=debs_thresh,col sep=comma] {figures/capacitance/relia_cap_dma.csv};
+        \legend{REPA DMA, REPA AES, DEBS DMA, DEBS AES}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Thresholds on variable capacitance.}
+    \label{fig:reliability_capacitance_thresholds}
+\end{figure}

@@ -251,7 +251,7 @@ Apart from the energy storage size, the voltage threshold that wakes up an IPS a
 Existing approaches use one or a few fixed voltage thresholds, which are calibrated at design time. 
 Some approaches (e.g.~\cite{gomez2016dynamic}) minimize the threshold for each task, but the fixed threshold can be violated at runtime due to variability in energy consumption, leaving the system in non-termination. 
 The variable energy consumption can come from many reasons, which include, but not limited to, variability in data amounts, peripheral configurations, devices, and capacitance degradation. 
-In contrast, some approaches set a universal high threshold, such that the energy budget should be mostly enough for all tasks. 
+In contrast, some approaches (e.g.~\cite{maeng2019supporting}) set a universal high threshold, such that the energy budget should be mostly enough for all tasks. 
 However, waiting for a high voltage threshold can be energy-inefficient because, typically, current input reduces with higher voltage and a high operating voltage also increases system quiescent current consumption. 
 Hence, the final focus of this thesis will be the scheme of voltage threshold settings that avoids non-termination under runtime variable energy consumption while maintains system energy efficiency. 
 

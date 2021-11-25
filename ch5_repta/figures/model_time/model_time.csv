@@ -1,4 +1,0 @@
-current,samoyed_perf,samoyed_perf_err+,samoyed_perf_err-,debs_perf,debs_perf_err+,debs_perf_err-,opta_perf,opta_perf_err+,opta_perf_err-
-\SI{100}{\micro\ampere},64.8,6.2,10.8,85.2,8.8,17.2,86.4,8.6,16.4
-\SI{300}{\micro\ampere},241.5,23.5,28.5,306.9,20.1,25.9,307.8,20.2,25.8
-\SI{500}{\micro\ampere},455.1,10.9,20.1,513.9,11.1,17.9,514.9,11.1,17.9

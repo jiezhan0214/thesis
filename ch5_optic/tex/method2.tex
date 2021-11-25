@@ -1,0 +1,30 @@
+
+\section{\nn{} Runtime Energy Adaptation} \label{sec:method2}
+
+Support three types of adaptation.
+
+With a target end voltage $\symb{V}{end}$ below which the system fails, the voltage threshold $\symb{V}{th}$ that the system should set to ensure a task's completion is
+\begin{equation}
+    \symb{V}{th} = \symb{V}{end} + \Delta \symb{V}{task}
+\end{equation}
+
+\subsection{Profiling Strategy}
+
+When should we take a profiling measurement?
+
+Goal: Reduce unnecessary/redundant measurements and take necessary measurements.
+
+\subsection{Learning Algorithm}
+
+How do we use the measurements to update the voltage threshold?
+
+Enable voltage threshold adaptation against runtime variation of energy consumption due to unforeseeable operating conditions, and also enable linear adaptation to function knobs that are known to the system. 
+
+\begin{itemize}
+    \item Without function knobs: use the latest profiled threshold.
+    \item With function knobs: do a linear regression based on a number of recent measurements. 
+\end{itemize}
+
+\subsection{Discussion}
+
+The ability to fall back differentiates it from a "simply-incrementing-threshold" DEBS.
