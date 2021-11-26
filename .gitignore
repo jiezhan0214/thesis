@@ -1,3 +1,4 @@
 *.bbl
 *.aux
 *.synctex.gz
+.texpadtmp/
