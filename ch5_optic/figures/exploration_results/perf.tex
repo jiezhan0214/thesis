@@ -5,28 +5,31 @@
         group style={group size=1 by 2,vertical sep=40pt},
         width=0.7\columnwidth,height=4cm,
         xbar,
-        symbolic y coords={debsl,samoyed,debsh,adaptive},
+        symbolic y coords={samoyed,debs,adaptive},
         xmin=0,
         enlarge y limits=0.2,
         tick align=inside,
         ytick style={draw=none},
-        yticklabels={,\debs{} Low, Samoyed, \debs{} High, Adaptive},
+        yticklabels={,Samoyed, \debs{}, Adaptive},
         ]
-        \nextgroupplot[xmax=120,xlabel={No. of Completions}]
+        \nextgroupplot[xmax=600,xlabel={No. of Completions}]
         \addplot
             plot [black,fill=Set1-B,error bars/.cd,x dir=both,x explicit]
             table [y=method,x=perf,x error plus=perf+,x error minus=perf-,col sep=comma] {ch5_optic/figures/exploration_results/perf.csv};
 
-        \nextgroupplot[xmax=60,xlabel={No. of Failures}]
+        \nextgroupplot[xmax=40,xlabel={No. of Failures}]
         \addplot
             plot [black,fill=Set1-A]
             table [y=method,x=fail,col sep=comma] {ch5_optic/figures/exploration_results/perf.csv};
         \node [anchor=west, font=\footnotesize, Set1-A] at (axis cs:0,adaptive) {0};
-        \node [anchor=west, font=\footnotesize, Set1-A] at (axis cs:0,debsh) {0};
-        \node [anchor=west, font=\footnotesize, black] at (axis cs:0,debsl) {Non-Termination};
+        \node [anchor=west, font=\footnotesize, Set1-A] at (axis cs:0,debs) {0};
+        % \node [anchor=west, font=\footnotesize, black] at (axis cs:0,debsl) {Non-Termination};
 
     \end{groupplot}
     \end{tikzpicture}
-    \caption{Numbers of completed and failed operations among four control schemes given random data sizes and configurations and a PV supply. }
+    \caption{Numbers of completed and failed operations of Samoyed,\debs{}, and Adaptive given random data sizes and configurations and a PV supply. }
     \label{fig:simulation_perf}
 \end{figure} 
+
+% DEBS low data from old csv
+% debsl,0.3,1.7,0.3,158.2,1.8,4.2

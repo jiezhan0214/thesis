@@ -161,6 +161,7 @@ In each round, all the schemes take the same random series of data sizes and con
 
 % New figure
 \input{ch5_optic/figures/exploration_results/perf.tex}
+\input{ch5_optic/figures/exploration_results/cap.tex}
 
 \begin{figure}[!t]
     \centering
@@ -172,7 +173,7 @@ In each round, all the schemes take the same random series of data sizes and con
 % DEBS High is probably not the most efficient DEBS. This is a bit unfair. Hope they can't find it.
 
 
-Figure~\ref{fig:simulation} shows the mean, maximum, and minimum numbers of completed and failed operations in the 10-round tests for each capacitance condition. 
+Figure~\ref{fig:simulation_perf} shows the mean, maximum, and minimum numbers of completed and failed operations in the 10-round tests for each capacitance condition. 
 DEBS Low cannot terminate when it ever encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
 DEBS Low can only occasionally get progress on lightweight operations before non-termination. 
 Samoyed also suffers performance loss from waiting for a high energy threshold, and failing an operation at the end of an active cycle. 

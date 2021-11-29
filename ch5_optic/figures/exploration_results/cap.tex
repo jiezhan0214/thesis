@@ -1,0 +1,34 @@
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.7\columnwidth,height=5cm,
+        ymin=0,ymax=50,
+        xmin=0,xmax=60,
+        xlabel={Capacitance Reduction},
+        ylabel={No. of Completions},
+        xticklabel={\pgfmathprintnumber\tick\%},
+        xticklabel shift={3pt},
+        legend style={
+            anchor=south,
+            at={(0.5,0.08)},
+            % font=\footnotesize,
+            legend columns=3,
+        },
+        ]
+        \pgfplotstableread[col sep=comma]{ch5_optic/figures/exploration_results/cap.csv}{\mytable};
+        \addplot 
+            plot [Set1-A,mark=triangle*,dashed]
+            table [x=cap_reduction,y=samoyed_perf] {\mytable};
+        \addplot 
+            plot [Set1-B,mark=square*,dashed]
+            table [x=cap_reduction,y=debs_perf] {\mytable};
+        \addplot 
+            plot [Set1-C,mark=*,dashed]
+            table [x=cap_reduction,y=repa_perf] {\mytable};
+        \legend{Samoyed,\debs{},\nn{}}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Number of completed operations of Samoyed,\debs{}, and Adaptive  capacitance reduction}
+    \label{fig:simulation_cap}
+\end{figure}
