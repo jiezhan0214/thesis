@@ -5,9 +5,9 @@
             width=0.7\columnwidth,
             height=6cm,
             ymin=0,
-            ymax=300,
+            ymax=150,
             xmin=0,
-            xmax=3.1,
+            xmax=5.3,
             xlabel=Voltage (V),
             ylabel=Current (\SI{}{\micro\ampere}),
             legend style={at={(0.05,0.05)},
@@ -17,14 +17,10 @@
             plot [black,only marks]
             table [x=v, y=i,col sep=comma] {ch5_optic/figures/pv_curve/pv_curve.csv};
         \addplot
-            plot [gray,ultra thick,domain=0:2.3,on layer=foreground]
-            {-16.25 * x + 276.10};
-        \addplot
-            plot [gray,ultra thick,domain=2.3:3.05,on layer=foreground]
-            {276 * (1 - e ^ (ln(1 - 237 / 276) * (x - 3.05) / (2.3 - 3.05)))};
-        \legend{Measurements, Model Fitting}
+            plot [gray,ultra thick,domain=0:4,on layer=foreground]{-7.02 * x + 123.9};
+        \legend{Measurements, Linear Fit for \SIrange{0}{4}{\volt}}
     \end{axis}
     \end{tikzpicture}
-    \caption{An I-V curve of an amorphous PV panel (Sanyo AM-1417CA) under an LED lighting condition.}
+    \caption{An I-V curve of an amorphous PV panel (Sanyo AM-1815CA) under an indoor office condition.}
     \label{fig:pv_iv}
 \end{figure}
