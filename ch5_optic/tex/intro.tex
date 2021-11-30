@@ -2,18 +2,18 @@
 
 % *** Background of energy harvesting and intermittent systems ***
 
-Energy harvesting has become a promising power solution for the Internet of Things, liberating wireless sensors from batteries and the power grid~\cite{sliper2020energy-driven}. 
-Batteryless devices harvest ambient energy, such as light, radio-frequency, and mechanical vibration~\cite{sravanthi2008survey, shaikh2016energy}, which is then buffered in a capacitor. 
-As the harvested power is typically insufficient for continuous operation, such devices operate in an intermittent way -- when a certain amount of energy is collected, the processor wakes up, executes program until the amount of energy falls below a threshold, where it sleeps or dies, and waits for the next active cycle\footnote{An active cycle denotes a continuous period that the intermittent system actively executes workloads, i.e. from when it wakes up till it dies or sleeps. }. 
-Prior work in \textit{intermittent systems} has developed sophisticated methods to preserve forward progress across frequent power interruptions by carefully \textit{checkpointing} the volatile computing state in CPU registers and volatile memory into non-volatile memory (NVM), and restoring it on reboot~\cite{umesh2021survey}. 
+%Energy harvesting has become a promising power solution for the Internet of Things, liberating wireless sensors from batteries and the power grid~\cite{sliper2020energy-driven}. 
+%Batteryless devices harvest ambient energy, such as light, radio-frequency, and mechanical vibration~\cite{sravanthi2008survey, shaikh2016energy}, which is then buffered in a capacitor. 
+%As the harvested power is typically insufficient for continuous operation, such devices operate in an intermittent way -- when a certain amount of energy is collected, the processor wakes up, executes program until the amount of energy falls below a threshold, where it sleeps or dies, and waits for the next active cycle\footnote{An active cycle denotes a continuous period that the intermittent system actively executes workloads, i.e. from when it wakes up till it dies or sleeps. }. 
+%Prior work in \textit{intermittent systems} has developed sophisticated methods to preserve forward progress across frequent power interruptions by carefully \textit{checkpointing} the volatile computing state in CPU registers and volatile memory into non-volatile memory (NVM), and restoring the state after power interruptions~\cite{umesh2021survey}. 
 
 
 % *** Previous work on intermittent peripheral operations ***
 
 Apart from computing, embedded sensor systems need to utilize peripherals, such as sensors, computational accelerators, and radios, which typically require \textit{atomicity}~\cite{berthou2020formal}.
-In the context of intermittent systems, an atomic operation should not be checkpointed during execution; if interrupted by power failures, it should restart rather than checkpoint and resume.
+In the context of IPSs, an atomic operation should not be checkpointed during execution; if interrupted by power failures, it should restart rather than checkpoint and resume.
 % A peripheral operation is considered atomic because it is infeasible to completely read, save, and restore the intermediate internal state of peripherals, and even if possible, could produce unwanted results (e.g. violating timeliness). 
-A peripheral operation is considered atomic because it is problematic to checkpoint and restore the operation later, even if including the intermediate peripheral state.
+A peripheral operation is considered atomic because it is usually problematic to checkpoint and restore the operation later, even if the intermediate peripheral state is also checkpointed.
 For example, checkpointing during a sensor reading and resuming it later can cause incorrect results or an infinite wait as the initialization is lost, and violate timeliness as the sensor does not render the latest and consecutive results~\cite{maeng2019supporting}. 
 % disable checkpoints during execution
 Prior works on intermittent peripheral operations either customize a design-time calibrated energy budget for each peripheral operation individually~\cite{gomez2016dynamic}, or allocate a universal and large energy budget that ensure the most energy-hungry operation can finish in one active cycle~\cite{maeng2019supporting}.
