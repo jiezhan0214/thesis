@@ -11,8 +11,7 @@
         xticklabel shift={3pt},
         legend style={
             anchor=south,
-            at={(0.5,0.08)},
-            % font=\footnotesize,
+            at={(0.5,0.1)},
             legend columns=3,
         },
         ]
@@ -26,9 +25,9 @@
         \addplot 
             plot [Set1-C,mark=*,dashed]
             table [x=cap_reduction,y=repa_perf] {\mytable};
-        \legend{Samoyed,\debs{},\nn{}}
+        \legend{Samoyed,\debs{} High,Adaptive}
     \end{axis}
     \end{tikzpicture}
-    \caption{Number of completed operations of Samoyed,\debs{}, and Adaptive  capacitance reduction}
+    \caption{Number of completed operations of Samoyed,\debs{} High, and the Adaptive scheme with capacitance reduction}
     \label{fig:simulation_cap}
 \end{figure}

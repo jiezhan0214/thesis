@@ -108,52 +108,66 @@ As suggested in prior work, operating at a lower voltage can improve system ener
 
 To validate this, we analysed the charging characteristic of a glass-type amorphous PV panel in an white LED lighting environment. 
 We used the PV panel to charge a \SI{103}{\micro\farad} capacitor from \SI{0}{\volt} to \SI{3.05}{\volt} where the capacitor cannot be charged up anymore. 
-The voltage-time charging trace is then differentiated to gain an I-V curve that represents the PV panel (Figure~\ref{fig:pv_iv} \fref{fig:pv_iv}). 
+The voltage-time charging trace is then differentiated to gain an I-V curve that represents the PV panel (\fref{fig:pv_iv}). 
 % The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
 To model this curve, we did a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
 The model function of this I-V curve is then expressed as:
 \begin{equation}
-    I = \left\{
+    \nmm{I}{in} = \left\{
     \begin{aligned}
-        & -16.25 V + 276.10 & , & \quad \SI{0}{\volt} < V <= \SI{2.3}{\volt} \\
-        & 1 & , & \quad \SI{2.3}{\volt} < V <= \SI{3.05}{\volt}
+        & -16.25 \nmm{V}{in} + 276.10 & , & \quad \SI{0}{\volt} < \nmm{V}{in} <= \SI{2.3}{\volt} \\
+        & \nmm{I}{sc} (1 - e ^ {ln(1 - \frac{\nmm{I}{mpp}}{\nmm{I}{sc}}) \frac{\nmm{V}{in} - \nmm{V}{oc}}{\nmm{V}{mpp} - \nmm{V}{oc}}}) & , & \quad \SI{2.3}{\volt} < \nmm{V}{in} <= \SI{3.05}{\volt}
+%         I_sc * (1 - math.exp(math.log(1 - I_mpp / I_sc) * (v - V_oc) / (V_mpp - V_oc)))
     \end{aligned}
     \right. 
     \quad (\SI{}{\micro\ampere})
     \label{eq:pv_iv}
 \end{equation}
-%which matches with the operating voltage range of the MCU, such that the power supply in simulation has a linearly-scaling supply current with the operating voltage.
+where we set \nm{I}{sc} = \SI{276}{\micro\ampere}, \nm{V}{oc} = \SI{3.05}{\volt}, \nm{I}{mpp} = \SI{237}{\micro\ampere}, and \nm{V}{mpp} = \SI{2.3}{\volt}.
 
 \input{ch5_optic/figures/pv_curve/pv_curve.tex}
 
-In our MSP430FR5994 platform, we did not find a significant change in current consumption with supply voltage (up to 2\%). 
-This is majorly due to an on-chip low-dropout output (LDO) that droops down the external supply voltage to a constant internal supply voltage, and hence maintaining a relatively stable current draw as the external supply voltage changes. 
+In the MSP430FR5994 platform, we did not observe a significant change in current consumption with supply voltage (up to 2\%). 
+This is majorly due to an on-chip LDO that droops down the external supply voltage to a constant internal supply voltage, and hence maintaining a relatively stable current draw as the external supply voltage changes. 
 Hence, we omitted the voltage effect on current consumption in this simulation. 
 
-We took the data of AES accelerator encryption in Section~\ref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 
-The current draw remains constant during one operation, but vary with dynamic data sizes and configurations due to the variable charge consumption and run time.
+We used the energy and time overheads of AES encryption presented in \sref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 
+In simulation, the current draw remains constant during one operation, but changes with dynamic data sizes and configurations due to the variable charge consumption and run time.
 
 \subsubsection{Runtime Control Models}
 
-We modelled an ideal adaptive threshold scheme against three other fixed-threshold schemes.
-We focussed on the effect of control logic and threshold settings, and omitted the state managing overhead as it can be dependent on the actual implementation. 
-We modelled two cases of DEBS, named as DEBS Low and DEBS High.
-DEBS Low represents the original idea of DEBS, where it sets the minimum threshold for a fixed operation.  
-We assumed its threshold was profiled with 1KB data and a 128-bit key length without considering any variability. 
-We also explored DEBS High, as a case where it foresees the possible dynamic increase in workload consumption and capacitance reduction, and sets the threshold to be the highest operating voltage.
-Samoyed differs from DEBS and the adaptive scheme in its control, where, when completing an operation, it keeps executing until it dies rather than sleeps and waits for the next threshold.
-Samoyed also suggests an abundant energy budget, so its threshold is also set to the highest operating voltage.
-In the ideal adaptive scheme, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold for that. 
+We modelled an ideal adaptive threshold scheme against two SoA fixed-threshold schemes.
+We focussed on modelling the control logic and threshold settings, and omitted the state management overhead as it can be dependent on the actual implementation. 
+
+In the ideal adaptive scheme, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold that suffices the energy budget. 
+
+\debs{} sets a minimum threshold for a fixed operation. 
+We explored two cases of \debs{}, labelled as \debs{} Low and \debs{} High.
+We firstly modelled \debs{} Low, which does not foresee any possible changes in data sizes and configurations. 
+\debs{} Low's threshold was profiled with 1KB data and a 128-bit key length without considering any variability. 
+We then modelled \debs{} High in a case where it foresees the possible dynamic increase in workload consumption due to variable data sizes and configurations and sets its threshold based on the most energy-hungry setup, while it does not consider further capacitor ageing.
+% Unfortunately, \debs{} Low fails to achieve any progress except for few operations at the beginning of the simulation given origin capacitance.
+% Thus, we use \debs{} High to represent \debs{} in the following results.
+
+Samoyed differs from \debs{} and the adaptive scheme in its control, where, when completing an operation, it keeps executing until it dies rather than sleeps and waits for the next threshold.
+Samoyed suggests allocating an abundant energy budget, so its threshold is also set to the highest possible operating voltage.
+
+% DEBS High is probably not the most efficient DEBS. 
+% An efficient DEBS can have multiple, but a limited number of, thresholds. 
+% This is a bit unfair.
 
 \subsubsection{Simulation Setup}
 
-The system has \SI{10}{\micro\farad} system capacitance without charge at the start. 
-The shutdown threshold is \SI{1.8}{\volt}, against which DEBS Low and the adaptive scheme set their threshold, with a \SI{10}{\milli\volt} small margin. 
+In simulation, the system has \SI{10}{\micro\farad} system capacitance without charge at the start. 
+The shutdown threshold is \SI{1.8}{\volt}, against which \debs{} and the adaptive scheme set their threshold, with a \SI{10}{\milli\volt} small margin. 
 The system consumes \SI{10}{\micro\ampere} when it is inactive.
-The workload has a random data amount to process from 16B to 4080B (1 to 255 blocks of data, 16B per block), and also a random 128-, 192-, or 256-bit key length, both uniformly distributed.
-We tested three capacitance conditions with 0\%, 30\%, and 60\% reduction, in line with the maximum possible reduction shown in Section~\ref{subsubsec:capacitance_variability}. 
-We ran 10 rounds of simulations for each capacitance condition, and each round simulates for \SI{2}{\second}. 
-In each round, all the schemes take the same random series of data sizes and configurations.
+To evaluate the performance of the three schemes, we conducted two tests that simulate a variable workload and capacitance reduction respectively.  
+The variable workload test runs a random data amount from 16B to 4080B (1 to 255 blocks of data, 16B per block), and also a random 128-, 192-, or 256-bit key length, both uniformly distributed. 
+The energy harvesting characteristics presented in \fref{fig:pv_iv} is used as the supply for this test. 
+All the schemes take the same random series of data sizes and configurations.
+The capacitance reduction test runs with 0-60\% reduced capacitance, in line with the maximum possible reduction shown in Section~\ref{subsubsec:capacitance_variability}.
+The system in this test is supplied with a \SI{50}{\micro\ampere} constant current and runs only the most energy-hungry operation, in order to examine whether the system can avoid non-termination even under the worst case.  
+We ran 10 rounds of simulations for each setup, and each round simulates for \SI{10}{\second}. 
 
 \subsubsection{Results}
 
@@ -168,32 +182,33 @@ In each round, all the schemes take the same random series of data sizes and con
 
 % New figure
 \input{ch5_optic/figures/exploration_results/perf.tex}
-\input{ch5_optic/figures/exploration_results/cap.tex}
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
-    \includegraphics[width=0.9\columnwidth]{ch5_optic/figures/voltage_traces.pdf}
-    \caption{An instance of supply voltage traces in simulation (to be updated with a consistent style). }
+    \includegraphics[width=0.8\columnwidth]{ch5_optic/figures/voltage_traces.pdf}
+    \caption{An instance of supply voltage traces in simulation. }
     \label{fig:simulation_voltage}
 \end{figure}
 
-% DEBS High is probably not the most efficient DEBS. This is a bit unfair. Hope they can't find it.
+\fref{fig:simulation_perf} shows the mean, maximum, and minimum numbers of completed and failed operations in the variable workload test. 
+\debs{} Low cannot terminate once it encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
+\debs{} Low can only occasionally get progress on lightweight operations before non-termination. 
+Samoyed also suffers performance loss from waiting for a high energy threshold (\SI{2.9}{\volt} in this case), and failing an operation at the end of an active cycle. 
+\debs{} High is relatively efficient because it does not usually fail due to a suffcient energy budget and a sleep-after-completion control. 
+The adaptive scheme runs the most efficiently among these four.
+It runs at reduced operating voltage that improves system energy efficiency, and also guarantees the completion of every task by setting a minimised but safe threshold.
+As an example voltage trace shown in \fref{fig:simulation_voltage}, the adaptive scheme runs with \SI{2.11}{\volt} mean voltage, while the ones for Samoyed and \debs{} High are \SI{2.36}{\volt} and \SI{2.40}{\volt} respectively. 
+Due to the above reasons, the adaptive scheme completes more operations over Samoyed by 50\% and \debs{} High by 15\% on average.
+
+\input{ch5_optic/figures/exploration_results/cap.tex}
+
+\fref{fig:simulation_cap} shows the results of the capacitance reduction test, where we have omitted \debs{} Low as it has already failed in non-termination with origin capacitance (so will still fail with reduced capacitance). 
+With the capacitance decreased, \debs{} High also falls into non-termination like \debs{} Low. 
+Samoyed, where its threshold is set to \SI{3.6}{\volt} in this case, can still progress until a 60\% reduction of capacitance because its abundant energy budget can support at least one or a few operations in one active cycle.
+The adaptive scheme still maintains the highest forward progress among these control scheme. 
 
 
-Figure~\ref{fig:simulation_perf} shows the mean, maximum, and minimum numbers of completed and failed operations in the 10-round tests for each capacitance condition. 
-DEBS Low cannot terminate when it ever encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
-DEBS Low can only occasionally get progress on lightweight operations before non-termination. 
-Samoyed also suffers performance loss from waiting for a high energy threshold, and failing an operation at the end of an active cycle. 
-DEBS High runs relatively efficiently because it does not usually fail due to an abundant energy budget and a sleep-after-completion control. 
-It fails when the capacitance decreases extremely (60\% reduction), where it also falls into non-termination like DEBS Low.  
-The adaptive scheme works the most efficiently among these four.
-It runs at minimized operating voltage that improves system energy efficiency, and also guarantees the completion of every task by setting a minimized but safe threshold.
-The adaptive scheme achieves more completed operations over Samoyed by 33-58\% and DEBS High by 13-23\% on average.
+The above exploration presents that using a fixed low threshold can leave the system in non-termination (e.g. \debs{} Low and \debs{} High) but allocating an abundant energy budget compromises system efficiency (\debs{} High and Samoyed). 
+An adaptive threshold can potentially overcome both problems.
 
-The above exploration presents that using a fixed low threshold can leave the system in non-termination but allocating an abundant energy budget compromises system efficiency. 
-An adaptive threshold can overcome both problems.
-Motivated by the previous examples of variable energy consumption and the benefit of an adaptive threshold, we propose \nn{}, a new methodology for profiling energy consumption of tasks at runtime and adapting energy budgets to variable energy consumption of tasks. 
-
-Adaptive V\_mean: 2.11
-DEBS High V\_mean: 2.40
-Samoyed V\_mean: 2.36
+Motivated by the previous examples of variable energy consumption and the benefit of an adaptive threshold, we propose \nn{}, a new methodology for profiling energy consumption of tasks at runtime and adapting energy budgets to the variable energy consumption of tasks. 
