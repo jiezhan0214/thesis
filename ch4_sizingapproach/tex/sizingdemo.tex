@@ -21,7 +21,8 @@ The energy storage model and the intermittent load model are as presented in Sec
 
 We use a converter-less supply circuit where only a Schottky diode is connected to the energy harvester output in order to prevent current backflow. 
 The energy source conditions are imported from NREL outdoor solar irradiance data~\cite{stoffel1981nrel} and EnHANTs indoor irradiance data~\cite{6244798}. Four sets of light conditions are used to encompass different energy environments. 
-To convert irradiance into harvested power, we adopt a PV cell model~\cite{en9050326} which uses the parameters available in common datasheets, so it can easily be reconfigured to suit various devices. We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cell properties as shown in Table~\ref{tab:pvcell}. We set four cells in series (with $V_{oc}$ = 3.56V) to match the operating voltage of the MCU (maximum 3.6V), and model energy harvester sizing by scaling the cell area. 
+To convert irradiance into harvested power, we adopt a PV cell model~\cite{en9050326} which uses the parameters available in common datasheets, so it can easily be reconfigured to suit various devices. 
+We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cell properties as shown in Table~\ref{tab:pvcell}. We set four cells in series (with $V_{oc}$ = 3.56V) to match the operating voltage of the MCU (maximum 3.6V), and model energy harvester sizing by scaling the cell area. 
 
 %The output current $I_{o}$ of the PV cell model can be described as:%
 %\begin{equation} \label{eq:pvcell}

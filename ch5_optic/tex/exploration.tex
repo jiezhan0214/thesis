@@ -1,18 +1,20 @@
 \section{Design Exploration} 
 \label{sec:design_exploration}
 
-In this section, we study the variability in intermittent systems that can violate a predefined fixed threshold. 
-We then investigate how this variability can make existing approaches failed or inefficient, and explore the potential of threshold adaptation. 
+In this section, we study the variability in IPSs that can violate a predefined fixed threshold. 
+We then investigate how existing approaches fail or become inefficient under this variability, and explore the potential of an adaptive thresholding scheme. 
 
 \subsection{Variability in Intermittent Systems} 
 \label{subsec:dynamic_energy_consumption}
  
-Design-time profiling of workload consumption in the prior work can be violated by the variability of intermittent systems.
-To study and demonstrate the variability, we chose the AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
-The example AES function encrypts data in the Cypher Block Chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
-In the following experiments, we measured $\Delta \symb{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy}, which directly determines the minimum voltage threshold that safely guarantee the completion of an atomic operation. 
-We used Device 1 in Table~\ref{tab:device}, which has \SI{35}{\micro\farad} system capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
-We looked at variable data amounts, peripheral configurations, devices variability, and capacitor degradation and tolerance, all of which can change $\Delta \symb{V}{task}$. 
+Design-time profiling of workloads' energy consumption in the prior work can be potentially violated by the variability of IPSs.
+To study and demonstrate the variability, we chose the built-in AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
+The example AES function encrypts data in the cypher block chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
+In the following experiments, we measured $\Delta \symb{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy meanwhile}, which directly determines the minimum voltage threshold that safely guarantees the completion of an atomic operation. 
+We used Device 1 in Table~\ref{tab:device}, which has \SI{11.5}{\micro\farad} energy buffering capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
+We explored four factors that can possibly change $\Delta \symb{V}{task}$, which are variable data amounts, variable peripheral configurations, devices variability, and capacitor degradation and tolerance. 
+Besides the above four, energy consumption can also change with other factors, such as temperature, clock frequency, and silicon ageing, but we have found them either insignificant or hard to validate on our experimental platform. 
+
 
 % 22 uF extra capacitance, or 33 uF extra capacitance
 % the MCU board has a 10 + 1.5 uF capacitance
@@ -21,10 +23,10 @@ We looked at variable data amounts, peripheral configurations, devices variabili
 \subsubsection{Variable Data Sizes}
 
 A peripheral function can accept a runtime variable amount of data, such as a variable data size to encrypt or different lengths of packets for a radio to transmit. 
-An example of this is plotted in Figure~\ref{fig:variable_datasize}, where the size of the square dots represent a \SI{5}{\milli\volt} precision error of the scope. 
-We observed that $\Delta \symb{V}{task}$ has a linear relationship with the data size, with an offset energy consumption that accounts for the initialization. 
-The dynamic range of $\Delta \symb{V}{task}$ is \SIrange{17}{194}{\milli\volt}.
-This typically comes from linearly scaled run time. 
+An example of this is plotted in Figure~\ref{fig:variable_datasize}, where the size of the square dots represent a \SI{5}{\milli\volt} precision error of the scope and the lines represent linear regression. 
+We observed that $\Delta \symb{V}{task}$ has a linear relationship with the data size, with an offset energy consumption that accounts for the initialisation. 
+%The dynamic range of $\Delta \symb{V}{task}$ is \SIrange{17}{194}{\milli\volt}.
+In this case, the linearly scaled $\Delta \symb{V}{task}$ comes from linearly scaled run time. 
 
 \input{ch5_optic/figures/variable_data/variable_data.tex}
 
@@ -32,11 +34,11 @@ This typically comes from linearly scaled run time.
 
 A peripheral can run with variable configurations at runtime, and demonstrate variable performance and energy consumption. 
 For example, as shown in Table~\ref{tab:configurations}, an AES accelerator can encrypt data with 128-, 192-, or 256-bit keys. 
-A longer key provides more security, but also takes more time and energy to complete.
+A longer key provides higher security, but also takes more time and energy to complete.
 The dynamic range of configuration variability in this case can be a 26\% increase in $\Delta \symb{V}{task}$ and a 33\% increase in run time.
 % Can refer to "A control flow" for the need of runtime configurations
 
-\begin{table}[!t]
+\begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
     \caption{$\Delta \symb{V}{task}$ Varying with Configurations in AES 4KB Encryption}
@@ -45,9 +47,9 @@ The dynamic range of configuration variability in this case can be a 26\% increa
     \hline
     \textbf{Configuration} & \textbf{$\Delta \symb{V}{task}$} & \textbf{Run Time} \\
     \hline
-    128-bit key & \SI{194}{\milli\volt} & \SI{6.479}{\milli\second} \\
-    192-bit key & \SI{230}{\milli\volt} & \SI{7.638}{\milli\second} \\
-    256-bit key & \SI{245}{\milli\volt} & \SI{8.606}{\milli\second} \\
+    128-bit key & \SI{583}{\milli\volt} & \SI{6.479}{\milli\second} \\
+    192-bit key & \SI{690}{\milli\volt} & \SI{7.638}{\milli\second} \\
+    256-bit key & \SI{736}{\milli\volt} & \SI{8.606}{\milli\second} \\
     \hline
     \end{tabular}
 \end{table}
@@ -57,11 +59,11 @@ The dynamic range of configuration variability in this case can be a 26\% increa
 Devices have their variation in power consumption, even with the same part number. 
 A threshold profiled on one device can be inadequate on another. 
 We did a test on three developments boards of the same MCU, where it runs 128-bit AES encryption on 4KB data. 
-As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \symb{V}{task}$ is up to 8\% among the three devices, though with almost the same run time (0.5\% variation). 
+As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \symb{V}{task}$ is up to 9\% among the three devices, though with almost the same run time (0.5\% variation). 
 % This has been moderated by the larger on-board capacitance on Device 1 -- the actual charge consumption is supposed to be 31\% larger than Device 3.
 It should be noticed that device variability can also present across platforms that can run the same or similar code. 
 
-\begin{table}[!t]
+\begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
     \caption{$\Delta \symb{V}{task}$ Varying among Devices in AES 128-bit 4KB Encryption}
@@ -73,9 +75,9 @@ It should be noticed that device variability can also present across platforms t
     % 1 & \SI{764}{\micro\ampere}\\
     % 2 & \SI{773}{\micro\ampere}\\
     % 3 & \SI{756}{\micro\ampere}\\
-    1 & \SI{194}{\milli\volt} & \SI{6.479}{\milli\second} \\
-    2 & \SI{185}{\milli\volt} & \SI{6.444}{\milli\second} \\
-    3 & \SI{179}{\milli\volt} & \SI{6.462}{\milli\second} \\
+    1 & \SI{583}{\milli\volt} & \SI{6.479}{\milli\second} \\
+    2 & \SI{555}{\milli\volt} & \SI{6.444}{\milli\second} \\
+    3 & \SI{535}{\milli\volt} & \SI{6.462}{\milli\second} \\
     \hline
     \end{tabular}
 \end{table}
@@ -83,27 +85,20 @@ It should be noticed that device variability can also present across platforms t
 \subsubsection{Capacitor Ageing and Tolerance}
 \label{subsubsec:capacitance_variability}
 
-As a component for buffering energy in intermittent systems, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in most commercial capacitors. 
+As the component for buffering energy in IPSs, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in many commercial capacitors. 
 Capacitors also age over time. 
-It is shown that capacitance can decrease by 7.2\% in 3000 hours under a \SI{25}{\celsius} ambient temperature in experiments~\cite{kulkarni2010experimental}, and by 50\% within 10 years under \SI{40}{\celsius} as manufacturers stated~\cite{vishaycapacitor}.
+It is shown that capacitance can decrease by 7.2\% in 3000 hours (125 days) under a \SI{25}{\celsius} ambient temperature in experiments~\cite{kulkarni2010experimental}, and by 50\% within 10 years under \SI{40}{\celsius} as manufacturers stated~\cite{vishaycapacitor}.
 A degraded capacitor does not change the load consumption, but can increase $\Delta \symb{V}{task}$, and hence makes the pre-defined voltage threshold unsafe or inefficient. 
 
-\subsubsection{Other (tentative)}
 
-Clock frequency? Voltage? Temperature? Silicon ageing?
-% 1MHz: 757uA (This should be checked later as it takes the same time to complete).
-
-
-The above study present that the variability of intermittent systems can make a predefined $\Delta \symb{V}{task}$ unsafe. 
-Profiling the $\Delta \symb{V}{task}$ in each scenario at design time is unrealistic in practice, and still cannot encompass unexpected situations, necessitating a runtime energy profiling approach. 
-Next, we explore how existing approaches can fail or run inefficiently under such variability. 
-
+The above four examples present that the variability in IPSs can potentially make a predefined $\Delta \symb{V}{task}$ insufficient. 
+It is unrealistic to profile the $\Delta \symb{V}{task}$ in each scenario at design time in practice considering the complexity of the variations, and still cannot encompass unexpected situations, necessitating a runtime energy profiling approach. 
 
 
 % Simulation
 \subsection{Performance Improvement with Adaptive Thresholds}
 
-Having presented the variability in intermittent systems, we explore in modelling and simulation the potential of adaptive thresholds on coping with such variability, as opposed to the fixed-threshold approaches.
+Having presented the variability in IPSs, we explore in modelling and simulation the potential of adaptive thresholds on coping with such variability, as opposed to existing fixed-threshold approaches, which may fail or run inefficiently under such variability.
 
 % i.e. the system always set the lowest possible threshold for the next operation.
 
@@ -111,11 +106,23 @@ Having presented the variability in intermittent systems, we explore in modellin
 
 As suggested in prior work, operating at a lower voltage can improve system energy efficiency due to a higher charging efficiency and a lower power consumption.
 
-We analyzed the charging characteristic of a glass-type PV panel in an indoor office environment. 
-We used the PV panel to charge a \SI{10}{\micro\farad} capacitor from \SI{0}{\volt} to around \SI{5.5}{\volt} where the capacitor cannot be charged up anymore. 
-The time trace of capacitor voltage is differentiated to gain an I-V curve that represents the energy harvester (Figure~\ref{fig:pv_iv}). 
-The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
-We did a linear regression for the data in \SIrange{0}{4}{\volt}, which matches with the operating voltage range of the MCU, such that the power supply in simulation has a linearly-scaling supply current with the operating voltage.
+To validate this, we analysed the charging characteristic of a glass-type amorphous PV panel in an white LED lighting environment. 
+We used the PV panel to charge a \SI{103}{\micro\farad} capacitor from \SI{0}{\volt} to \SI{3.05}{\volt} where the capacitor cannot be charged up anymore. 
+The voltage-time charging trace is then differentiated to gain an I-V curve that represents the PV panel (Figure~\ref{fig:pv_iv} \fref{fig:pv_iv}). 
+% The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
+To model this curve, we did a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
+The model function of this I-V curve is then expressed as:
+\begin{equation}
+    I = \left\{
+    \begin{aligned}
+        & -16.25 V + 276.10 & , & \quad \SI{0}{\volt} < V <= \SI{2.3}{\volt} \\
+        & 1 & , & \quad \SI{2.3}{\volt} < V <= \SI{3.05}{\volt}
+    \end{aligned}
+    \right. 
+    \quad (\SI{}{\micro\ampere})
+    \label{eq:pv_iv}
+\end{equation}
+%which matches with the operating voltage range of the MCU, such that the power supply in simulation has a linearly-scaling supply current with the operating voltage.
 
 \input{ch5_optic/figures/pv_curve/pv_curve.tex}
 

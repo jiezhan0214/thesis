@@ -1,12 +1,12 @@
-\begin{figure}[!t]
+\begin{figure}
     \centering
     \begin{tikzpicture}
     \pgfplotsset{set layers}
     \begin{axis}[
         scale only axis,
         width=0.6\columnwidth,
-        height=6cm,
-        ymin=0,ymax=200,
+        height=5cm,
+        ymin=0,ymax=600,
         xmin=0,xmax=4,
         axis y line*=left,
         y axis line style={Set1-A},
@@ -21,13 +21,13 @@
             \label{delta_V_task}
         \addplot
             plot [Set1-A]
-            {44.31027668 * x + 16.926383399209485};
+            {133.32 * x + 50.10};
         % \legend{$\Delta V_{\text{task}}$}
     \end{axis}
     \begin{axis}[
         scale only axis,
         width=0.6\columnwidth,
-        height=6cm,
+        height=5cm,
         ymin=0,ymax=7,
         xmin=0,xmax=4,
         axis y line*=right,
@@ -44,7 +44,7 @@
             \addlegendentry{Run Time}
         \addplot
             plot [Set1-B]
-            {1.60436561 * x + 0.07670306324110676};
+            {1.6044 * x + 0.0767};
         % \legend{Run Time}
     \end{axis}
     \end{tikzpicture}

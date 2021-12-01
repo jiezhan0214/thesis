@@ -1,4 +1,4 @@
-\section{Introduction}
+%\section{Introduction}
 
 % *** Background of energy harvesting and intermittent systems ***
 
@@ -10,50 +10,46 @@
 
 % *** Previous work on intermittent peripheral operations ***
 
-Apart from computing, embedded sensor systems need to utilize peripherals, such as sensors, computational accelerators, and radios, which typically require \textit{atomicity}~\cite{berthou2020formal}.
+Apart from computing, embedded sensor systems need to utilise peripherals, such as sensors, computational accelerators, and radios, which typically require \textit{atomicity}~\cite{berthou2020formal}.
 In the context of IPSs, an atomic operation should not be checkpointed during execution; if interrupted by power failures, it should restart rather than checkpoint and resume.
 % A peripheral operation is considered atomic because it is infeasible to completely read, save, and restore the intermediate internal state of peripherals, and even if possible, could produce unwanted results (e.g. violating timeliness). 
 A peripheral operation is considered atomic because it is usually problematic to checkpoint and restore the operation later, even if the intermediate peripheral state is also checkpointed.
-For example, checkpointing during a sensor reading and resuming it later can cause incorrect results or an infinite wait as the initialization is lost, and violate timeliness as the sensor does not render the latest and consecutive results~\cite{maeng2019supporting}. 
+For example, checkpointing during a sensor reading and resuming it later can cause incorrect results or an infinite wait as the initialisation is lost, and violate timeliness as the sensor does not render the latest and consecutive results~\cite{maeng2019supporting}. 
 % disable checkpoints during execution
-Prior works on intermittent peripheral operations either customize a design-time calibrated energy budget for each peripheral operation individually~\cite{gomez2016dynamic}, or allocate a universal and large energy budget that ensure the most energy-hungry operation can finish in one active cycle~\cite{maeng2019supporting}.
-
-
+Prior works on intermittent peripheral operations either customise a design-time calibrated energy budget for each peripheral operation individually~\cite{gomez2016dynamic}, or allocate a universal and large energy budget that ensure the most energy-hungry operation can finish in one active cycle~\cite{maeng2019supporting}.
 
 
 % *** Offline profiling and fixed threshold is impractical due to variability ***
 
-However, in this paper we argue that manually profiling each peripheral operation and customizing energy thresholds is impractical due to variability in intermittent systems, where we have considered the variability in the data amount to process, peripheral configurations, devices, and energy buffering capacitance (detailed in Section~\ref{subsec:dynamic_energy_consumption}). 
+However, in this paper we argue that manually profiling each peripheral operation and customising energy thresholds is impractical due to variability in IPSs, where we have considered the variability in the data amount to process, peripheral configurations, devices, and energy buffering capacitance (detailed in Section~\ref{subsec:dynamic_energy_consumption}). 
 A fixed threshold can be violated if any of the above cases happen, and lead to non-termination\footnote{Non-termination happens when the pre-defined energy budget is less than how much the operation consumes and the supply is not strong enough to fill the energy gap. It is one of the main causes for failures in intermittent systems. }.
-In practical deployment, considering the complexity and labour effort, it is unrealistic to profile every atomic operation for every device under every runtime scenario at design time and customize the energy budgets accordingly. 
+In practical deployment, considering the complexity and labour effort, it is unrealistic to profile every atomic operation for every device under every runtime scenario at design time and customise the energy budgets accordingly. 
 
 
-
-% *** An optimized threshold improves efficiency ***
+% *** An optimised threshold improves efficiency ***
 
 On the other hand, using only one high voltage threshold, though probably avoids non-termination, can affect system energy efficiency. 
 % Microcontrollers and peripheral devices typically draw more current at a higher supply voltage. 
-Intermittent systems typically minimize operating voltage in order to lower quiescent power consumption from power conversion loss and system leakage~\cite{gomez2016dynamic}. 
+IPSs typically minimise operating voltage in order to lower quiescent power consumption from power conversion loss and system leakage~\cite{gomez2016dynamic}. 
 Also, a high operating voltage can decrease the output current of energy harvesters, making it harder to charge up the buffering capacitor~\cite{pan2017maximize}.
-Hence, setting a high wake-up voltage threshold results in a superlinear long charging time, which therefore slows down the system execution or even leave the system in an infinite wait at low input power.
-% \todo{Illustrate or demonstrate this?}
+Hence, setting a high wake-up voltage threshold results in a longer charging time than a linear scale of the voltage threshold, which therefore slows down the system execution or even leave the system in an infinite wait under poor energy conditions.
 
 
 % *** What we do to address it ***
 
-To address the above issue, we propose \nn{}\footnote{\nn{}: \underline{O}nline Energy \underline{P}rofiling and \underline{T}hreshold Adaptation for \underline{I}ntermittent \underline{C}omputing Systems. }, a methodology that profiles energy consumption of operations at runtime and dynamically adapts energy thresholds based on newly profiled consumption and user-defined parameters. 
+To address the above issue, we propose \nn{}\footnote{\nn{}: \underline{O}nline Energy \underline{P}rofiling and \underline{T}hreshold Adaptation for \underline{I}ntermittent \underline{C}omputers. }, a methodology that profiles energy consumption of operations at runtime and dynamically adapts energy thresholds based on newly profiled consumption and user-defined parameters. 
 A naive approach of runtime energy profiling can be disconnecting the power supply during profiling and taking two readings of supply voltage before and after an operation~\cite{zhan2020adaptive}, but this can waste the harvested energy during the operation. 
 In contrast, \nn{} profiles the maximum drop of supply voltage that an operation can cause while the energy harvesting supply is connected. 
 The profiling strategy is to measure the input current in the charging cycle so as to calculate the maximum drop of supply voltage in the discharging cycle. 
-The runtime profiled energy budget can closely match the latest energy consumption of an atomic operation. 
-Based on the profiling results, \nn{} dynamically adapts the threshold for each atomic operation, with an option of scaling threshold by user-defined parameters or peripheral configurations.
-Therefore, \nn{} avoids non-termination and achieves high energy efficiency, improving the workload throughput.
+The runtime profiled energy budget can thus, compared to a design-time profiled one, closely match with the latest energy consumption. 
+Based on the profiling results, \nn{} dynamically adapts the threshold for each atomic operation, with an option of scaling thresholds by user-defined parameters, e.g. a variable data size.
+Therefore, \nn{} enables IPSs to allocate a barely sufficient energy budget despite runtime energy variations, and hence mitigates non-termination while achieves high energy efficiency, eventually improving the workload throughput.
 
-The main contributions of this article are as follows:
+The main contributions of this chapter can be summarised as follows:
 
 \begin{enumerate}
-    \item Design exploration (Section~\ref{sec:design_exploration})
-    \item Methodology (Section~\ref{sec:method1} and Section~\ref{sec:method2})
-    \item Implementation (Section~\ref{sec:implementation})
-    \item Experimental evaluation (Section~\ref{sec:experiment})
+    \item An exploration of the runtime variations of energy consumption in IPSs that compromise existing approaches in comparison with an adaptive thresholding scheme (Section~\ref{sec:design_exploration}). 
+    \item A method of runtime energy profiling of tasks for IPSs without disconnecting supply (Section~\ref{sec:method1}), showing a high accuracy within \SI{5}{\milli\volt} (Section~\ref{sec:experiment}).
+    \item An adaptive thresholding scheme that, utilising the runtime energy profiling method, dynamically allocates barely sufficient energy budgets for tasks, with an optional scaling based on user-defined parameters (Section~\ref{sec:method2}). The proposed scheme enables a system to survive with xx\% less energy buffering capacitance than the initially allocated amount and presents a xx\% speedup with variable data sizes, compared to SoA approaches (Section~\ref{sec:experiment}).
+    \item Implementation of the proposed runtime energy profiling and threshold adaptation method (Section~\ref{sec:implementation}).
 \end{enumerate}
