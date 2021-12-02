@@ -180,16 +180,6 @@ We ran 10 rounds of simulations for each setup, and each round simulates for \SI
 % Grouped figure
 %\input{ch5_optic/figures/exploration_results/grouped.tex}
 
-% New figure
-\input{ch5_optic/figures/exploration_results/perf.tex}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\columnwidth]{ch5_optic/figures/voltage_traces.pdf}
-    \caption{An instance of supply voltage traces in simulation. }
-    \label{fig:simulation_voltage}
-\end{figure}
-
 \fref{fig:simulation_perf} shows the mean, maximum, and minimum numbers of completed and failed operations in the variable workload test. 
 \debs{} Low cannot terminate once it encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
 \debs{} Low can only occasionally get progress on lightweight operations before non-termination. 
@@ -199,6 +189,15 @@ The adaptive scheme runs the most efficiently among these four.
 It runs at reduced operating voltage that improves system energy efficiency, and also guarantees the completion of every task by setting a minimised but safe threshold.
 As an example voltage trace shown in \fref{fig:simulation_voltage}, the adaptive scheme runs with \SI{2.11}{\volt} mean voltage, while the ones for Samoyed and \debs{} High are \SI{2.36}{\volt} and \SI{2.40}{\volt} respectively. 
 Due to the above reasons, the adaptive scheme completes more operations over Samoyed by 50\% and \debs{} High by 15\% on average.
+
+\input{ch5_optic/figures/exploration_results/perf.tex}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\columnwidth]{ch5_optic/figures/voltage_traces.pdf}
+    \caption{An instance of supply voltage traces in simulation. }
+    \label{fig:simulation_voltage}
+\end{figure}
 
 \input{ch5_optic/figures/exploration_results/cap.tex}
 
