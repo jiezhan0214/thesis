@@ -1,8 +1,23 @@
 \section{\nn{} Runtime Energy Adaptation} \label{sec:method2}
 
-% (may goes to Method 2) 
-% \item Ability to monitor the supply voltage and signal the MCU to wake up or sleep when a high or low threshold is hit. 
-% Intermittent systems are also equipped with voltage monitoring function to determine when to wake up or sleep, which may be achieved by a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, an energy management unit~\cite{gomez2016dynamic, maeng2019supporting}, or a constant ADC polling. 
+\nn{} runtime energy adaptation utilises the presented runtime energy profiling to dynamically adapts the voltage threshold to the latest energy consumption of a task. 
+This method assumes the system is able to monitor the supply voltage and signal the MCU to wake up or sleep when a high or low threshold is hit, and the threshold is configurable by the MCU at runtime. 
+The voltage monitoring ability is widely required by prior IPSs in the forms of a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, an energy management unit~\cite{gomez2016dynamic, maeng2019supporting}, or a periodic ADC polling~\cite{sliper2019efficient}. 
+
+\nn{} runtime energy adaptation is decoupled with the method of energy profiling. 
+The adaptation scheme requires an interface of the energy profiling method that can return a profiling result and trigger an instance of profiling.
+
+
+% Outline
+% goal
+% basic adaptation for constant operation
+%   flowchart
+% optional linear adaptation
+% optional multiple configurations (can be similar to multiple atom_func_state)
+
+
+
+
 
 Support three types of adaptation.
 

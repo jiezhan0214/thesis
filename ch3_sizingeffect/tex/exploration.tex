@@ -118,7 +118,7 @@ For example, reducing from \SI{325}{\micro\farad} to \SI{90}{\micro\farad} gives
 
 \subsubsection{Impact of Volatile State Size}
 
-The size of volatile state differs across applications with different amounts of RAM usage, and hence incurs varying time and energy overheads for restore and save operations. We measured time overheads of restore and save operations in the minimum case (64B register data and a 160B stack) and the maximum case (64B register data and a full 2048B RAM) respectively as shown in Table~\ref{tab:ramscale}. As these time overheads are expected to be linear to the state size~\cite{Sliper:2019:ESR:3316781.3317812}, the model can be tuned for various volatile state sizes by linearly scaling the profiled values. 
+The size of volatile state differs across applications with different amounts of RAM usage, and hence incurs varying time and energy overheads for restore and save operations. We measured time overheads of restore and save operations in the minimum case (64B register data and a 160B stack) and the maximum case (64B register data and a full 2048B RAM) respectively as shown in Table~\ref{tab:ramscale}. As these time overheads are expected to be linear to the state size~\cite{sliper2019efficient}, the model can be tuned for various volatile state sizes by linearly scaling the profiled values. 
 
 % In the MCU we explore, volatile state includes CPU registers and SRAM data, which takes 64B and 160-2048B. 
 
