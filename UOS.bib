@@ -168,18 +168,6 @@
   issn      = {1063-9667},
   month     = {Jan}
 }
-@article{balsamo2015hibernus,
-  author   = {D. {Balsamo} and A. S. {Weddell} and G. V. {Merrett} and B. M. {Al-Hashimi} and D. {Brunelli} and L. {Benini}},
-  journal  = {IEEE Embedded Systems Letters},
-  title    = {Hibernus: Sustaining Computation During Intermittent Supply for Energy-Harvesting Systems},
-  year     = {2015},
-  volume   = {7},
-  number   = {1},
-  pages    = {15-18},
-  doi      = {10.1109/LES.2014.2371494},
-  issn     = {1943-0663},
-  month    = {March}
-}
 @article{7403941,
   author   = {D. {Balsamo} and A. {Das} and A. S. {Weddell} and D. {Brunelli} and B. M. {Al-Hashimi} and G. V. {Merrett} and L. {Benini}},
   journal  = {IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},
@@ -314,6 +302,18 @@
   title       = {Low Leakage Current Aspect of Designing with Tantalum and Niobium Oxide Capacitors},
   institution = {AVX},
   year        = {2012}
+}
+@article{balsamo2015hibernus,
+  author  = {D. {Balsamo} and A. S. {Weddell} and G. V. {Merrett} and B. M. {Al-Hashimi} and D. {Brunelli} and L. {Benini}},
+  journal = {IEEE Embedded Systems Letters},
+  title   = {Hibernus: Sustaining Computation During Intermittent Supply for Energy-Harvesting Systems},
+  year    = {2015},
+  volume  = {7},
+  number  = {1},
+  pages   = {15-18},
+  doi     = {10.1109/LES.2014.2371494},
+  issn    = {1943-0663},
+  month   = {March}
 }
 @article{balsamo2016graceful,
   title     = {Graceful performance modulation for power-neutral transient computing systems},
@@ -504,6 +504,16 @@
   year         = {2013},
   organization = {ACM}
 }
+@inproceedings{deep2020harc,
+  author    = {Deep, Vishal and Narayanan, Vishak and Wymore, Mathew and Qiao, Daji and Duwe, Henry},
+  booktitle = {2020 IEEE Real-Time Systems Symposium (RTSS)},
+  title     = {HARC: A Heterogeneous Array of Redundant Persistent Clocks for Batteryless, Intermittently-Powered Systems},
+  year      = {2020},
+  volume    = {},
+  number    = {},
+  pages     = {270-282},
+  doi       = {10.1109/RTSS49844.2020.00033}
+}
 @article{doi:10.1098/rsta.2019.0158,
   author  = {Sliper, Sivert T.  and Cetinkaya, Oktay  and Weddell, Alex S.  and Al-Hashimi, Bashir  and Merrett, Geoff V. },
   title   = {Energy-driven computing},
@@ -544,13 +554,13 @@
 @misc{exynos,
   howpublished = {\url{https://www.samsung.com/semiconductor/minisite/exynos/products/mobileprocessor/exynos-5-octa-5422/}},
   title        = {Exynos 5 Octa (5422): The big.LITTLE Octa-core Mobile Processor with HMP Solution}
-}
+} 
 @misc{fft,
   author       = {Evan Wakefield},
   title        = {Benchmarking the Signal Processing Capabilities of the Low-Energy Accelerator on MSP430™ MCUs},
   howpublished = {\url{http://www.ti.com/lit/an/slaa698b/slaa698b.pdf}},
   note         = {Last accessed: 21 May, 2019}
-} 
+}
 @inproceedings{fletcher2017power,
   title        = {Power neutral performance scaling for energy harvesting MP-SoCs},
   author       = {Fletcher, Benjamin J and Balsamo, Domenico and Merrett, Geoff V},
@@ -590,6 +600,25 @@
   author  = {Heinemann, Detlev and Lorenz, Elke and Girodo, Marco},
   journal = {Solar energy resource management for electricity generation from local level to global scale. Nova Science Publishers, New York},
   year    = {2006}
+}
+@article{hester2016persistent,
+  author     = {Hester, Josiah and Tobias, Nicole and Rahmati, Amir and Sitanayah, Lanny and Holcomb, Daniel and Fu, Kevin and Burleson, Wayne P. and Sorber, Jacob},
+  title      = {Persistent Clocks for Batteryless Sensing Devices},
+  year       = {2016},
+  issue_date = {August 2016},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {15},
+  number     = {4},
+  issn       = {1539-9087},
+  url        = {https://doi.org/10.1145/2903140},
+  doi        = {10.1145/2903140},
+  abstract   = {Sensing platforms are becoming batteryless to enable the vision of the Internet of Things, where trillions of devices collect data, interact with each other, and interact with people. However, these batteryless sensing platforms—that rely purely on energy harvesting—are rarely able to maintain a sense of time after a power failure. This makes working with sensor data that is time sensitive especially difficult. We propose two novel, zero-power timekeepers that use remanence decay to measure the time elapsed between power failures. Our approaches compute the elapsed time from the amount of decay of a capacitive device, either on-chip Static Random-Access Memory (SRAM) or a dedicated capacitor. This enables hourglass-like timers that give intermittently powered sensing devices a persistent sense of time. Our evaluation shows that applications using either timekeeper can keep time accurately through power failures as long as 45s with low overhead.},
+  journal    = {ACM Trans. Embed. Comput. Syst.},
+  month      = {aug},
+  articleno  = {77},
+  numpages   = {28},
+  keywords   = {CRFID, SRAM, clocks, batteryless, RTC, Remanence timekeepers}
 }
 @inproceedings{hester2017new,
   title     = {New Directions: The Future of Sensing is Batteryless, Intermittent, and Awesome},
@@ -965,24 +994,6 @@
   year      = {2008},
   publisher = {IEEE}
 }
-@inproceedings{mitcheson2010energy,
-  title        = {Energy harvesting for human wearable and implantable bio-sensors},
-  author       = {Mitcheson, Paul D},
-  booktitle    = {Engineering in Medicine and Biology Society (EMBC), 2010 Annual International Conference of the IEEE},
-  pages        = {3432--3436},
-  year         = {2010},
-  organization = {IEEE}
-}
-@article{morais2008sun,
-  title     = {Sun, wind and water flow as energy supply for small stationary data acquisition platforms},
-  author    = {Morais, Raul and Matos, Samuel G and Fernandes, Miguel A and Valente, Ant{\'o}nio LG and Soares, Salviano FSP and Ferreira, PJSG and Reis, MJCS},
-  journal   = {Computers and electronics in agriculture},
-  volume    = {64},
-  number    = {2},
-  pages     = {120--132},
-  year      = {2008},
-  publisher = {Elsevier}
-}
 
 
 
@@ -996,6 +1007,24 @@ work1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+@inproceedings{mitcheson2010energy,
+  title        = {Energy harvesting for human wearable and implantable bio-sensors},
+  author       = {Mitcheson, Paul D},
+  booktitle    = {Engineering in Medicine and Biology Society (EMBC), 2010 Annual International Conference of the IEEE},
+  pages        = {3432--3436},
+  year         = {2010},
+  organization = {IEEE}
+} 
+@article{morais2008sun,
+  title     = {Sun, wind and water flow as energy supply for small stationary data acquisition platforms},
+  author    = {Morais, Raul and Matos, Samuel G and Fernandes, Miguel A and Valente, Ant{\'o}nio LG and Soares, Salviano FSP and Ferreira, PJSG and Reis, MJCS},
+  journal   = {Computers and electronics in agriculture},
+  volume    = {64},
+  number    = {2},
+  pages     = {120--132},
+  year      = {2008},
+  publisher = {Elsevier}
+}
 @article{moss2015scaling,
   title     = {Scaling and power density metrics of electromagnetic vibration energy harvesting devices},
   author    = {Moss, Scott D and Payne, Owen R and Hart, Genevieve A and Ung, Chandarin},
@@ -1005,7 +1034,7 @@ work1
   pages     = {023001},
   year      = {2015},
   publisher = {IOP Publishing}
-} 
+}
 @inproceedings{naderiparizi2015wispcam,
   title        = {WISPCam: A battery-free RFID camera},
   author       = {Naderiparizi, Saman and Parks, Aaron N and Kapetanovic, Zerina and Ransford, Benjamin and Smith, Joshua R},
@@ -1013,7 +1042,7 @@ work1
   pages        = {166--173},
   year         = {2015},
   organization = {IEEE}
-}
+} 
 @misc{nreldata,
   howpublished = {\url{https://maps.nrel.gov/nsrdb-viewer/}},
   title        = {National Solar Radiation Database Data Viewer}
@@ -1036,7 +1065,7 @@ work1
   pages        = {168--177},
   year         = {2006},
   organization = {IEEE}
-}
+} 
 @inproceedings{parks2013wireless,
   title        = {A wireless sensing platform utilizing ambient RF energy},
   author       = {Parks, Aaron N and Sample, Alanson P and Zhao, Yi and Smith, Joshua R},
@@ -1044,7 +1073,7 @@ work1
   pages        = {160--162},
   year         = {2013},
   organization = {IEEE}
-} 
+}
 @article{patel2008maximum,
   title     = {Maximum power point tracking scheme for PV systems operating under partially shaded conditions},
   author    = {Patel, Hiren and Agarwal, Vivek},
@@ -1054,7 +1083,7 @@ work1
   pages     = {1689--1698},
   year      = {2008},
   publisher = {IEEE}
-} 
+}
 @article{paz2016high,
   title     = {High-performance solar MPPT using switching ripple identification based on a lock-in amplifier},
   author    = {Paz, Francisco and Ordonez, Martin},
@@ -1073,6 +1102,7 @@ work1
   year         = {2012},
   organization = {IEEE}
 }
+
 @inproceedings{pillai2001real,
   title        = {Real-time dynamic voltage scaling for low-power embedded operating systems},
   author       = {Pillai, Padmanabhan and Shin, Kang G},
@@ -1091,7 +1121,6 @@ work1
   year         = {2009},
   organization = {IEEE}
 }
-
 @article{prauzek2018energy,
   title     = {Energy harvesting sources, storage devices and system topologies for environmental wireless sensor networks: A review},
   author    = {Prauzek, Michal and Konecny, Jaromir and Borova, Monika and Janosova, Karolina and Hlavica, Jakub and Musilek, Petr},
@@ -1120,6 +1149,7 @@ work1
   year         = {2005},
   organization = {IEEE}
 }
+
 @inproceedings{rakhmatov2002battery,
   title        = {Battery lifetime prediction for energy-aware computing},
   author       = {Rakhmatov, Daler and Vrudhula, Sarma and Wallach, Deborah A},
@@ -1128,6 +1158,7 @@ work1
   year         = {2002},
   organization = {ACM}
 }
+
 @inproceedings{Ransford:2011:MSS:1950365.1950386,
   author    = {Ransford, Benjamin and Sorber, Jacob and Fu, Kevin},
   title     = {Mementos: System Support for Long-running Computation on RFID-scale Devices},
@@ -1167,30 +1198,14 @@ work1
   publisher = {ACM}
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-work1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-=============================================
-= CapSizing =================================
-= Start =====================================
-=============================================
-replicate items are labelled with 'ieee' at the end
 @article{renner2009lifetime,
   title   = {Lifetime prediction for supercapacitor-powered wireless sensor nodes},
   author  = {Renner, Christian and Jessen, J{\"u}rgen and Turau, Volker},
   journal = {Proceedings of FGSN},
   pages   = {1--6},
   year    = {2009}
-}
+} 
+
 
 @inproceedings{rodriguez2015approaches,
   title        = {Approaches to transient computing for energy harvesting systems: A quantitative evaluation},
@@ -1208,8 +1223,7 @@ replicate items are labelled with 'ieee' at the end
   pages        = {1--6},
   year         = {2017},
   organization = {IEEE}
-} 
-
+}
 
 @article{rodriguez2018restop,
   author         = {Rodriguez Arreola, Alberto and Balsamo, Domenico and Merrett, Geoff V. and Weddell, Alex S.},
@@ -1243,6 +1257,8 @@ replicate items are labelled with 'ieee' at the end
   year      = {2008},
   publisher = {IEEE}
 }
+  
+
 
 @inproceedings{seah2009wireless,
   title        = {Wireless sensor networks powered by ambient energy harvesting (WSN-HEAP)-Survey and challenges},
@@ -1264,8 +1280,6 @@ replicate items are labelled with 'ieee' at the end
   url     = {https://www.sciencedirect.com/science/article/pii/S1364032115012629},
   author  = {Faisal Karim Shaikh and Sherali Zeadally}
 }
-  
-
 
 @inproceedings{sharma2010cloudy,
   title        = {Cloudy computing: Leveraging weather forecasts in energy harvesting sensor systems},
@@ -1275,6 +1289,7 @@ replicate items are labelled with 'ieee' at the end
   year         = {2010},
   organization = {IEEE}
 }
+month=may,
 
 @article{sharma2010optimal,
   title     = {Optimal energy management policies for energy harvesting sensor nodes},
@@ -1295,8 +1310,7 @@ replicate items are labelled with 'ieee' at the end
   pages     = {30--42},
   year      = {2001},
   publisher = {IEEE}
-}
-month=may,
+} 
 
 @article{shi2016edge,
   title     = {Edge computing: Vision and challenges},
@@ -1318,7 +1332,7 @@ month=may,
   pages     = {1499},
   year      = {2006},
   publisher = {IOP Publishing}
-} 
+}
 
 @inproceedings{simjee2006everlast,
   title        = {Everlast: long-life, supercapacitor-operated wireless sensor node},
@@ -1327,7 +1341,7 @@ month=may,
   pages        = {197--202},
   year         = {2006},
   organization = {ACM}
-}
+} 
 
 @article{simjee2008efficient,
   title     = {Efficient charging of supercapacitors for extended lifetime of wireless sensor nodes},
@@ -1340,6 +1354,15 @@ month=may,
   publisher = {IEEE}
 }
 
+@inproceedings{sliper2018enabling,
+  title        = {Enabling intermittent computing on high-performance out-of-order processors},
+  author       = {Sliper, Sivert T and Balsamo, Domenico and Weddell, Alex S and Merrett, Geoff V},
+  booktitle    = {Proceedings of the 6th International Workshop on Energy Harvesting \& Energy-Neutral Sensing Systems},
+  pages        = {19--25},
+  year         = {2018},
+  organization = {ACM}
+}
+
 @inproceedings{sliper2019efficient,
   author    = {Sliper, Sivert T. and Balsamo, Domenico and Nikoleris, Nikos and Wang, William and Weddell, Alex S. and Merrett, Geoff V.},
   title     = {Efficient State Retention Through Paged Memory Management for Reactive Transient Computing},
@@ -1348,15 +1371,6 @@ month=may,
   month     = jun,
   year      = {2019},
   pages     = {26:1--26:6}
-} 
-
-@inproceedings{sliper2018enabling,
-  title        = {Enabling intermittent computing on high-performance out-of-order processors},
-  author       = {Sliper, Sivert T and Balsamo, Domenico and Weddell, Alex S and Merrett, Geoff V},
-  booktitle    = {Proceedings of the 6th International Workshop on Energy Harvesting \& Energy-Neutral Sensing Systems},
-  pages        = {19--25},
-  year         = {2018},
-  organization = {ACM}
 }
 
 @article{sliper2020energy-driven,
@@ -1379,7 +1393,7 @@ month=may,
 @misc{smallpt,
   howpublished = {\url{http://www.kevinbeason.com/smallpt/}},
   title        = {smallpt: Global Illumination in 99 lines of C++}
-}
+} 
 
 @misc{solarcell,
   author       = {Panasonic},
@@ -1392,7 +1406,7 @@ month=may,
   title = {Panasonic Amorton Solar Cells},
   note  = {{Accessed:} Jul. 2020},
   url   = {https://www.panasonic-electric-works.com/cps/rde/xbcr/pew_eu_en/ca_amorton_solar_cells_en.pdf}
-} 
+}
 
 @techreport{sparks2017trillion,
   author      = {Philip Sparks},
@@ -1437,6 +1451,7 @@ month=may,
   month   = jul,
   year    = {2019}
 }
+url = {https://www.avx.com/docs/techinfo/Low_Leakage_Current_Aspect_Designing_Tantalum_Niobium_Oxide_Capacitors.pdf},
 
 @article{su2017ferroelectric,
   title     = {A Ferroelectric Nonvolatile Processor with 46$\mu$s System-Level Wake-up Time and 14$\mu$s Sleep Time for Energy Harvesting Applications},
@@ -1448,6 +1463,7 @@ month=may,
   year      = {2017},
   publisher = {IEEE}
 }
+url = {http://datasheets.avx.com/TAJ_LOW_PROFILE.pdf},
 
 @inproceedings{su2017nonvolatile,
   title        = {Nonvolatile processors: Why is it trending?},
@@ -1457,7 +1473,8 @@ month=may,
   year         = {2017},
   organization = {IEEE}
 }
-url = {https://www.avx.com/docs/techinfo/Low_Leakage_Current_Aspect_Designing_Tantalum_Niobium_Oxide_Capacitors.pdf},
+url = {http://doi.acm.org/10.1145/3316781.3317812},
+
 
 @article{sudevalayam2011energy,
   title     = {Energy harvesting sensor nodes: Survey and implications},
@@ -1469,7 +1486,6 @@ url = {https://www.avx.com/docs/techinfo/Low_Leakage_Current_Aspect_Designing_Ta
   year      = {2011},
   publisher = {IEEE}
 }
-url = {http://datasheets.avx.com/TAJ_LOW_PROFILE.pdf},
 
 @article{sun2017maximum,
   title     = {Maximum energy efficiency tracking circuits for converter-less energy harvesting sensor nodes},
@@ -1481,8 +1497,6 @@ url = {http://datasheets.avx.com/TAJ_LOW_PROFILE.pdf},
   year      = {2017},
   publisher = {IEEE}
 }
-url = {http://doi.acm.org/10.1145/3316781.3317812},
-
 
 @misc{tacap1,
   author       = {Vishay},
@@ -1503,6 +1517,11 @@ url = {http://doi.acm.org/10.1145/3316781.3317812},
   organization = {AVX}
 }
 
+=============================================
+= CapSizing =================================
+= End =======================================
+=============================================
+
 @inproceedings{taneja2008design,
   title        = {Design, modeling, and capacity planning for micro-solar power sensor networks},
   author       = {Taneja, Jay and Jeong, Jaein and Culler, David},
@@ -1522,11 +1541,6 @@ url = {http://doi.acm.org/10.1145/3316781.3317812},
   year      = {2008},
   publisher = {IOP Publishing}
 }
-
-=============================================
-= CapSizing =================================
-= End =======================================
-=============================================
 
 @article{travers2015cpu,
   title   = {CPU Power Consumption Experiments and Results Analysis of Intel i7-4820K},
@@ -1620,6 +1634,23 @@ url = {http://doi.acm.org/10.1145/3316781.3317812},
   pages     = {173--186},
   year      = {2016},
   publisher = {IEEE}
+}
+
+@inproceedings{winkel2020reliable,
+  author    = {de Winkel, Jasper and Delle Donne, Carlo and Yildirim, Kasim Sinan and Pawe\l{}czak, Przemys\l{}aw and Hester, Josiah},
+  title     = {Reliable Timekeeping for Intermittent Computing},
+  year      = {2020},
+  isbn      = {9781450371025},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3373376.3378464},
+  doi       = {10.1145/3373376.3378464},
+  booktitle = {Proceedings of the Twenty-Fifth International Conference on Architectural Support for Programming Languages and Operating Systems},
+  pages     = {53–67},
+  numpages  = {15},
+  keywords  = {timekeeping, energy harvesting, embedded sensor networks},
+  location  = {Lausanne, Switzerland},
+  series    = {ASPLOS '20}
 }
 
 @article{wu2012efficient,
