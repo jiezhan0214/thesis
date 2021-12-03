@@ -45,7 +45,7 @@ Conversely, reactive approaches monitor the supply voltage and only save state w
 % The volatile state is lost when the supply voltage drops below the minimum operating threshold, while the saved state in NVM is retained. The saved state is restored from NVM when the supply voltage recovers to a restore threshold, and then the execution continues from the last saved point. 
 % Therefore, forward execution is preserved. 
 
-In ICSs, \textit{forward progress} denotes the effective application progress, excluding re-executed progress, lost progress, and state-saving and -restoring operations~\cite{7478428}. The amount of forward progress directly determines application performance, e.g. program iteration rate or task completion time. In this paper, to allow fair comparison, we define normalized forward progress as \textit{the ratio of the effective execution time to the total elapsed time}, without being restricted to a specific workload. 
+In ICSs, \textit{forward progress} denotes the effective application progress, excluding re-executed progress, lost progress, and state-saving and -restoring operations~\cite{7478428}. The amount of forward progress directly determines application performance, e.g. program iteration rate or task completion time. In this paper, to allow fair comparison, we define normalised forward progress as \textit{the ratio of the effective execution time to the total elapsed time}, without being restricted to a specific workload. 
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % turn into the main topic now: modelling progress, improvement by sizing energy storage 
@@ -56,7 +56,7 @@ In ICSs, \textit{forward progress} denotes the effective application progress, e
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=3.33in]{ch3_sizingeffect/figures/ImprValidColorFig1}
+    \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/ImprValidColorFig1}
     \caption{The relationship between energy storage capacitance and ICS forward progress, for various supply currents. }
     \label{fig:imprvalid1}
 \end{figure}
@@ -66,7 +66,7 @@ In ICSs, \textit{forward progress} denotes the effective application progress, e
 % What we did? What we did differently from them?
 % We provide a modelling approach to estimate forward progress of an ICS in real-world deployment, considering energy source conditions as well as the forward progressing behaviours intermittent computing. This model can be used to explore the effect of energy harvester and energy storage sizing on forward progress. Further, we provide an approach for sizing energy storage in intermittent systems. 
 
-With the goal of minimizing device dimensions and interruption periods, most ICS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+With the goal of minimising device dimensions and interruption periods, most ICS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
 This is typically just sufficient for the most energy-expensive atomic operation. 
 % \cite{6960060} // hibernus
 % \cite{7403941} // graceful
@@ -94,7 +94,7 @@ This paper presents an approach for sizing energy storage in ICSs, quantifying a
 \begin{itemize}
     \item A reactive ICS model which accurately estimates forward progress; experimental validation shows a 0.5\% mean error (Section~\ref{section:model}). %(Section~\ref{section:experiment}).
     \item A model-based sizing approach that recommends appropriate energy storage capacitance in ICSs (Section~\ref{section:approach}).
-	\item An exploration based on the model, where we analyze the energy storage sizing effect on forward progress, showing up to 65\% forward progress improvement (Section~\ref{section:exploration}).     % with respect to supply current and volatile state size, 
+	\item An exploration based on the model, where we analyse the energy storage sizing effect on forward progress, showing up to 65\% forward progress improvement (Section~\ref{section:exploration}).     % with respect to supply current and volatile state size, 
     % while reduces capacitor volume by \SI{71.7}{\percent} and interruption periods by \SI{83.8}{\percent} as simulated with real energy availability data (Section~\ref{section:demo}). 
     % that trades off forward progress, capacitor volume, and interruption periods in ICSs . 
     \item An evaluation of the impact of sizing in real-world conditions using real energy availability data (Section~\ref{section:demo}). This includes a cost function-based method for trading off parameters. In an example, this reduced capacitor volume and interruption periods by 83\% and 91\% respectively, while sacrificing 7\% of forward progress.

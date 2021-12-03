@@ -28,7 +28,7 @@ where $\lambda$ denotes the ratio of the actual current leakage at $V_{cc}$ to t
 \begin{equation}
     \lambda = 0.05 \times 20^{\frac{V_{cc}}{V_{rated}}}
 \end{equation}
-We assume a typical load of $<$ \SI{4.0}{\volt} so, to minimize leakage, we select a device with $V_{rated} =$ \SI{10}{\volt} so as to operate between 25-40\% of its rated voltage~\cite{avxleakage}. 
+We assume a typical load of $<$ \SI{4.0}{\volt} so, to minimise leakage, we select a device with $V_{rated} =$ \SI{10}{\volt} so as to operate between 25-40\% of its rated voltage~\cite{avxleakage}. 
 
 % Here, $V_{cc}$ affects both the energy harvester and the load. On the harvester side, $V_{cc}$ is the operating voltage of PV cells, which has an effect on the harvested current $I_{harvest}$. On the load side, $V_{cc}$ is the supply voltage, which determines when the load wakes up or powers off (affecting $I_{load}$). Hence, the energy storage, the energy harvester, and the load impact on each other through $V_{cc}$, $I_{harvest}$, and $I_{load}$. 
 
@@ -93,19 +93,19 @@ Typically, commercially-available capacitors have a $\pm$20\% tolerance. The eff
 
 \begin{figure}[!t]
   \centering
-  \includegraphics[width=3.2in]{ch3_sizingeffect/figures/StorCCur6Fig} 
+  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/StorCCur6Fig} 
   \caption{Forward progress against energy storage capacitance at different levels of constant supply current. Error bars around optimal points denote the impact of typical $\pm$20\% capacitance tolerance. }
   \label{fig:fpwconstcurr}
 \end{figure}
 
 \begin{figure}[!t]
   \centering
-  \includegraphics[width=3.2in]{ch3_sizingeffect/figures/StorCCurMax4Fig}
-  \caption{Maximum forward progress improvement by sizing energy storage given a spectrum of supply current (normalized by the minimum capacitance case), with the corresponding maximum and sub-maximum (95\% of maximum) capacitance. }
+  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/StorCCurMax4Fig}
+  \caption{Maximum forward progress improvement by sizing energy storage given a spectrum of supply current (normalised by the minimum capacitance case), with the corresponding maximum and sub-maximum (95\% of maximum) capacitance. }
   \label{fig:maxfwp}
 \end{figure}
 
-\figurename{~\ref{fig:maxfwp}} shows that an improvement in forward progress of up to 65\%  can be achieved when using the optimal capacitance instead of the minimum. However, it may not be desirable to set the capacitance solely for maximizing forward progress, because there are often trade-offs with other factors including increased interruption periods and dimensions. 
+\figurename{~\ref{fig:maxfwp}} shows that an improvement in forward progress of up to 65\%  can be achieved when using the optimal capacitance instead of the minimum. However, it may not be desirable to set the capacitance solely for maximising forward progress, because there are often trade-offs with other factors including increased interruption periods and dimensions. 
 % (explored in Section~\ref{subsec:tradeoff}).
 % In real-world energy source conditions, the supply current varies across this spectrum, and hence leads to an overall progress improvement based on its supply distribution. 
 % This improvement exists only when the device operates in the Intermittent mode, since the device keeps either inactive in the Off mode or active in the On mode without the need for restoring and saving state. 
@@ -145,7 +145,7 @@ An example of this is plotted in \figurename{~\ref{fig:ram}}. The forward progre
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=3.2in]{ch3_sizingeffect/figures/RSTORAM3Fig}
-    \caption{Impact of RAM usage (linear to restore/save overheads) on sizing energy storage with \SI{0.4}{\milli\ampere} current supply. Improvement and reduction are normalized by the minimum capacitance case. }
+    \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/RSTORAM3Fig}
+    \caption{Impact of RAM usage (linear to restore/save overheads) on sizing energy storage with \SI{0.4}{\milli\ampere} current supply. Improvement and reduction are normalised by the minimum capacitance case. }
     \label{fig:ram}
 \end{figure}

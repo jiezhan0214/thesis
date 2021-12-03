@@ -10,7 +10,7 @@
 
 % Assumptions. low variation in harvested power, how low? what's the impact of high variance input?
 % given a constant current supply
-To facilitate the understanding and exploration of reactive ICSs, we present a model which outputs the normalized forward progress $\alpha_{exe}$ when powered from a constant current supply $I_{harv}$. Parameters of this model are listed in Table~\ref{tab:parameter}. 
+To facilitate the understanding and exploration of reactive ICSs, we present a model which outputs the normalised forward progress $\alpha_{exe}$ when powered from a constant current supply $I_{harv}$. Parameters of this model are listed in Table~\ref{tab:parameter}. 
 %This accounts for the \textit{Energy Storage} and \textit{Intermittent Load} modules in the system model, allowing the expected forward progress to be evaluated.
 % The input parameters $I_{harv}$ and $C$ are related to the size configuration of energy harvester and energy storage respectively. 
 % for a period of time that long enough to omit an individual uncompleted operating cycle. 
@@ -47,7 +47,7 @@ The model assumes that all configuration parameters remain constant.
         \hline
         \multicolumn{2}{|c|}{\textbf{Output Parameter}}\\
         \hline
-        $\alpha_{exe}$ & Normalized forward progress \\ 
+        $\alpha_{exe}$ & Normalised forward progress \\ 
         \hline
     \end{tabular}
 \end{table}
@@ -61,11 +61,11 @@ For brevity, $I_{in}$ denotes the usable input current as expressed in (\ref{eq:
 
 \subsection{Operating Modes of Reactive ICS}
 
-The behavior of reactive ICSs can be classified into three operating modes depending on the supply current, as shown in \figurename{~\ref{fig:operatingModes}}. These are differentiated by the relationship between input current $I_{in}$ and the system's current draw in its low-power mode (LPM) or active modes, i.e. $I_{lpm}$ and $I_{exe}$. We define the three modes as:
+The behaviour of reactive ICSs can be classified into three operating modes depending on the supply current, as shown in \figurename{~\ref{fig:operatingModes}}. These are differentiated by the relationship between input current $I_{in}$ and the system's current draw in its low-power mode (LPM) or active modes, i.e. $I_{lpm}$ and $I_{exe}$. We define the three modes as:
 
 \begin{figure}[!t]
   \centering
-  \includegraphics[width=3.2in]{ch3_sizingeffect/figures/OperatingMode0Fig}
+  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/OperatingMode0Fig}
   \caption{Operating modes of reactive ICSs, and achieved forward progress against supply current.}
   \label{fig:operatingModes}
 \end{figure}
@@ -88,7 +88,7 @@ The behavior of reactive ICSs can be classified into three operating modes depen
 
 Next, we derive formulations to calculate $\alpha_{exe}$ from $I_{in}$ and energy storage capacitance $C$. We then explore the effect of capacitor leakage on maximum forward progress. 
 
-In the \textit{On} and \textit{Off} modes, the normalized forward progress is trivial to find (simply 1 and 0 respectively). In the \textit{Intermittent} mode,  as shown in \figurename{~\ref{fig:operatingCycle}}, the system goes through four intervals in turn, i.e. charging, restoring, executing, and saving, with current consumption of $I_{lpm}$, $I_{r}$, $I_{exe}$, and $I_{s}$ in each interval respectively. The normalized forward progress, i.e. effective execution time ratio, is indicated as $T_{exe} / T_{cycle}$, where $T_{exe}$ is the time spent on effective execution in one operating cycle and $T_{cycle}$ is the period of operating cycles. Hence, the forward progress given all supply levels is expressed as:
+In the \textit{On} and \textit{Off} modes, the normalised forward progress is trivial to find (simply 1 and 0 respectively). In the \textit{Intermittent} mode,  as shown in \figurename{~\ref{fig:operatingCycle}}, the system goes through four intervals in turn, i.e. charging, restoring, executing, and saving, with current consumption of $I_{lpm}$, $I_{r}$, $I_{exe}$, and $I_{s}$ in each interval respectively. The normalised forward progress, i.e. effective execution time ratio, is indicated as $T_{exe} / T_{cycle}$, where $T_{exe}$ is the time spent on effective execution in one operating cycle and $T_{cycle}$ is the period of operating cycles. Hence, the forward progress given all supply levels is expressed as:
 \begin{equation}
     \alpha_{exe} = \left\{
     \begin{aligned}
@@ -102,7 +102,7 @@ In the \textit{On} and \textit{Off} modes, the normalized forward progress is tr
 
 \begin{figure}[!t]
   \centering
-  \includegraphics[width=3.33in]{ch3_sizingeffect/figures/CRESdemoFig}
+  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/CRESdemoFig}
   \caption{Operating cycles in the \textit{Intermittent} mode. }
   \label{fig:operatingCycle}
 \end{figure}
@@ -142,7 +142,7 @@ With (\ref{eq:texe}) and (\ref{eq:tcharge}), the period of an operating cycle is
   \label{eq:tperiod}
 \end{equation}
 
-Finally, combining (\ref{eq:vpr})--(\ref{eq:tperiod}), we obtain normalized forward progress $\alpha_{exe}$ in the \textit{Intermittent} mode as:
+Finally, combining (\ref{eq:vpr})--(\ref{eq:tperiod}), we obtain normalised forward progress $\alpha_{exe}$ in the \textit{Intermittent} mode as:
 \begin{equation}
     \begin{aligned}
         \alpha_{exe} &= \frac{T_{exe}}{T_{cycle}} \\ %, \quad I_{lpm} < I_{in} < I_{exe}
@@ -157,7 +157,7 @@ In the numerator $T_{exe}$, $C(V_{r} - V_{s})$ represents the amount of charge i
 % Higher $\alpha_{exe}$ leads to more time spent on forward progress. 
 
 % As $d\alpha_{exe} / dI_{in}$ is positive, higher harvested current $I_{harv}$ leads to more forward progress. 
-To explore the effect of energy storage on forward progress, we need to analyze $d\alpha_{exe} / dC$. Here, if we assume that $I_{leak}$ remains constant, $\alpha_{exe}$ keeps increasing and approaches $(I_{in} - I_{lpm}) / (I_{exe} - I_{lpm})$ when energy storage capacitance $C$ increases. Defining $(I_{in} - I_{lpm}) / (I_{exe} - I_{lpm})$ as $\alpha_{exe\_ideal}$, $\alpha_{exe} = \alpha_{exe\_ideal}$ is an ideal case, where restore and save overheads are absent.
+To explore the effect of energy storage on forward progress, we need to analyse $d\alpha_{exe} / dC$. Here, if we assume that $I_{leak}$ remains constant, $\alpha_{exe}$ keeps increasing and approaches $(I_{in} - I_{lpm}) / (I_{exe} - I_{lpm})$ when energy storage capacitance $C$ increases. Defining $(I_{in} - I_{lpm}) / (I_{exe} - I_{lpm})$ as $\alpha_{exe\_ideal}$, $\alpha_{exe} = \alpha_{exe\_ideal}$ is an ideal case, where restore and save overheads are absent.
 
 In an electrolytic capacitor, however, $I_{leak}$ typically increases with $C$ with the following relationship~\cite{avxleakage}:
 \begin{equation}

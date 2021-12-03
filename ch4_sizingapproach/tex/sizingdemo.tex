@@ -9,7 +9,7 @@ In this section, we model an ICS with a photovoltaic (PV) energy harvester to ex
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=3.3in]{ch4_sizingapproach/figures/solarmodel4}
+    \includegraphics[width=0.8\columnwidth]{ch4_sizingapproach/figures/solarmodel4}
     \caption{System model of a PV-based ICS.}
     \label{fig:Model}
 \end{figure}
@@ -74,8 +74,8 @@ For the purposes of this exploration, three levels of baseline mean forward prog
 
 Having obtained the energy harvester sizes for the baseline forward progress, we then use the modelling approach to size energy storage.
 % A table lists the PV panel area to achieve the target $\alpha_{exe}$ with minimum energy storage capacitance, the optimal capacitance with the forward progress improvement, and the alternative (decreased) PV panel area with the optimal capacitance. 
-We analyze the sizing effect of energy storage on forward progress given real-world energy conditions. \figurename{~\ref{fig:harvstor}} shows a 7.8-43.3\% improvement in forward progress by sizing energy storage under the given real-world energy conditions and baseline energy harvester sizes. 
-It can also be inferred that optimizing energy storage can either improve forward progress for a given energy harvester size, or reduce the energy harvester size that achieves the target forward progress. Given higher-power energy sources (e.g. Denver 2018 and Hawaii 2018 outdoor solar), increasing the harvester size efficiently improves forward progress with minor dimensional overheads, e.g. tens of \SI{}{\square\milli\meter}; however, given lower-power sources (e.g. EnHANTs Setup~A and Setup~D indoor light), optimizing energy storage capacitance can save tens of \SI{}{\square\centi\meter} of PV panel area to achieve the same forward progress.
+We analyse the sizing effect of energy storage on forward progress given real-world energy conditions. \figurename{~\ref{fig:harvstor}} shows a 7.8-43.3\% improvement in forward progress by sizing energy storage under the given real-world energy conditions and baseline energy harvester sizes. 
+It can also be inferred that optimising energy storage can either improve forward progress for a given energy harvester size, or reduce the energy harvester size that achieves the target forward progress. Given higher-power energy sources (e.g. Denver 2018 and Hawaii 2018 outdoor solar), increasing the harvester size efficiently improves forward progress with minor dimensional overheads, e.g. tens of \SI{}{\square\milli\meter}; however, given lower-power sources (e.g. EnHANTs Setup~A and Setup~D indoor light), optimising energy storage capacitance can save tens of \SI{}{\square\centi\meter} of PV panel area to achieve the same forward progress.
 
 % Also, the progress improvement by sizing energy storage varies accordingly with energy source conditions. This improvement stems from the reduction of restore and save overheads when the device works in the Intermittent mode, so this improvement becomes significant when the device works mostly in the Intermittent mode (typically when energy source is scarce, e.g. indoor source 1 and 2), and insignificant when the device works mostly in the On and Off modes (e.g. outdoor source 1 and 2). 
 
@@ -96,28 +96,28 @@ It can also be inferred that optimizing energy storage can either improve forwar
 
 \begin{figure}[!t]
     \centering
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{0.49\columnwidth}
         \centering
-        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig1}
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorTgFig1}
         \caption{EnHANTs Setup A}
         \label{fig:harvstor1}
     \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{0.49\columnwidth}
         \centering
-        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig2}
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorTgFig2}
         \caption{EnHANTs Setup D}
         \label{fig:harvstor2}
     \end{subfigure}
     \hfil
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{0.49\columnwidth}
         \centering
-        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig3}
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorTgFig3}
         \caption{NREL Denver 2018}
         \label{fig:harvstor3}
     \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
+    \begin{subfigure}{0.49\columnwidth}
         \centering
-        \includegraphics[width=1.66in]{ch4_sizingapproach/figures/HarvStorTgFig4}
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorTgFig4}
         \caption{NREL Hawaii 2018}
         \label{fig:harvstor4}
     \end{subfigure}
@@ -143,7 +143,7 @@ Facilitated by the simulator, developers are enabled to estimate whether the dis
     % \subfloat[a]{\includegraphics[width=2.8in]{IntPeriodFig}}
     % \label{fig:distribution}
     % \hfil
-    \includegraphics[width=3.2in]{ch4_sizingapproach/figures/IntPeriodOrdFig}
+    \includegraphics[width=0.85\columnwidth]{ch4_sizingapproach/figures/IntPeriodOrdFig}
     \caption{Distribution of interruption periods. }
     \label{fig:interruption}
 \end{figure}
@@ -313,7 +313,7 @@ Facilitated by the simulator, developers are enabled to estimate whether the dis
 
 \subsection{Trading Forward Progress, Dimensions, and Interruption Period} \label{subsec:tradeoff}
 
-% Prior intermittent computing approaches adopt only the minimum energy storage capacitance so as to minimize device dimensions and interruption periods. 
+% Prior intermittent computing approaches adopt only the minimum energy storage capacitance so as to minimise device dimensions and interruption periods. 
 
 Although increasing energy storage capacitance improves forward progress, larger capacitance increases both dimensions and interruption periods. We evaluate the overheads of increased capacitor dimensions and interruption periods, and then trade them off against forward progress using a cost function to suggest an optimal capacitance value. 
 % We evaluate this impact
@@ -326,8 +326,8 @@ The overhead of capacitor dimensions is evaluated by characteristics of off-the-
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=3.2in]{ch4_sizingapproach/figures/CapVol2Fig2}
-    \caption{Tantalum capacitor volume against capacitance for the six series of capacitors analyzed. }
+    \includegraphics[width=0.85\columnwidth]{ch4_sizingapproach/figures/CapVol2Fig2}
+    \caption{Tantalum capacitor volume against capacitance for the six series of capacitors analysed. }
     \label{fig:capvol}
 \end{figure}
 
@@ -357,7 +357,7 @@ From the previous observations (\figurename{~\ref{fig:maxfwp}}) we can see that 
     f = \frac{\alpha_{exe}}{k_1} - \left(\frac{v_{cap}}{k_2}\right) ^ {2} - \left(\frac{T_{int}}{k_3}\right) ^ {2} 
     \label{eq:tradeoff}
 \end{equation}
-where $v_{cap}$ denotes capacitor volume and $T_{int}$ denotes interruption periods. $\alpha_{exe}$, $v_{cap}$, $T_{int}$ can be described as functions of $C$. $k_1$, $k_2$, and $k_3$ are independent factors used for normalizing each metric, and they are empirically determined according to applications. In this example, the undesirable parameters are expressed as quadratics to give an increasing cost to higher values. While only three parameters are considered here, others (such as the energy harvester size) could be included for a system-wise sizing scenario.
+where $v_{cap}$ denotes capacitor volume and $T_{int}$ denotes interruption periods. $\alpha_{exe}$, $v_{cap}$, $T_{int}$ can be described as functions of $C$. $k_1$, $k_2$, and $k_3$ are independent factors used for normalising each metric, and they are empirically determined according to applications. In this example, the undesirable parameters are expressed as quadratics to give an increasing cost to higher values. While only three parameters are considered here, others (such as the energy harvester size) could be included for a system-wise sizing scenario.
 % $\alpha_{exe}$ denotes normalized forward progress,
 % ; they can all be described as functions of $C$
 % , so comparing them is meaningless, e.g. $\frac{1}{k_1} / \frac{1}{k_2} = 1000$ does not mean that forward progress is 1000 times more important than capacitor volume in this cost function.
@@ -372,11 +372,11 @@ As an example, we configure the function by setting $k_1$ = 0.2, $k_2$ = \SI{200
 
 \subsubsection{Results}
 
-The effect of the trade-off is plotted in \figurename{~\ref{fig:tradeoff}} using the Denver 2018 energy source dataset. Compared to the capacitor size that solely maximizes forward progress, on average, an appropriately-sized capacitor achieves 93\% of the maximum forward progress, while saving 83\% of capacitor volume and 91\% of interruption periods. Compared to the minimum storage case, the appropriately-sized capacitor improves forward progress by 12-124\% with energy storage increased from \SI{6.2}{\micro\farad} to \SI{30}{\micro\farad}.
+The effect of the trade-off is plotted in \figurename{~\ref{fig:tradeoff}} using the Denver 2018 energy source dataset. Compared to the capacitor size that solely maximises forward progress, on average, an appropriately-sized capacitor achieves 93\% of the maximum forward progress, while saving 83\% of capacitor volume and 91\% of interruption periods. Compared to the minimum storage case, the appropriately-sized capacitor improves forward progress by 12-124\% with energy storage increased from \SI{6.2}{\micro\farad} to \SI{30}{\micro\farad}.
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=3.3in]{ch4_sizingapproach/figures/Tradeoff3Fig}
+    \includegraphics[width=0.8\columnwidth]{ch4_sizingapproach/figures/Tradeoff3Fig}
     \caption{The sizing approach trades off forward progress, capacitor volume, and interruption periods. The results are plotted against a range of PV panel area, given Denver 2018 energy source dataset. }
     \label{fig:tradeoff}
 \end{figure}
