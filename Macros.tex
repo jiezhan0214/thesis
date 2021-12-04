@@ -2,11 +2,10 @@
 %% Definitions.tex
 %% ---------------------------------------------------------------- 
 
-
-\newcommand{\nm}[2]{\ensuremath{\mathit{#1_\text{#2}}}}  % Math name in text
-\newcommand{\nmm}[2]{#1_{\text{#2}}}  % Math name in math environment
+\newcommand{\N}[1]{\ensuremath{#1}}             % Math name without subscript in text
+\newcommand{\nm}[2]{\ensuremath{#1_\text{#2}}}  % Math name in text
+\newcommand{\nmm}[2]{#1_{\text{#2}}}            % Math name in math environment
 \newcommand{\red}[1]{\color{red}#1\color{black}}
-% \newcommand{\needcite}{\color{red}[Citation needed]\color{black}}
 \newcommand{\needref}{\red{[Reference needed]}}
 
 %%%%%%%%%% Steve's macros
@@ -46,9 +45,6 @@
 % \newcommand{\sgn}{\F{sgn}}
 % \newcommand{\tr}{\F{trace}}
 % \newcommand{\diag}{\F{diag}}
-
-% %% Math Names
-\newcommand{\N}[1]{\ensuremath{\mathit{#1}}\xspace}
 
 % %% Data
 % \newcommand{\mc}[1]{\ensuremath{\mathcal{#1}}\xspace}

@@ -28,7 +28,7 @@ The adaptation scheme allows the energy profiling method to be integrated in the
 \begin{figure}
     \centering
     \includegraphics[width=0.8\columnwidth]{ch5_optic/figures/flowchart.pdf}
-    \caption{Flowchart of \nn{}'s runtime energy adaptation scheme. The blue blocks represent a configurable control logic to decide when to perform energy profiling. The dashed purple blocks are only run when the profiling is enabled, and represent \nn{}'s energy profiling with the last block updating \nm{V}{th} with the new $\Delta \nmm{V}{task}$. }
+    \caption{Flowchart of \nn{}'s runtime energy adaptation routine. The blue blocks represent a configurable control logic to decide when to perform energy profiling. The dashed purple blocks are only run when the profiling is enabled, and represent \nn{}'s energy profiling with the last block updating \nm{V}{th} with the new $\Delta \nmm{V}{task}$. }
     \label{fig:opta_flowchart}
 \end{figure}
 
@@ -51,25 +51,36 @@ Alternatively, persistent timekeepers~\cite{winkel2020reliable, deep2020harc, he
 If energy profiling is enabled, the dashed purple blocks in \fref{fig:opta_flowchart} are performed in the routine. 
 The particular operations involved can be dependent on the profiling method, while we have illustrated this in the flowchart with \nn{}'s profiling method. 
 As explained, \nn{}' energy profiling operates at three points when the charge cycle starts, when the charge cycle ends and the discharge cycle starts, and when the discharge cycle ends. 
-\nm{V}{th} is then updated after a new $\Delta \nmm{V}{task}$ is profiled following \eref{eq:vth_definition}. 
+\nm{V}{th} is then updated after a new $\Delta\nmm{V}{task}$ is profiled following \eref{eq:vth_definition}. 
 If a charge cycle is not needed, i.e. the energy stored is already sufficient for the task, the profiling is skipped and performed next time as this contradicts the design of \nn{}'s profiling method.
 
 % optional linear adaptation
 % optional multiple configurations (can be similar to multiple atom_func_state)
 \subsection{Linear Adaptation}
 
-The above threshold adaptation is design for workloads that have a fixed amount of computational work and a determined configuration, the $\Delta \nmm{V}{task}$ variation of which can change slowly with non-computational factors, e.g. capacitor ageing or temperature variations.
-For workloads that have runtime changeable parameters that scale energy consumption significantly, e.g. data sizes, the above adaptation can cost a number of failures before adapting to the new threshold. 
-While dynamic configurations can be solved with multiple thresholds that switched by the configuration, data sizes can be more fine-grained and can introduce a high memory overhead considering the number of thresholds needed. 
+The above threshold adaptation is design for workloads that have a fixed amount of computational work and a determined configuration, the $\Delta\nmm{V}{task}$ variation of which can change slowly with non-computational factors, e.g. capacitor ageing or temperature variations.
+For workloads that have runtime changeable parameters that scale energy consumption significantly, e.g. data sizes and peripheral configurations, the above adaptation can cost a number of failures before adapting to the new threshold. 
+While dynamic configurations can be solved with multiple thresholds that switched by the configuration, data sizes can be fine-grained and can introduce a high memory overhead considering the number of thresholds needed. 
 Hence, we propose a linear adaptation method as an option for workloads that have linearly-scaled energy consumption with its parameter. 
 
-Rather than taking a series of profiling results, 
+Thus, a linearly-scaled $\Delta\nmm{V}{task}$ can be represented as:
+\begin{equation}
+    \Delta\nmm{V}{task} = \nmm{\theta}{1} x + \nmm{\theta}{0}
+\end{equation}
+where \N{x}{} is the parameter that is supposed to scale $\Delta\nmm{V}{task}$. \nm{\theta}{1} and \nm{\theta}{0} are the slope and y-intercept of the linear relationship between $\Delta\nmm{V}{task}$ and \nm{x}{}. Hence, \nm{V}{th} for the task should be set as:
+\begin{equation}
+    \nmm{V}{th} = \nmm{\theta}{1} x + \nmm{\theta}{0} + \nmm{V}{end}
+\end{equation}
 
-% linear regression vs min-max sampling 
-% y = theta0 + theta1 * x
+A straightforward solution to obtain \nm{\theta}{1} and \nm{\theta}{0} can be taking a series of profiling results and calculating the regression function.
+Though viable, this can introduce relatively high overheads on sampling and calculation.
 
-\subsection{Discussion}
+To lower the overheads, we adopt an efficient method where energy profiling is performed to update \nm{\theta}{1} and \nm{\theta}{0} when \N{x} reaches its minimum or maximum values. 
+\nm{\theta}{1} and \nm{\theta}{0} can then be calculated with less computation than linear regression. 
+When the task is run with a \N{x} value other than the minimum or maximum, the energy profiling is disabled and \nm{\theta}{0} is incremented when necessary, e.g. a \N{x} value that causes a higher $\Delta\nmm{V}{task}$ than what the equation predicts. 
 
-Adaptation to other non-linear relationship?
+The routine of the linear adaptation method is then similar to the one shown in \fref{fig:opta_flowchart}, with modifications on the profiling control and the increment and update of \nm{V}{th}, where it controls whether to profile based on \N{x}, increments \nm{\theta}{0}, and updates \nm{\theta}{1} and \nm{\theta}{0} rather than \nm{V}{th}. 
 
-The ability to fall back differentiates it from a "simply-incrementing-threshold" DEBS.
+
+\todo[inline]{Discussion on e.g. adaptation to other non-linear relationship, the ability to fall back differentiates it from a "simply-incrementing-threshold" approach?}
+
