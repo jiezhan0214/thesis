@@ -14,7 +14,7 @@ The voltage threshold \nm{V}{th} of a barely sufficient energy budget is defined
 \end{equation}
 where \nm{V}{end} is the target end voltage below which the whole or part of system's hardware cannot function correctly. 
 \nm{V}{end} can be higher than the MCU shutdown voltage, e.g. a peripheral that has a higher operating voltage. 
-Besides allocating the lowest \nm{V}{th}, an ideal adaptation scheme is also expected to have little overheads, run energy profiling only when necessary, and react to energy variations immediately.
+Besides allocating the lowest \nm{V}{th}, an ideal adaptation scheme is also expected to have low overheads, run energy profiling only when necessary, and react to energy variations immediately.
 
 Based on the above aims, we design \nn{}'s runtime adaptation scheme. 
 It consists of a basic adaptation routine for a fixed workload and an optional linear adaptation method for workloads that has a linearly-scaled $\Delta \nmm{V}{task}$ with dynamic parameters.
@@ -58,8 +58,18 @@ If a charge cycle is not needed, i.e. the energy stored is already sufficient fo
 % optional multiple configurations (can be similar to multiple atom_func_state)
 \subsection{Linear Adaptation}
 
-The above 
+The above threshold adaptation is design for workloads that have a fixed amount of computational work and a determined configuration, the $\Delta \nmm{V}{task}$ variation of which can change slowly with non-computational factors, e.g. capacitor ageing or temperature variations.
+For workloads that have runtime changeable parameters that scale energy consumption significantly, e.g. data sizes, the above adaptation can cost a number of failures before adapting to the new threshold. 
+While dynamic configurations can be solved with multiple thresholds that switched by the configuration, data sizes can be more fine-grained and can introduce a high memory overhead considering the number of thresholds needed. 
+Hence, we propose a linear adaptation method as an option for workloads that have linearly-scaled energy consumption with its parameter. 
+
+Rather than taking a series of profiling results, 
+
+% linear regression vs min-max sampling 
+% y = theta0 + theta1 * x
 
 \subsection{Discussion}
+
+Adaptation to other non-linear relationship?
 
 The ability to fall back differentiates it from a "simply-incrementing-threshold" DEBS.
