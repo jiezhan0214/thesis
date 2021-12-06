@@ -1,0 +1,26 @@
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \begin{groupplot}[
+        group style={group size=1 by 1,vertical sep=35pt},
+        width=0.8\columnwidth,height=4cm,
+        % xmin=1.2,
+        tick align=inside,
+        % ytick style={draw=none},
+        ]
+        \pgfplotstableread[col sep=comma]{ch5_optic/figures/v_trace/analog.csv}{\analogtable};
+        \pgfplotstableread[col sep=comma]{ch5_optic/figures/v_trace/digital.csv}{\digitaltable};
+        \nextgroupplot
+        \addplot
+            plot []
+            table [x expr=\thisrowno{0}-1.221762802,y=Vcc,col sep=comma] {\analogtable};
+
+        \nextgroupplot
+        \addplot
+            plot [black,fill=Set1-A]
+            table [x index=0,y index=1,col sep=comma] {\digitaltable};
+    \end{groupplot}
+    \end{tikzpicture}
+    \caption{Test. }
+    \label{fig:v_trace}
+\end{figure} 
