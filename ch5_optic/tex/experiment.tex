@@ -14,9 +14,8 @@ For the experiment on capacitance reduction only, we instead use a constant low-
 Three common peripheral tasks in IoT sensors were used as the benchmarks for evaluation. 
 \begin{itemize}
     \item \textbf{DMA}: Data transfer using an on-chip DMA module, frequently used in data logging.
-    \item \textbf{AES}: AES encryption using an on-chip AES accelerator, configurable with 3 key lengths, processing up to 4KB data at a time.
-    \item \textbf{RF}:  Wireless communication through an external nRF24L01 radio module. 
-    The radio can transmit a payload up to 96B at a time, configured as a 2Mbps air data rate and a \SI{0}{\decibel{m}} output power. 
+    \item \textbf{AES}: AES encryption using an on-chip AES accelerator processing up to 4KB data at a time for secure communication.
+    \item \textbf{RF}:  Wireless communication through an external nRF24L01 radio module, transmitting a payload up to 96B at a time, configured as a 2Mbps air data rate and a \SI{0}{\decibel{m}} output power. 
     The radio module is connected through an LDO with a \SI{2}{\volt} output voltage to lower the quiescent current consumption, with a \SI{10}{\micro\farad} at the LDO's low side. 
 \end{itemize}
 
@@ -29,18 +28,22 @@ Three common peripheral tasks in IoT sensors were used as the benchmarks for eva
 % Hence, it does not look for a threshold for a task with a specific configuration, but instead its aim is to minimise the chance of non-termination in practice by giving a high margin.
 
 \subsection{Profiling Accuracy}
-
-Question: How does our profiling approach perform in terms of accuracy?
-
-Accuracy compared to manual measurement.
+% Question: How does our profiling approach perform in terms of accuracy?
+% Accuracy compared to manual measurement.
 
 \input{ch5_optic/figures/profiling_accuracy/profiling_accuracy.tex}
 
-% \input{figures/capacitance/relia_cap_perf.tex}
-% \input{figures/capacitance/relia_cap_thresh.tex}
+\todo[inline]{Should present Figure 5.9 with a smaller division.}
 
-\input{ch5_optic/figures/capacitance/relia_cap_group.tex}
-\input{ch5_optic/figures/datasize/datasize.tex}
+We first measured the profiling accuracy of \nn{}'s runtime energy profiling ability. 
+A hundred profiling results were obtained for each workload. 
+Manual profiling was also conducted by disconnecting the power supply during task execution and reading $\Delta\nmm{V}{task}$ from a scope, and used as a reference that we evaluate the profiling results against. 
+As shown in \fref{fig:profiling_accuracy}, the profiling errors are low and relatively consistent (mostly within \SI{5}{\milli\volt}) across the three workload with different levels of energy consumption. 
+The error becomes insignificant with energy-hungry tasks, e.g. RF. 
+Compared to the step of voltage thresholds in our implementation (around \SI{30}{\milli\volt}), this \SI{5}{\milli\volt} error is acceptable as it can convert to a relatively stable threshold assuming a fixed energy consumption. 
+Additionally, the average profiling results are shown to be a slightly higher than the reference, which 
+seems to contradict the theoretical error that is supposed to make the profiling undershoot.
+This is majorly due to a positive error in the MCU's internal 1/2 \nm{V}{cc} divider, which also evidences that the theoretical error is insignificant and easily compensated by other factors. 
 
 \todo[inline]{Energy saving compared to the disconnect-supply profiling method?}
 
@@ -58,9 +61,18 @@ New categories:
 
 \subsubsection{New devices / operations (once)}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{ch5_optic/figures/v_trace/v_trace.pdf}
+    \caption{Voltage trace. }
+    \label{fig:v_trace}
+\end{figure}
+
 - Show the voltage trace that illustrates how it profiles and adapts on new devices or new operations. 
 
 \subsubsection{Variability in capacitance due to ageing / tolerance (slowly changing)}
+
+\input{ch5_optic/figures/capacitance/relia_cap_group.tex}
 
 - Profile the tasks for DEBS with the target end voltage at 1.8V (need explanation on this) and 30uF capacitance. 
 
@@ -71,6 +83,8 @@ New categories:
 Note that the threshold settings in this experiment are different from the profiling results due to different system capacitance, operating voltage, allowing some switching overheads, and the comparator precision and resolution. 
 
 \subsubsection{Variability in peripheral configurations (single threshold for a rarely/slightly-changing configuration, multiple thresholds for frequently-changing configurations)}
+
+\input{ch5_optic/figures/datasize/datasize.tex}
 
 - Profile the tasks for DEBS with the target end voltage at 1.8V and a "default" configuration. 
     
