@@ -1,40 +1,38 @@
 \section{Experimental Evaluation} \label{sec:experiment}
 
-\subsection{Benchmark and Comparisons}
+We experimentally evaluated \nn{}, showing its ability to run with an adaptive minimum threshold that mitigate non-termination and improve energy efficiency. 
+\nn{}'s runtime energy profiling presents a low and relatively consistent error across different task scales. 
+We show that, despite with reduced capacitance, \nn{} is able to adapt \nm{V}{th} to meet a target end voltage \nm{V}{end} until the highest threshold is reached, while the fixed-threshold comparison \debs{} fails.
+We also show that \nn{} improves performance over \debs{} and Samoyed with a PV panel supply owning to its reduced operating voltage. 
 
-Benchmark: 
+\subsection{Experimental Setup and Benchmarks}
 
+A PV panel (Sanyo AM-1417CA) provided the sole power supply for the system. 
+It is covered in a black box with a white LED light as the only energy source, producing a consistent supply characteristic (as shown in \fref{fig:pv_iv}) during the experiments.
+For the experiment on capacitance reduction only, we instead use a constant low-current supply so as to examine whether the system is able to survive with little energy income during task execution. 
+
+Three common peripheral tasks in IoT sensors were used as the benchmarks for evaluation. 
 \begin{itemize}
-    \item AES encryption. Default 128-bit 4KB.
-    \item RF transmission. Default 32B payload, 2Mbps.
-    \item DMA
-    \item Sensor? (possible)
+    \item \textbf{DMA}: Data transfer using an on-chip DMA module, frequently used in data logging.
+    \item \textbf{AES}: AES encryption using an on-chip AES accelerator, configurable with 3 key lengths, processing up to 4KB data at a time.
+    \item \textbf{RF}:  Wireless communication through an external nRF24L01 radio module. 
+    The radio can transmit a payload up to 96B at a time, configured as a 2Mbps air data rate and a \SI{0}{\decibel{m}} output power. 
+    The radio module is connected through an LDO with a \SI{2}{\volt} output voltage to lower the quiescent current consumption, with a \SI{10}{\micro\farad} at the LDO's low side. 
 \end{itemize}
 
-Comparisons:
+% No state retention
 
-DEBS, Samoyed (later), Plain C (for evaluating overheads)
-
-We may temporarily overlook Samoyed as its implementation is a bit more complex and its threshold setting is unclear. 
-Samoyed scales down the atomic task if it fails to complete (but never scale back). 
-It uses an "energy profiler" in previous work to test the whether the smallest scale of all peripheral tasks and randomized inputs can successfully complete. 
-They suggested it is appropriate to set an energy capacity that can run the smallest scale of an operation for hundreds of times in one active cycle. 
-Hence, it does not look for a threshold for a task with a specific configuration, but instead its aim is to minimize the chance of non-termination in practice by giving a high margin.
+% Comparisons: DEBS, Samoyed (without scaling), Plain C (for evaluating overheads)
+% Samoyed scales down the atomic task if it fails to complete (but never scales back). 
+% It uses an "energy profiler" in previous work to test the whether the smallest scale of all peripheral tasks and randomised inputs can successfully complete. 
+% They suggested it is appropriate to set an energy capacity that can run the smallest scale of an operation for hundreds of times in one active cycle. 
+% Hence, it does not look for a threshold for a task with a specific configuration, but instead its aim is to minimise the chance of non-termination in practice by giving a high margin.
 
 \subsection{Profiling Accuracy}
 
 Question: How does our profiling approach perform in terms of accuracy?
 
 Accuracy compared to manual measurement.
-
-Figure shows:
-\begin{itemize}
-    \item Profiling results (average of 10)
-    \item Each profiling reading (range)
-    \item Dynamic threshold (Perhaps add horizontal lines as configurable thresholds in figures)
-    \item Manually profiled voltage drop (average of 5 readings)
-    \item Comparison against
-\end{itemize}
 
 \input{ch5_optic/figures/profiling_accuracy/profiling_accuracy.tex}
 
@@ -44,11 +42,11 @@ Figure shows:
 \input{ch5_optic/figures/capacitance/relia_cap_group.tex}
 \input{ch5_optic/figures/datasize/datasize.tex}
 
+\todo[inline]{Energy saving compared to the disconnect-supply profiling method?}
 
 \subsection{Reliability with Dynamic Energy Consumption}
 
 Question: Can it still make forward progress correctly with changes (as listed below) while other SoA approaches can't? 
-
 
 New categories:
 
@@ -57,9 +55,6 @@ New categories:
     \item Changing slowly: capacitor ageing, device ageing, temperature, long-term configuration.
     \item Changing frequently: Data size, configurations. 
 \end{itemize}
-
-
-Cases of changes and experiments:
 
 \subsubsection{New devices / operations (once)}
 
@@ -101,21 +96,14 @@ Test conditions:
 
 \todo[inline]{Results of current, time, and memory overheads to be measured.}
 
-- Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
+%Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
+%Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 
+%The energy/charge consumption can also be calculated. 
+%Memory overhead. Check the section sizes of the compiled code. Compared it to a PlainC version and a Hibernus-like IC version.  
 
-Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 
-
-The energy/charge consumption can also be calculated. 
-
-- Memory overhead. Check the section sizes of the compiled code. Compared it to a PlainC version and a Hibernus-like IC version.  
 
 % \subsection{Correctness of computational results (test its intermittent computing functionality, might not be important)}
-
 % Question: does it produce correct results from atomic functions across power failures?
-
 % Compare the output of our approach with intermittent supply vs Plain C solution with continuous supply. Use a computational workload probably, as an atomic function should be guaranteed to finish. 
-
-
 % \subsection{Case Study}
-
 % Apply the proposed approach on an application that includes multiple atomic operations and the device runs with dynamic energy consumption due to operating conditions. 
