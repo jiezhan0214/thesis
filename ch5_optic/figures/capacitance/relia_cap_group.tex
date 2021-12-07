@@ -339,6 +339,9 @@
         \node [anchor=south east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
         \draw [thick,dashed] (axis cs:0,1.8) -- (axis cs:80,1.8);
         \node [anchor=north east,font=\small] at (axis cs:80,1.8) {Fail};
+        \node [font=\small] (source) at (axis cs:68,3){Alert};
+        \draw[->](source)--(axis cs:68,3.57);
+        
         \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
 
     \end{groupplot}
@@ -413,9 +416,13 @@
         \node [anchor=south east,font=\small] at (axis cs:80,2) {Target $V_{\text{end}}$};
         \draw [thick,dashed] (axis cs:0,1.9) -- (axis cs:80,1.9);
         \node [anchor=north east,font=\small] at (axis cs:80,1.9) {Fail};
+        \node [font=\small] (source) at (axis cs:65,2.9){Alert};
+        \draw[->](source)--(axis cs:67.5,3.22);
+        \draw[->](source)--(axis cs:57.5,3.22);
         \legend{\ ,\nn{} $V_{\text{start}}\ V_{\text{end}}$,\ ,\debs{} $V_{\text{start}}\ V_{\text{end}}$}
     \end{groupplot}
 	\end{tikzpicture}
 	}
 	\caption{Effect of Capacitor Degradation on \nn{} and \debs{}.}
+	\label{fig:relia_cap}
 \end{figure}

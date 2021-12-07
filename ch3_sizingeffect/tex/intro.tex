@@ -2,16 +2,17 @@
 %%% Section 1: Introduction 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Motivation} \label{section:intro}
+%\section{Motivation} \label{section:intro}
 
-% \IEEEPARstart{T}{o} establish a ubiquitous Internet of Things (IoT), tens of billions of devices are to be installed, and possibly at hard-to-reach locations~\cite{6064380, 7347318, 7954016, 7488250}. Using non-rechargeable batteries constrains the lifespan of these devices and brings impractical battery replacement work. Enabling IoT devices to harvest ambient energy becomes a solution to circumvent the limited battery lifespan. 
+% \IEEEPARstart{T}{o} establish a ubiquitous Internet of Things (IoT), tens of billions of devices are to be installed, and possibly at hard-to-reach locations~\cite{6064380, 7347318, 7954016, 7488250}. 
+% Using non-rechargeable batteries constrains the lifespan of these devices and brings impractical battery replacement work. 
+% Enabling IoT devices to harvest ambient energy becomes a solution to circumvent the limited battery lifespan. 
 
 Internet of Things (IoT) devices are becoming ubiquitous, with forecasts of hundreds of billions being installed in the near future~\cite{sparks2017trillion}.
 % ~\cite{7954016, sundmaeker2010vision, dave2011next} % old citations for predictions 
 % ~\cite{6064380, 7347318, 7954016, 7488250}. 
 They are conventionally battery-powered, thus have constrained lifespans, necessitating inconvenient periodic battery replacement. %, and many will be in hard-to-reach locations.
 Energy-harvesting is a potential solution. Environmentally harvested power is, however, intrinsically variable and intermittent~\cite{4494336}. Traditionally, large energy storage devices such as rechargeable batteries or supercapacitors are used to smooth out supply variability~\cite{Kansal:2007:PME:1274858.1274870}. Unfortunately, these increase cost and device dimensions~\cite{4494753}, raise pollution concerns~\cite{LIU2014210}, and still limit lifespans~\cite{AKHTAR2015769}. 
-%TODO: Look at cutting the last 3 refs in paragraph down to 1
 % yet using an energy-harvesting supply without energy buffering hinders execution by frequent power interruptions. 
 % Buchli:2014:DPM:2668332.2668333, Wagemann:2017:OER:3136518.3078631,
 % ~\cite{5522465, Kansal:2007:PME:1274858.1274870, Jiang:2005:PEP:1147685.1147765, Simjee:2006:ELS:1165573.1165619}
@@ -76,8 +77,8 @@ This is typically just sufficient for the most energy-expensive atomic operation
 However, our assertion is that this can be \textit{inherently inefficient in terms of time and energy}. 
 We show that a system with minimum energy storage frequently goes through a cycle of: wake up, restore state, execute program, save state, and halt.
 We propose that provisioning \textit{slightly more} energy storage can prolong the operating cycles, reduce the frequency of interruptions, and hence improve forward progress. We show with modelled and experimental results that (\figurename{~\ref{fig:imprvalid1}}) using efficiently-sized energy storage capacitance (\SI{43}{\micro\farad}) achieves up to a 55\% improvement in forward progress compared against using the theoretical minimum amount of capacitance (\SI{6.2}{\micro\farad}). This improvement is more significant with a weaker supply. 
-%our modelled and experimental results show that 
-%and \SI{30.4}{\percent}  and on-board respectively
+% our modelled and experimental results show that 
+% and \SI{30.4}{\percent}  and on-board respectively
 % It achieves at least \SI{90}{\percent} of the ideal forward progress.
 % However, larger energy storage also increases leakage current, occupies greater volume, and requires longer interruption periods. 
 However, the relationship between ICS energy storage capacitance and forward progress has not previously been defined. Also, current tools for ICSs (Section~\ref{section:review2}) are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 

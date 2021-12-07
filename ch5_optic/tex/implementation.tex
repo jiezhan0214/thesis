@@ -24,7 +24,6 @@ The energy profiling is achieved through the on-chip modules.
 The ADC reads voltage from a built-in 1/2 \nm{V}{cc} channel, and thus an external voltage divider is not needed. 
 A \SI{2}{\volt} voltage reference is used by the ADC to convert the voltage reading, hence providing a \SIrange{0}{4}{\volt} reading range. 
 A timer, driven by a \SI{10}{\kilo\hertz} low-power clock, records the charge and discharge cycle for \nn{}'s energy profiling.
-% Software?
 
 \subsection{External Voltage Monitor}
 
@@ -49,6 +48,8 @@ Combining \eref{eq:vth_definition}, \eref{eq:pot_thr}, and \eref{eq:digit_profil
     \frac{\nmm{N}{profiling}}{\nmm{N}{adcmax}} \times \nmm{V}{adcmax} + \nmm{V}{end} = \frac{560 + 100 + 68}{\frac{\nmm{N}{wiper}}{128} * 100 + 68} \times 0.4
     \label{eq:adc_thr}
 \end{equation}
+
+where \nm{V}{end} is the target end voltage, which we set at \SI{2}{\volt} because the energy profiling  uses the \SI{2}{\volt} voltage reference for ADC reading such that the energy profiling can correctly work above \nm{V}{end}. 
 
 In order to speed up the threshold setting from this non-linear relationship (\eref{eq:adc_thr}), We generated a look-up table to efficiently convert a profiling result \nm{N}{profiling} into the corresponding voltage threshold setting \nm{N}{wiper}. 
 To avoid unnecessarily fine-grained steps, we equally divide \nm{N}{profiling} by a step of \nm{N}{step}. We recommend setting \nm{N}{step} as a power of 2 for an efficient threshold conversion, and we set \nm{N}{step} as 32, which translates to a voltage step of about \SI{31}{\milli\volt}.

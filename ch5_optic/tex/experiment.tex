@@ -51,66 +51,93 @@ This is majorly due to a positive error in the MCU's internal 1/2 \nm{V}{cc} div
 
 Question: Can it still make forward progress correctly with changes (as listed below) while other SoA approaches can't? 
 
-New categories:
-
+We evaluated whether \nn{} can adapt to variability in IPSs and keep making forward progress.
+We classified the variability in three categories according to the frequency of these changes: 
 \begin{itemize}
-    \item Changing once: new operations, device/components variability (including capacitor tolerance).
-    \item Changing slowly: capacitor ageing, device ageing, temperature, long-term configuration.
-    \item Changing frequently: Data size, configurations. 
+    \item \textbf{Changing once}, such as new workloads, devices, and components.
+    \item \textbf{Changing infrequently}, such as capacitor ageing, device ageing, temperature changes, and configurations that last for a long term.
+    \item \textbf{Changing frequently}, such as variable data sizes and peripheral configurations that can frequently change. 
 \end{itemize}
+To reduce similar results, we show one example in each category to illustrate \nn{}'s adaptation to variability. 
 
-\subsubsection{New devices / operations (once)}
+\subsubsection{Changing once}
+% new operations, device, components
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch5_optic/figures/v_trace/v_trace.pdf}
-    \caption{Voltage trace. }
+    \caption{A voltage trace of \nn{} adapting to a new operation on a new device. }
     \label{fig:v_trace}
 \end{figure}
 
-- Show the voltage trace that illustrates how it profiles and adapts on new devices or new operations. 
+\fref{fig:v_trace} shows an example of how \nn{} adapts its threshold to a new workload and a new device. 
+The system runs an AES-128 encryption on 1KB data repetitively . 
+The algorithm does not have any knowledge on the energy consumption of the platform or the workload.
+The system first waits for the initial profiling threshold, which is set at \SI{2.7}{\volt} in this case. 
+Then it performs energy profiling as this is the first time it executes this task. 
+The next threshold for the task is then adapted to a lower one.
+In the following execution, the system is able to maintain the same threshold that guarantees the completion of the task. 
+The end voltage after completing a task matches closely with the target \nm{V}{end}, with a small margin that comes from both the round-up threshold and the energy harvested during the task execution. 
+The above example shows \nn{}'s ability to adapt to a new workload or device, obviating the need for manual energy profiling for various scenarios, e.g. updating workloads or deploying new devices. 
 
-\subsubsection{Variability in capacitance due to ageing / tolerance (slowly changing)}
+\subsubsection{Changing infrequently}
+% Variability in capacitance due to ageing / tolerance (slowly changing)
+% Actually the mechanism isn't any different from changing once. 
 
 \input{ch5_optic/figures/capacitance/relia_cap_group.tex}
 
-- Profile the tasks for DEBS with the target end voltage at 1.8V (need explanation on this) and 30uF capacitance. 
+% whether it can fail
 
-- Build a capacitor bank with a better granularity. The potential testing range of capacitance should be 1.5-11.5uF, with 1uF capacitors per step. 
+We then evaluated \nn{}'s adaptation on infrequently or slowly changing $\Delta\nmm{V}{task}$.
+We took capacitor ageing as an example for this category of changes. 
+The capacitor ageing was emulated with a capacitor bank consisting of \SI{1}{\micro\farad} capacitors. 
+The capacitor bank replaced the \SI{10}{\micro\farad} \nm{C}{ext} in \fref{fig:schematic}, and hence the system capacitance could then be tuned in the range of \SIrange{1.5}{11.7}{\micro\farad} with \SIrange{1.2}{1.5}{\micro\farad} per step as measured. 
 
-- Decrease the capacitance step by step. Record the capacitance where DEBS fails, the performance, the adaptive thresholds, and possibly a voltage trace that shows what happens. 
+In this experiment, the initial system capacitance was \SI{11.7}{\micro\farad}, and was reduced step by step to test the system's ability against capacitor ageing. 
+We compared \nn{} against \debs{} in terms of whether it may fail. 
+As the target end voltage for \nn{} in this implementation is \SI{2}{\volt}, we configured the thresholds of \debs{} against \SI{2}{\volt} as well for a fair comparison, allowing additional energy before the shutdown threshold (\SI{1.8}{\volt}) is reached.
+We omitted the results of Samoyed as it assumes an abundant energy budget and the simulation results in \fref{fig:simulation_cap} indicate it is resilient to reduction of capacitance though with performance loss. 
 
-Note that the threshold settings in this experiment are different from the profiling results due to different system capacitance, operating voltage, allowing some switching overheads, and the comparator precision and resolution. 
+\fref{fig:relia_cap} shows whether \nn{} and \debs{} can safely complete the tasks with their threshold settings, along with their start and end voltages.
+% Meeting target end voltage
+In terms of meeting the target \nm{V}{end}, \nn{} is able to increase its threshold to prevent its end voltage dropping below the target \nm{V}{end}, while \debs{} fails to do so with reduced capacitance as its threshold is fixed. 
+The increase of \nn{}'s threshold has a limit, where we set with the maximum operating voltage (\SI{3.6}{\volt}) for DMA and AES, and \SI{3.3}{\volt} for RF beyond which the system's quiescent current draw becomes larger than the supply.
+\nn{}'s threshold is increased with reduced capacitance until the upper limit is met, where it signals an alert.
+In a practical scenario, the alert could be sent to maintainers and indicate further actions needed.  
+% Failure
+Owing to the threshold adaptation, \nn{} can still survive with much lower capacitance, only failing the RF task with the lowest capacitance (67.5\% reduction). 
 
-\subsubsection{Variability in peripheral configurations (single threshold for a rarely/slightly-changing configuration, multiple thresholds for frequently-changing configurations)}
+
+% Note that the threshold settings in this experiment are different from the profiling results due to different system capacitance, operating voltage, allowing some switching overheads, and the comparator precision and resolution. 
+
+% \subsubsection{Variability in peripheral configurations (single threshold for a rarely/slightly-changing configuration, multiple thresholds for frequently-changing configurations)}
+\subsubsection{Changing frequently}
+% Variability in the amount of data to process (fast changing, but perhaps could be an unsuitable test case for reliability as it should violate the API requirement to make it fail)
+% Question: Does it run faster than other SoA approaches (make more progress under the same energy condition) under conditions that all approaches can make forward progress?
+% Test conditions:    
+% - (1) A constant data size (2) Randomised data sizes (DEBS threshold configured for the largest data size)
+% - A few levels of input current
+% - Profile the tasks for DEBS with the target end voltage at 1.8V and a "default" configuration.   
+% - Presumably DEBS can only complete the tasks with configurations that consumes the same or less energy as it was profiled, while OPTA adapts the threshold. 
 
 \input{ch5_optic/figures/datasize/datasize.tex}
 
-- Profile the tasks for DEBS with the target end voltage at 1.8V and a "default" configuration. 
-    
-- Presumably DEBS can only complete the tasks with configurations that consumes the same or less energy as it was profiled, while OPTA adapts the threshold. 
+% Setup: randomised data sizes, 
+% improvement
+A task may have runtime variable data sizes and configurations, which frequently change $\Delta\nmm{V}{task}$.
+While \debs{} and Samoyed can set a high threshold that suffices the most energy-hungry task, \nn can also adapts its threshold to frequently changing $\Delta\nmm{V}{task}$ so as to lower operating voltage and increase forward progress.
 
-\subsubsection{Variability in the amount of data to process (fast changing, but perhaps could be an unsuitable test case for reliability as it should violate the API requirement to make it fail)}
-    
-- This would be similar to the capacitance test but with a less granularity needed.
-
-\subsection{Efficiency}
-
-Question: Does it run faster than other SoA approaches (make more progress under the same energy condition) under conditions that all approaches can make forward progress?
-
-Comparisons: DEBS, Samoyed.
-
-Test conditions:
-    
-- (1) A constant data size (2) Randomised data sizes (DEBS threshold configured for the largest data size)
-
-- A few levels of input current
+We demonstrate \nn{}'s linear threshold adaptation on workloads that have variable data sizes, where AES encrypts 512B to 4KB data with a 256-bit key length, and RF sends 16B to 96B data. 
+An array of randomised numbers was generated to switch the data sizes. 
+The average completion rate in a \SI{30}{\second} window was recorded as a performance metric.
+As shown in \fref{fig:datasize}, \nn{} managed to make 64\% and 98\% more progress compared to Samoyed and \debs{} respectively on the AES workload. On the RF workload, the improvement compared to \debs{} is 10\% while Samoyed failed because the radio cannot reset to the correct state after a power failure and draws large current. 
+The improvement of \nn{} comes from a lower threshold from which the system can harvest more energy and save the time on waiting for unnecessary energy. 
 
 \subsection{Overheads}
 
 \todo[inline]{Results of current, time, and memory overheads to be measured.}
 
-%Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
+% Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
 %Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 
 %The energy/charge consumption can also be calculated. 
 %Memory overhead. Check the section sizes of the compiled code. Compared it to a PlainC version and a Hibernus-like IC version.  
