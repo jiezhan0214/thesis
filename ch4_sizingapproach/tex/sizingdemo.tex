@@ -4,7 +4,6 @@
 
 \section{Sizing under Real-World Energy Conditions} \label{section:demo}
 
-% This section demonstrates the usage of the proposed sizing approach. 
 In this section, we model an ICS with a photovoltaic (PV) energy harvester to explore the energy storage sizing effect in real-world energy conditions, and demonstrate use of the proposed sizing approach. 
 
 \begin{figure}[!t]
@@ -22,15 +21,16 @@ The energy storage model and the intermittent load model are as presented in Sec
 We use a converter-less supply circuit where only a Schottky diode is connected to the energy harvester output in order to prevent current backflow. 
 The energy source conditions are imported from NREL outdoor solar irradiance data~\cite{stoffel1981nrel} and EnHANTs indoor irradiance data~\cite{6244798}. Four sets of light conditions are used to encompass different energy environments. 
 To convert irradiance into harvested power, we adopt a PV cell model~\cite{en9050326} which uses the parameters available in common datasheets, so it can easily be reconfigured to suit various devices. 
+The output current $I_{o}$ of the PV cell model can then be described as:
+\begin{equation} \label{eq:pvcell}
+    I_{o} = \frac{G}{G_{ref}} I_{sc} (1 - (1 - \frac{I_{mpp}}{I_{sc}}) ^ {\frac{V_{o}-V_{oc}}{V_{mpp} - V_{oc}}})
+\end{equation}
+where $V_{o}$ is the output voltage of the PV cell, $G$ is the ambient irradiance, $G_{ref}$ is the reference irradiance (normally 1000$W/m^2$), and $I_{sc}$, $V_{oc}$, $I_{mpp}$, $V_{mpp}$ are respectively short-circuit current, open-circuit voltage, and the current and voltage at maximum power point (MPP) given the reference irradiance. 
+$V_{o}$ and $G$ are dynamic at run time, while other parameters in this model are constant. 
 We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cell properties as shown in Table~\ref{tab:pvcell}. We set four cells in series (with $V_{oc}$ = 3.56V) to match the operating voltage of the MCU (maximum 3.6V), and model energy harvester sizing by scaling the cell area. 
 
-%The output current $I_{o}$ of the PV cell model can be described as:%
-%\begin{equation} \label{eq:pvcell}
-%    I_{o} = \frac{G}{G_{ref}} I_{sc} (1 - (1 - \frac{I_{mpp}}{I_{sc}}) ^ {\frac{V_{o}-V_{oc}}{V_{mpp} - V_{oc}}})
-%\end{equation}
-%where $V_{o}$ is the output voltage of the PV cell, $G$ is the ambient irradiance, $G_{ref}$ is the reference irradiance (normally 1000$W/m^2$), and $I_{sc}$, $V_{oc}$, $I_{mpp}$, $V_{mpp}$ are respectively short-circuit current, open-circuit voltage, and the current and voltage at maximum power point (MPP) given the reference irradiance. $V_{o}$ and $G$ are dynamic at run time, while other parameters in this model are constant. 
 
-%A PV panel is an array of PV cells, which amplifies voltage and current output by connecting PV cells in series or parallel. In a PV panel, the open-circuit voltage is proportional to the number of cells in series, and the short-circuit current is proportional to the area of each cell and the number of cells in parallel. 
+% A PV panel is an array of PV cells, which amplifies voltage and current output by connecting PV cells in series or parallel. In a PV panel, the open-circuit voltage is proportional to the number of cells in series, and the short-circuit current is proportional to the area of each cell and the number of cells in parallel. 
 
 \begin{table}[!t]
     \renewcommand{\arraystretch}{1.2}
@@ -50,9 +50,9 @@ We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cel
     \end{tabular}
 \end{table}
 
-% \color{blue}
-% Our simulation tool can perform two simulation processes: (a) sort and process the time distribution of environmental conditions, and (b) simulate system state chronologically with a fine-grained time step. Process (a) reduces simulation time significantly, e.g. from hours to seconds, but ignores the restore operation after a brownout reset, hence overestimating forward progress, and it overestimates more with smaller capacitance and lower supply current. In the following results, \figurename{~\ref{fig:harvstor}} come from Process (a) for fast exploration, and \figurename{~\ref{fig:interruption}} and \figurename{~\ref{fig:tradeoff}} come from Process (b) for accurate records. 
-% \color{black}
+Our simulation tool can perform two simulation processes: (a) sort and process the time distribution of environmental conditions, and (b) simulate system state chronologically with a fine-grained time step. 
+Process (a) reduces simulation time significantly, e.g. from hours to seconds, but ignores the restore operation after a brownout reset, hence overestimating forward progress, and it overestimates more with smaller capacitance and lower supply current. 
+In the following results, \figurename{~\ref{fig:harvstor}} come from Process (a) for fast exploration, and \figurename{~\ref{fig:interruption}} and \figurename{~\ref{fig:tradeoff}} come from Process (b) for accurate records. 
 
 % Before the simulation, we developed and explored two simulation processes: (a) simulate system state chronologically with a fine-grained time step, and (b) sort energy source conditions into a distribution in time lengths and process the distribution. Process (b) shows a \SI{0.89}{\percent} mean absolute percentage error compared to Process (a), while reducing simulation time significantly (e.g. from several hours to several seconds in a one-year test). Hence, we use Process (b) in the following tests.
 
@@ -123,6 +123,43 @@ It can also be inferred that optimising energy storage can either improve forwar
     \end{subfigure}
     \caption{Improvement of average forward progress by sizing energy storage given different PV panel areas under real-world energy source conditions. The model is able to find the PV panel area required for achieving the target mean forward progress. } 
     \label{fig:harvstor}
+\end{figure}
+
+ The mean forward progress given target $\alpha_{exe}$ = 0.1 is plotted in \figurename{~\ref{fig:harvstorrange}}, with the 60th and 90th time percentiles of forward progress. In all the  above datasets, the energy source is absent and the system is off for around \SI{55}{\percent} of time, so we plot the percentiles from the 60th. The mean progress during the energy-available periods is averaged over the energy-absent periods, so the actual mean forward progress during the energy-available periods is nearly double the annual mean. 
+
+% Absolute improvement are different? Large variations? What other results can I add? 
+% The variations of forward progress are significant due to the large variations of energy source conditions, so practical implementation should consider such variation as .
+% The improved progress during the energy-available periods is averaged over the energy-absent periods, so the actual amount of improvement when energy is available is higher than the mean. (wrong statement)
+
+\begin{figure}[!t]
+    \centering
+    \begin{subfigure}{0.49\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorRan2Fig1}
+        \caption{EnHANTs Setup A}
+        \label{fig:harvstorrange1}
+    \end{subfigure}
+    \begin{subfigure}{0.49\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorRan2Fig2}
+        \caption{EnHANTs Setup D}
+        \label{fig:harvstorrange2}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.49\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorRan2Fig3}
+        \caption{NREL Denver 2018}
+        \label{fig:harvstorrange3}
+    \end{subfigure}
+    \begin{subfigure}{0.49\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/HarvStorRan2Fig4}
+        \caption{NREL Hawaii 2018}
+        \label{fig:harvstorrange4}
+    \end{subfigure}
+    \caption{Time percentiles of forward progress by sizing energy storage with target $\alpha_{exe}$ = 0.1 and the corresponding PV panel area listed in \figurename{~\ref{fig:harvstor}}. The percentiles start from the 60th as the system is off for around \SI{55}{\percent} of time due to insufficient energy source. }
+    \label{fig:harvstorrange}
 \end{figure}
 
 \subsubsection{Interruption Period} \label{subsubsec:intper}
@@ -268,29 +305,6 @@ Facilitated by the simulator, developers are enabled to estimate whether the dis
 %     \hline
 %     \end{tabular} 
 % \end{table}
-
-% talking about range. what is the point of this paragraph?
-% The mean forward progress given target $\alpha_{exe}$ = 0.1 is plotted in \figurename{~\ref{fig:harvstorrange}}, with the 60th and 90th time percentiles of forward progress. In all the  above datasets, the energy source is absent and the system is off for around \SI{55}{\percent} of time, so we plot the percentiles from the 60th. The mean progress during the energy-available periods is averaged over the energy-absent periods, so the actual mean forward progress during the energy-available periods is nearly double the annual mean. 
-
-% Absolute improvement are different? Large variations? What other results can I add? 
-% The variations of forward progress are significant due to the large variations of energy source conditions, so practical implementation should consider such variation as .
-% The improved progress during the energy-available periods is averaged over the energy-absent periods, so the actual amount of improvement when energy is available is higher than the mean. (wrong statement)
-
-
-% \begin{figure}[!t]
-%     \centering
-%     \subfloat[EnHANTs Setup A]{\includegraphics[width=1.65in]{HarvStorRan2Fig1}
-%     \label{fig:harvstorrange1}}
-%     \subfloat[EnHANTs Setup D]{\includegraphics[width=1.65in]{HarvStorRan2Fig2}
-%     \label{fig:harvstorrange2}}
-%     \hfil
-%     \subfloat[NREL Denver 2018]{\includegraphics[width=1.65in]{HarvStorRan2Fig3}
-%     \label{fig:harvstorrange3}}
-%     \subfloat[NREL Hawaii 2018]{\includegraphics[width=1.65in]{HarvStorRan2Fig4}
-%     \label{fig:harvstorrange4}}
-%     \caption{Time percentiles of forward progress by sizing energy storage with target $\alpha_{exe}$ = 0.1 and the corresponding PV panel area listed in \figurename{~\ref{fig:harvstor}}. The percentiles start from the 60th as the system is off for around \SI{55}{\percent} of time due to insufficient energy source. }
-%     \label{fig:harvstorrange}
-% \end{figure}
 
 % \begin{table}[!t]
 %     \renewcommand{\arraystretch}{1.2}

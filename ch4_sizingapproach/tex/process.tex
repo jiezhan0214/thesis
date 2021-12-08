@@ -4,7 +4,16 @@
 
 \section{Energy Storage Sizing Approach} \label{section:approach}
 
-We propose a sizing approach which recommends appropriate energy storage capacitance for an ICS, trading off forward progress against capacitor volume and interruption periods. We present a system model which accepts real long-term data on environmental energy conditions. The three inputs can be swept for design exploration, but we focus on energy storage in this paper. The model outputs forward progress, capacitor volume, and interruption periods (defined in Section~\ref{subsec:harvstor}). These are subsequently traded off in a cost function to obtain the appropriate energy storage capacitance. This process is summarised in \figurename{~\ref{fig:sizingapproach}} with details explained as follows. 
+As mentioned, previous designs of intermittent computing typically adopt a minimised energy storage so as to minimise device dimensions and interruption periods. 
+However, such a minimised energy storage leads to frequent save and restore operations, and reduces forward progress.
+An appropriate capacitor size instead may balance the three factors. 
+
+We propose a sizing approach which recommends appropriate energy storage capacitance for an ICS, trading off forward progress against capacitor volume and interruption periods. 
+We present a system model which accepts real long-term data on environmental energy conditions. 
+The three inputs can be swept for design exploration, but we focus on energy storage in this paper. 
+The model outputs forward progress, capacitor volume, and interruption periods (defined in Section~\ref{subsec:harvstor}). 
+These are subsequently traded off in a cost function to obtain the appropriate energy storage capacitance. 
+This process is summarised in \figurename{~\ref{fig:sizingapproach}} with details explained as follows. 
 
 \begin{figure}[!t]
     \centering
@@ -12,11 +21,12 @@ We propose a sizing approach which recommends appropriate energy storage capacit
     \caption{Structure of the proposed system model and sizing approach.}
     \label{fig:sizingapproach}
 \end{figure}
-% As mentioned, previous designs of intermittent computing typically adopt a minimized energy storage so as to minimize device dimensions and interruption periods. However, such a minimized energy storage leads to frequent save and restore operations, and reduces forward progress; a proper capacitor size instead mitigates the lost forward progress. 
+
     
 \subsection{Input}
-A time trace of representative environmental energy conditions in the intended deployment location is provided as an input, along with the energy harvester size; for design exploration, these can optionally be changed to explore variations and scales of harvested power. A pre-defined set of energy storage capacitance values are swept through. 
-% A time trace of energy source conditions in the deployed location should be obtained and imported. Assuming the energy source is equally distributed in the deployed space, the energy harvester size can be optionally changed to explore different harvested power scales.
+A time trace of representative environmental energy conditions in the intended deployment location is provided as an input, along with the energy harvester size. 
+For design exploration, assuming the energy source is equally distributed in the deployed space, these can optionally be changed to explore variations and scales of harvested power. 
+A pre-defined set of energy storage capacitance values are swept through. 
 
 \subsection{System Model}
 
@@ -38,7 +48,7 @@ This contains three modules:
 \end{itemize}
 
 The outputs from the system model are the interruption periods, capacitor volume, and forward progress.
-%As mentioned, ICS approaches can be classified as static and reactive approaches. These two types of approaches fundamentally differs in how the load consumes power and makes forward progress, and hence require different models for estimating forward progress. Owing to the computing advantage of reactive ICSs as explained in Section~\ref{section:review}, we focus on reactive ICSs for modelling and validation in this paper.
+% As mentioned, ICS approaches can be classified as static and reactive approaches. These two types of approaches fundamentally differs in how the load consumes power and makes forward progress, and hence require different models for estimating forward progress. Owing to the computing advantage of reactive ICSs as explained in Section~\ref{section:review}, we focus on reactive ICSs for modelling and validation in this paper.
 % The unit of energy source conditions should be consistent with the unit of the \textit{Energy Harvester and Conversion Circuits} in the ICS model. 
 % Note that the size configuration of energy harvester configures actual dimensions, e.g. PV panel area, while the one of energy storage configures capacitance.
 % The size configuration of energy harvester and energy storage can be altered to observe how the design metrics change. 
