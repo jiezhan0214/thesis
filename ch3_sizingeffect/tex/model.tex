@@ -148,6 +148,11 @@ Finally, combining \eref{eq:vpr} to \eref{eq:tperiod}, we obtain normalised forw
 \end{equation}
 In the numerator \nm{T}{exe}, $C(\nmm{V}{r} - \nmm{V}{s})$ represents the amount of charge in the capacitor available for restoring and executing. $\nmm{T}{r} (\nmm{I}{in} - \nmm{I}{r})$ represents the charge used by a restore operation. $\nmm{I}{exe} - \nmm{I}{in}$ is the rate of charge consumption from the energy storage during execution.
 
+% Also, the time overhead of state saving and restoring operations $T_{RS\%}$ can be calculated as:
+% \begin{equation}
+%   T_{RS\%} = \frac{\nmm{T}{r} + \nmm{T}{s}}{\nmm{T}{exe} + \nmm{T}{r} + \nmm{T}{s}}
+% \end{equation}
+
 % \footnote{Calculation breakdowns of differential analysis is attached in Appendix.}
 % Higher \nm{\alpha}{exe} leads to more time spent on forward progress. 
 
@@ -155,16 +160,9 @@ In the numerator \nm{T}{exe}, $C(\nmm{V}{r} - \nmm{V}{s})$ represents the amount
 To explore the effect of energy storage on forward progress, we need to analyse $d\nmm{\alpha}{exe} / dC$. Here, if we assume that \nm{I}{leak} remains constant, \nm{\alpha}{exe} keeps increasing and approaches $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ when energy storage capacitance \N{C} increases. Defining $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ as \nm{\alpha}{exe\_ideal}, $\nmm{\alpha}{exe} = \nmm{\alpha}{exe\_ideal}$ is an ideal case, where restore and save overheads are absent.
 
 In an electrolytic capacitor, however, \nm{I}{leak} typically increases with \N{C} with the following relationship~\cite{avxleakage}:
+% \cite{alcapacitor}
 \begin{equation}
     \nmm{I}{leak} = kC\nmm{V}{cc}
     \label{eq:ileak}
 \end{equation}
 where $k$ is a constant normally in a range of \SIrange{0.01}{0.03}{\ampere\per\farad\per\volt}. Combining \eref{eq:ileak} with \eref{eq:in}, $d\nmm{I}{in} / dC$ is $-k\nmm{V}{cc}$, meaning \nm{I}{in} decreases linearly as \N{C} increases. Thus, when \N{C} increases, \nm{\alpha}{exe} keeps approaching \nm{\alpha}{exe\_ideal} while \nm{\alpha}{exe\_ideal} decreases. Hence, we believe that there is a capacitance value that leads to the maximum \nm{\alpha}{exe} considering \nm{I}{leak} increases with \N{C}.
-% \cite{alcapacitor}
-% Also, the time overhead of state saving and restoring operations $T_{RS\%}$ can be calculated as:
-% \begin{equation}
-%   T_{RS\%} = \frac{\nmm{T}{r} + \nmm{T}{s}}{\nmm{T}{exe} + \nmm{T}{r} + \nmm{T}{s}}
-% \end{equation}
-
-
-% In Equation~(\ref{eq:feff}), we get the relationship between forward progress and the sizes of energy harvester and energy storage. 
