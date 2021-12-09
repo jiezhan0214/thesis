@@ -61,7 +61,7 @@ The behaviour of reactive ICSs can be classified into three operating modes depe
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/OperatingMode0Fig}
+    \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/OperatingMode0Fig}
     \caption{Operating modes of reactive ICSs, and achieved forward progress against supply current.}
     \label{fig:operatingModes}
 \end{figure}
@@ -98,7 +98,7 @@ In the \textit{On} and \textit{Off} modes, the normalised forward progress is tr
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/CRESdemoFig}
+    \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/CRESdemoFig}
     \caption{Operating cycles in the \textit{Intermittent} mode. }
     \label{fig:operatingCycle}
 \end{figure}
@@ -131,8 +131,8 @@ Analogously, with \eref{eq:vps}, the charging interval can be described as:
 With \eref{eq:texe} and \eref{eq:tcharge}, the period of an operating cycle is:
 \begin{equation}
     \begin{aligned}
-        \nmm{T}{cycle} & = \quad T_{charge} + \nmm{T}{r} + \nmm{T}{exe} + \nmm{T}{s} \\
-        & = \quad \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{s} (\nmm{I}{s} - \nmm{I}{lpm})}{\nmm{I}{in} - \nmm{I}{lpm}} + \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{exe} - \nmm{I}{r})}{\nmm{I}{exe} - \nmm{I}{in}}
+        \nmm{T}{cycle} & = T_{charge} + \nmm{T}{r} + \nmm{T}{exe} + \nmm{T}{s} \\
+        & = \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{s} (\nmm{I}{s} - \nmm{I}{lpm})}{\nmm{I}{in} - \nmm{I}{lpm}} + \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{exe} - \nmm{I}{r})}{\nmm{I}{exe} - \nmm{I}{in}}
     \end{aligned}
     \label{eq:tperiod}
 \end{equation}
@@ -142,22 +142,28 @@ Finally, combining \eref{eq:vpr} to \eref{eq:tperiod}, we obtain normalised forw
     \begin{aligned}
         \nmm{\alpha}{exe} &= \frac{\nmm{T}{exe}}{\nmm{T}{cycle}} \\
         &= [\frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{in} - \nmm{I}{r})} {\nmm{I}{exe} - \nmm{I}{in}}] / \\
-        & [\frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{s} (\nmm{I}{s} - \nmm{I}{lpm})}{\nmm{I}{in} - \nmm{I}{lpm}} + \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{exe} - \nmm{I}{r})}{\nmm{I}{exe} - \nmm{I}{in}}] \\
+        &[\frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{s} (\nmm{I}{s} - \nmm{I}{lpm})}{\nmm{I}{in} - \nmm{I}{lpm}} + \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{exe} - \nmm{I}{r})}{\nmm{I}{exe} - \nmm{I}{in}}] \\
     \end{aligned}
     \label{eq:texepercent}
 \end{equation}
 In the numerator \nm{T}{exe}, $C(\nmm{V}{r} - \nmm{V}{s})$ represents the amount of charge in the capacitor available for restoring and executing. $\nmm{T}{r} (\nmm{I}{in} - \nmm{I}{r})$ represents the charge used by a restore operation. $\nmm{I}{exe} - \nmm{I}{in}$ is the rate of charge consumption from the energy storage during execution.
 
-% Also, the time overhead of state saving and restoring operations $T_{RS\%}$ can be calculated as:
-% \begin{equation}
-%   T_{RS\%} = \frac{\nmm{T}{r} + \nmm{T}{s}}{\nmm{T}{exe} + \nmm{T}{r} + \nmm{T}{s}}
-% \end{equation}
+Also, the ratio of the time overhead on state-saving and -restoring operations to the total elapsed time \nm{T}{rs\%} can be deduced as:
+\begin{equation}
+    \begin{aligned}
+        \nmm{T}{rs\%} &= \frac{\nmm{T}{r} + \nmm{T}{s}}{\nmm{T}{cycle}} \\
+        &= (\nmm{T}{r} + \nmm{T}{s}) / [\frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{s} (\nmm{I}{s} - \nmm{I}{lpm})}{\nmm{I}{in} - \nmm{I}{lpm}} + \frac{C (\nmm{V}{r} - \nmm{V}{s}) + \nmm{T}{r} (\nmm{I}{exe} - \nmm{I}{r})}{\nmm{I}{exe} - \nmm{I}{in}}]
+    \end{aligned}
+    \label{eq:trs}
+\end{equation}
+\eref{eq:trs} can describe the impact of state-saving and -restoring overhead with respect to \N{C} and \nm{I}{in}.
 
+\todo[inline]{Differential analysis?}
 % \footnote{Calculation breakdowns of differential analysis is attached in Appendix.}
 % Higher \nm{\alpha}{exe} leads to more time spent on forward progress. 
-
 % As $d\nmm{\alpha}{exe} / d\nmm{I}{in}$ is positive, higher harvested current \nm{I}{harv} leads to more forward progress. 
-To explore the effect of energy storage on forward progress, we need to analyse $d\nmm{\alpha}{exe} / dC$. Here, if we assume that \nm{I}{leak} remains constant, \nm{\alpha}{exe} keeps increasing and approaches $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ when energy storage capacitance \N{C} increases. Defining $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ as \nm{\alpha}{exe\_ideal}, $\nmm{\alpha}{exe} = \nmm{\alpha}{exe\_ideal}$ is an ideal case, where restore and save overheads are absent.
+
+To explore the effect of energy storage on forward progress, we need to analyse $d\nmm{\alpha}{exe} / dC$. Here, if we assume that \nm{I}{leak} remains constant, \nm{\alpha}{exe} keeps increasing and approaches $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ when energy storage capacitance \N{C} increases. Defining $(\nmm{I}{in} - \nmm{I}{lpm}) / (\nmm{I}{exe} - \nmm{I}{lpm})$ as \nm{\alpha}{exe\_ideal}, $\nmm{\alpha}{exe} = \nmm{\alpha}{exe\_ideal}$ is an ideal case, where state-saving and -restoring overheads are absent.
 
 In an electrolytic capacitor, however, \nm{I}{leak} typically increases with \N{C} with the following relationship~\cite{avxleakage}:
 % \cite{alcapacitor}

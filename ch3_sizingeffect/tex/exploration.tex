@@ -91,16 +91,16 @@ Typically, commercially-available capacitors have a $\pm$20\% tolerance. The eff
 % red zone: when supply current doesn't last for long. 
 % (Regarding the red zone, potentially show a graph of the number of operating cycles to approximate constant current supply.)
 
-\begin{figure}[!t]
+\begin{figure}
   \centering
-  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/StorCCur6Fig} 
+  \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/StorCCur6Fig} 
   \caption{Forward progress against energy storage capacitance at different levels of constant supply current. Error bars around optimal points denote the impact of typical $\pm$20\% capacitance tolerance. }
   \label{fig:fpwconstcurr}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}
   \centering
-  \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/StorCCurMax4Fig}
+  \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/StorCCurMax4Fig}
   \caption{Maximum forward progress improvement by sizing energy storage given a spectrum of supply current (normalised by the minimum capacitance case), with the corresponding maximum and sub-maximum (95\% of maximum) capacitance. }
   \label{fig:maxfwp}
 \end{figure}
@@ -122,7 +122,7 @@ The size of volatile state differs across applications with different amounts of
 
 % In the MCU we explore, volatile state includes CPU registers and SRAM data, which takes 64B and 160-2048B. 
 
-\begin{table}[!t]
+\begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
     \caption{Linear scaling range of volatile state size and restore/save time overheads}
@@ -143,9 +143,9 @@ The size of volatile state differs across applications with different amounts of
 An example of this is plotted in \figurename{~\ref{fig:ram}}. The forward progress improvement by sizing energy storage increases with the volatile state size, and the optimal capacitance grows accordingly. The improvement becomes insignificant when the volatile state size is small because the restore and save overheads are already negligible. For example, when the workload uses the least volatile state (the leftmost point), the maximum progress improvement is only 3.6\% although the restore and save overheads are reduced by 93\%. 
 % This indicates the more efficiently ICSs save/restore, the more useless this work is. 
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
-    \includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/RSTORAM3Fig}
+    \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/RSTORAM3Fig}
     \caption{Impact of RAM usage (linear to restore/save overheads) on sizing energy storage with \SI{0.4}{\milli\ampere} current supply. Improvement and reduction are normalised by the minimum capacitance case. }
     \label{fig:ram}
 \end{figure}

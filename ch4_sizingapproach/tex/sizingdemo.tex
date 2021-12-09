@@ -8,7 +8,7 @@ In this section, we model an ICS with a photovoltaic (PV) energy harvester to ex
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.8\columnwidth]{ch4_sizingapproach/figures/solarmodel4}
+    \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/solarmodel4}
     \caption{System model of a PV-based ICS.}
     \label{fig:Model}
 \end{figure}
@@ -94,7 +94,7 @@ It can also be inferred that optimising energy storage can either improve forwar
 %     \label{fig:harvstor}
 % \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
     \begin{subfigure}{0.49\columnwidth}
         \centering
@@ -125,13 +125,15 @@ It can also be inferred that optimising energy storage can either improve forwar
     \label{fig:harvstor}
 \end{figure}
 
+\todo[inline]{Adjust \fref{fig:harvstor} such that its font size is bigger and fills in more space, same with \fref{fig:harvstorrange}}
+
  The mean forward progress given target $\alpha_{exe}$ = 0.1 is plotted in \figurename{~\ref{fig:harvstorrange}}, with the 60th and 90th time percentiles of forward progress. In all the  above datasets, the energy source is absent and the system is off for around \SI{55}{\percent} of time, so we plot the percentiles from the 60th. The mean progress during the energy-available periods is averaged over the energy-absent periods, so the actual mean forward progress during the energy-available periods is nearly double the annual mean. 
 
 % Absolute improvement are different? Large variations? What other results can I add? 
 % The variations of forward progress are significant due to the large variations of energy source conditions, so practical implementation should consider such variation as .
 % The improved progress during the energy-available periods is averaged over the energy-absent periods, so the actual amount of improvement when energy is available is higher than the mean. (wrong statement)
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
     \begin{subfigure}{0.49\columnwidth}
         \centering
@@ -175,12 +177,12 @@ Facilitated by the simulator, developers are enabled to estimate whether the dis
 % the total number of interruptions is reduced,
 
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
     % \subfloat[a]{\includegraphics[width=2.8in]{IntPeriodFig}}
     % \label{fig:distribution}
     % \hfil
-    \includegraphics[width=0.85\columnwidth]{ch4_sizingapproach/figures/IntPeriodOrdFig}
+    \includegraphics[width=0.9\columnwidth]{ch4_sizingapproach/figures/IntPeriodOrdFig}
     \caption{Distribution of interruption periods. }
     \label{fig:interruption}
 \end{figure}
@@ -338,9 +340,9 @@ The overhead of capacitor dimensions is evaluated by characteristics of off-the-
 % ~\cite{tancap1, tancap2, tancap3, tancap4, tancap5, tancap6}
 % Among the common capacitor chemistries with \textmu F to mF capacitance, tantalum capacitors manifest low leakage 
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
-    \includegraphics[width=0.85\columnwidth]{ch4_sizingapproach/figures/CapVol2Fig2}
+    \includegraphics[width=0.9\columnwidth]{ch4_sizingapproach/figures/CapVol2Fig2}
     \caption{Tantalum capacitor volume against capacitance for the six series of capacitors analysed. }
     \label{fig:capvol}
 \end{figure}
@@ -388,9 +390,9 @@ As an example, we configure the function by setting $k_1$ = 0.2, $k_2$ = \SI{200
 
 The effect of the trade-off is plotted in \figurename{~\ref{fig:tradeoff}} using the Denver 2018 energy source dataset. Compared to the capacitor size that solely maximises forward progress, on average, an appropriately-sized capacitor achieves 93\% of the maximum forward progress, while saving 83\% of capacitor volume and 91\% of interruption periods. Compared to the minimum storage case, the appropriately-sized capacitor improves forward progress by 12-124\% with energy storage increased from \SI{6.2}{\micro\farad} to \SI{30}{\micro\farad}.
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
-    \includegraphics[width=0.8\columnwidth]{ch4_sizingapproach/figures/Tradeoff3Fig}
+    \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/Tradeoff3Fig}
     \caption{The sizing approach trades off forward progress, capacitor volume, and interruption periods. The results are plotted against a range of PV panel area, given Denver 2018 energy source dataset. }
     \label{fig:tradeoff}
 \end{figure}
