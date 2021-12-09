@@ -1,0 +1,66 @@
+\documentclass[sotoncolour]{uosthesis}      % Use the Thesis Style with custom link colour
+\graphicspath{{figures/}}   % Location of your graphics files
+% \usepackage[round]{natbib}            % Use Natbib style for the refs.
+\usepackage{bibentry}          % Use bibentry for prepublished works
+\nobibliography*               % Use bibentry for prepublished works
+\usepackage{attrib}            % Use the attrib package for quotations
+\hypersetup{colorlinks=true}   % Set to false for black/white printing
+\hypersetup{pdfstartpage=3}    % Set first page to skip copyright declaration
+\setlength{\headheight}{30pt}  % ...at least 51.60004pt
+\input{Macros}            % Include your abbreviations
+
+%% -------------------- Additional Packages ------------------------
+\usepackage[square,sort,comma,numbers,compress]{natbib}% Use Natbib style for the refs.
+\usepackage{amsmath}
+\usepackage{wasysym} % diameter symbol
+\usepackage[range-units=single, range-phrase=--, detect-all, per-mode=symbol, binary-units=true]{siunitx} % SI units, e.g. celsius symbol
+\usepackage{float}
+% \usepackage[table,xcdraw]{xcolor}
+% \usepackage[nottoc,notlof,notlot]{tocbibind} 
+\usepackage{multirow} % multirow/multicol table
+\usepackage{pdfpages}
+\usepackage{notoccite}
+\usepackage[titletoc]{appendix}
+\usepackage{silence}
+\usepackage[euler]{textgreek}
+\usepackage{subcaption}
+\usepackage{array}
+% \usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{pgfgantt}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{cycle list/Set1}
+\usetikzlibrary{patterns}
+\pgfplotsset{compat=1.15}
+\usepackage{pgfplotstable}
+\pgfplotsset{
+    layers/my layer set/.define layer set={
+        background,
+        main,
+        foreground
+    }{},
+    % activate the newly created layer set
+    set layers=my layer set,
+}
+\usepackage{todonotes}
+
+%% -------------------- THESIS/DOC INFORMATION --------------------
+\department  {School of Electronics and Computer Science}
+\DEPARTMENT  {\MakeUppercase{\deptname}}
+\group       {Cyber Physical Systems Group}
+\GROUP       {\MakeUppercase{\groupname}}
+\faculty     {Faculty of Engineering and Physical Science}
+\FACULTY     {\MakeUppercase{\facname}}
+\title       {Energy Allocation and Management for Energy-Harvesting Intermittent Systems}
+\authors    {Jie Zhan} % Use of Soton Email unadvised, use ORCiD instead.
+\addresses  {\groupname\\\deptname\\\univname}
+\date       {\today}
+%% Optional Fields TODO: Replace these fields with your own data
+
+% \qualifications{[Insert Previous Qualifications, for example MEng]}
+% \orcidid{0000-0002-9196-757X}
+% \doi{10.1002/0470841559.ch1}
+% \volume{n}{m} %Optional Volume Numbering Volume n of m
+\subject    {}
+\keywords   {}

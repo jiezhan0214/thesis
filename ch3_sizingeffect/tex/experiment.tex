@@ -2,9 +2,9 @@
 %%% Section 6: Experiment
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Experimental Validation}
+\section{Experimental Validation} \label{sec:c3_experiment}
 
-\subsection{Model Validation} \label{section:experiment}
+\subsection{Model Validation} 
 
 %This section compares the experimental and modelled forward progress to validate the proposed reactive ICS model. 
 % As the sizing approach suggests the optimal energy storage capacitance in \SIrange{36}{46}{\micro\farad}, we select a \SI{43}{\micro\farad} capacitance in the experiment as an optimal value of the proposed sizing approach for comparison. 
@@ -24,7 +24,7 @@ We implemented and parameterized a reactive ICS~\cite{balsamo2015hibernus} on a 
 % In this practical experiment, the task completion rate (i.e. tasks completed per second) is used as the metric of forward progress rather than the effective execution time ratio. To gain the task completion rate from the model, we multiply the normalized forward progress (execution time ratio) generated from our model by the completion rate when the system executes constantly, since the task completion rate is linear to the effective execution time. 
 
 %\subsection{Validation Results}
-\begin{figure}[!t]
+\begin{figure}
 	\centering
 	\includegraphics[width=0.8\columnwidth]{ch3_sizingeffect/figures/ModelValidFig} % was 3.0in
 	\caption{Model validation with experimental and modelled forward progress. }
