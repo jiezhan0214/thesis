@@ -1,15 +1,11 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Section 3: Modelling Reactive
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Reactive ICS Modelling} \label{sec:c3_model}
+\section{Reactive IPS Modelling} \label{sec:c3_model}
 
 % The goal of this model is to facilitate making design decisions when deploying intermittent computing devices in real-world environments by enabling designers to observe how the sizes of energy harvester and energy storage have an impact on the key design specifications, i.e. forward progress, dimensions, and interruption periods.
 
 % We then illustrate a formulation which describes the relationship between forward progress and energy storage capacitance given different harvested power level in reactive intermittent computing as a part of the exploration model. 
 
 % Assumptions. low variation in harvested power, how low? what's the impact of high variance input?
-To facilitate the understanding and exploration of reactive ICSs, we present a model which outputs the normalised forward progress \nm{\alpha}{exe} when powered from a constant current supply \nm{I}{harv}. Parameters of this model are listed in \tref{tab:parameter}. 
+To facilitate the understanding and exploration of reactive IPSs, we present a model which outputs the normalised forward progress \nm{\alpha}{exe} when powered from a constant current supply \nm{I}{harv}. Parameters of this model are listed in \tref{tab:parameter}. 
 % This accounts for the \textit{Energy Storage} and \textit{Intermittent Load} modules in the system model, allowing the expected forward progress to be evaluated.
 % The input parameters \nm{I}{harv} and \N{C} are related to the size configuration of energy harvester and energy storage respectively. 
 % for a period of time that long enough to omit an individual uncompleted operating cycle. 
@@ -18,7 +14,7 @@ The model assumes that all configuration parameters remain constant.
 \begin{table}[!t]
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{Model parameters of reactive ICS} 
+    \caption{Model parameters of reactive IPS} 
     \label{tab:parameter}
     \begin{tabular}{|c|c|}
         % \hline
@@ -55,14 +51,14 @@ For brevity, \nm{I}{in} denotes the usable input current as expressed in (\eref{
     \label{eq:in}
 \end{equation}
 
-\subsection{Operating Modes of Reactive ICS}
+\subsection{Operating Modes of Reactive IPS}
 
-The behaviour of reactive ICSs can be classified into three operating modes depending on the supply current, as shown in \fref{fig:operatingModes}. These are differentiated by the relationship between input current \nm{I}{in} and the system's current draw in its low-power mode (LPM) or active modes, i.e. \nm{I}{lpm} and \nm{I}{exe}. We define the three modes as:
+The behaviour of reactive IPSs can be classified into three operating modes depending on the supply current, as shown in \fref{fig:operatingModes}. These are differentiated by the relationship between input current \nm{I}{in} and the system's current draw in its low-power mode (LPM) or active modes, i.e. \nm{I}{lpm} and \nm{I}{exe}. We define the three modes as:
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
     \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/OperatingMode0Fig}
-    \caption{Operating modes of reactive ICSs, and achieved forward progress against supply current.}
+    \caption{Operating modes of reactive IPSs, and achieved forward progress against supply current.}
     \label{fig:operatingModes}
 \end{figure}
 
@@ -96,7 +92,7 @@ In the \textit{On} and \textit{Off} modes, the normalised forward progress is tr
     \label{eq:feff}
 \end{equation}
 
-\begin{figure}[!t]
+\begin{figure}
     \centering
     \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/CRESdemoFig}
     \caption{Operating cycles in the \textit{Intermittent} mode. }

@@ -52,6 +52,16 @@ To validate the accuracy of our model, we powered the device with a range of sup
 
 \subsection{Validation of Sizing Effects}
 
+We show with modelled and experimental results that (\fref{fig:imprvalid1}) using efficiently-sized energy storage capacitance (\SI{43}{\micro\farad}) achieves up to a 55\% improvement in forward progress compared against using the theoretical minimum amount of capacitance (\SI{6.2}{\micro\farad}). 
+This improvement is more significant with a weaker supply. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{ch3_sizingeffect/figures/ImprValidColorFig1}
+    \caption{The relationship between energy storage capacitance and IPS forward progress, for various supply currents. }
+    \label{fig:imprvalid1}
+\end{figure}
+
 As previously shown in Fig.\ref{fig:imprvalid1}, the efficiently-sized energy storage capacitance (\SI{43}{\micro\farad}) improves forward progress by up to 55\% and 30\% compared to the minimum and decoupling capacitance respectively. We notice that this improvement becomes significant when the supply current attenuates because the save and restore overheads consume a larger proportion of the available energy. Also, this achieves at least 90\% of the ideal forward progress mentioned in Section~\ref{subsec:formulation}. 
 % The ideal case switches between LPM and execution without restoring and saving overheads (mentioned in Section~\ref{subsec:formulation}). 
 These results illustrate the importance of this technique, in particular for conditions where the supply current is low.

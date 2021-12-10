@@ -86,15 +86,6 @@ This is typically just sufficient for the most energy-expensive atomic operation
 However, our assertion is that this can be \textit{inherently inefficient in terms of time and energy}. 
 We show that a system with minimum energy storage frequently goes through a cycle of: wake up, restore state, execute program, save state, and halt.
 We propose that provisioning \textit{slightly more} energy storage can prolong the operating cycles, reduce the frequency of interruptions, and hence improve forward progress. 
-We show with modelled and experimental results that (\fref{fig:imprvalid1}) using efficiently-sized energy storage capacitance (\SI{43}{\micro\farad}) achieves up to a 55\% improvement in forward progress compared against using the theoretical minimum amount of capacitance (\SI{6.2}{\micro\farad}). 
-This improvement is more significant with a weaker supply. 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{ch3_sizingeffect/figures/ImprValidColorFig1}
-    \caption{The relationship between energy storage capacitance and IPS forward progress, for various supply currents. }
-    \label{fig:imprvalid1}
-\end{figure}
 
 % However, larger energy storage also increases leakage current, occupies greater volume, and requires longer interruption periods. 
 % We further propose an approach for identifying the proper energy storage size for deploying energy-harvesting intermittent computing (EHIC) devices, which improves forward progress while balances dimensions and interruption periods. We integrate the reactive intermittent computing model into a photovoltaic-based (PV-based) EHIC device framework. We demonstrate the sizing approach with the framework given various real-world indoor and outdoor light source datasets. 
