@@ -6,9 +6,11 @@ In this section, we configure the reactive IPS model presented in \sref{sec:c3_m
 
 \subsection{Model Configuration}
 
+We configured the model with an empirical capacitor model and experimentally measured load characteristics. 
+
 \subsubsection{Energy Storage}
 
-The energy storage is represented as an ideal capacitor with leakage current. 
+The energy storage is represented as an ideal capacitor with empirically defined leakage current. 
 Its terminal voltage is directly applied to the load, so is modelled as:
 \begin{equation}
   C \frac{d\nmm{V}{cc}}{dt} = \nmm{I}{harv} - \nmm{I}{load} - \nmm{I}{leak}
@@ -32,17 +34,25 @@ We assume a typical load of $<$ \SI{4.0}{\volt} so, to minimise leakage, we sele
 
 \subsubsection{Intermittent Computing Load} \label{ssubsec:loadconfig}
 
-The load parameters of current draws and time overheads, as listed in \tref{tab:load}, were profiled with the experimental settings explained in \sref{sec:c3_experiment}. 
+We configured the load with experimentally measured current draws and time overheads.
+We only consider computational loads in this study, as handling of peripherals in intermittent systems is still an ongoing research topic~\cite{rodriguez2018restop, Maeng:2019:SPI:3314221.3314613}. 
 
+We implemented and parameterised a reactive IPS~\cite{balsamo2015hibernus} on a development board of a TI MSP430FR6989 MCU. 
+The load parameters are profiled with the MCU running a Dijkstra path finding algorithm with \SI{1696}{\byte} RAM usage at \SI{8}{\mega\hertz}. 
+The supply voltage monitoring circuits use the MCU's internal comparator and an external \SI{3}{\mega\ohm} voltage divider. 
+The restore and save voltage thresholds are set as \nm{V}{r} = \SI{2.4}{\volt} and \nm{V}{s} = \SI{2.1}{\volt} respectively. 
+The MCU shutdown voltage \nm{V}{off} is \SI{1.8}{\volt}. 
+
+The measured current draws and time overheads are listed in \tref{tab:load}.
 The current draw was profiled with experimental measurements at a range of supply voltages. 
 The variation of \nm{I}{lpm} between \nm{V}{off} (\SI{1.8}{\volt}) and \nm{V}{r} (\SI{2.4}{\volt}) is 2\%, and for \nm{I}{exe} between \nm{V}{s} (\SI{2.1}{\volt}) and \SI{3.3}{\volt} is 1.5\%. 
-\todo[inline]{Reason for this range.}
 \nm{I}{exe} also has a run-time variation of 2.8\% due to a variable memory access rate. 
-We omit these minor variations and use the mean of \nm{I}{exe} and \nm{I}{lpm} in the model. 
+As these variations of \nm{I}{exe} and \nm{I}{lpm} in their effecting voltage range are minor, we therefore omit the variations and use the mean of \nm{I}{exe} and \nm{I}{lpm} in the model. 
 \nm{I}{r} and \nm{I}{s} are measured at \nm{V}{r} and \nm{V}{s} respectively. 
+
 Given the voltage thresholds and the current consumption, the minimum energy storage capacitance is \SI{6.2}{\micro\farad}. 
 This guarantees that a save and restore operation can complete even if the incoming supply current drops instantaneously to zero. 
-The model parameters in \tref{tab:load} are given as an example, and can be changed for different load characteristics. 
+Moreover, the model parameters in \tref{tab:load} are given as an example, and can be changed for different load characteristics. 
 For example, \nm{T}{r} and \nm{T}{s} can be tuned for different volatile state sizes.
 
 \begin{table}[!t]
@@ -83,51 +93,54 @@ For example, \nm{T}{r} and \nm{T}{s} can be tuned for different volatile state s
 
 \subsubsection{Impact of Supply Current}
 
-Increasing energy storage capacitance above the minimum can improve forward progress by reducing the frequency of power interruptions, but this improvement may be offset by increased leakage. \fref{fig:fpwconstcurr} shows the relationship between forward progress and energy storage capacitance for a range of constant supply currents. Optimal capacitance values are shown for each current value.
-% Forward progress increases with energy storage capacitance. However, , which leads to an optimal storage capacitance. 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{ch3_sizingeffect/figures/StorCCur6Fig} 
+    \caption{Forward progress against energy storage capacitance at different levels of constant supply current. Error bars around \nm{C}{$\alpha$\_max} denote the impact of typical $\pm$20\% capacitance tolerance. The \SIrange{30}{150}{\micro\farad} range is omitted as forward progress in that range increases monotonically. }
+    \label{fig:fpwconstcurr}
+\end{figure}
+
+Increasing energy storage capacitance beyond the minimum one can improve forward progress by reducing the frequency of power interruptions, but this improvement may be offset by increased leakage. 
+\fref{fig:fpwconstcurr} shows the relationship between forward progress and energy storage capacitance for a range of constant supply currents. 
+In this section, we denote the capacitance that leads to the maximum forward progress \nm{\alpha}{exe} as \nm{C}{$\alpha$\_max}. 
+\nm{C}{$\alpha$\_max} for each current value is also shown in \fref{fig:fpwconstcurr}.
 
 % some more explanation about details in this graph
-The minimum capacitance (dashed line in \fref{fig:fpwconstcurr}) is calculated to deliver correct operation even if the supply current instantaneously drops to zero. If it does not drop to zero, this means that correct operation could have continued even with a smaller capacitance, though designing a system in this way would be inadvisable owing to unpredictability of the supply. This property is illustrated in \fref{fig:fpwconstcurr}, in the area on the left of the dashed line. It may be observed that, for each of the current values, there is a sudden drop-off towards zero forward progress. This illustrates the hazard of setting the capacitance too small: the stored energy is too low to allow a restore and save to be undertaken.
-%This steep fall is because the implemented control algorithm enters the low-power mode with volatile state retained after a save operation, and hence the energy used for restoring state in the first operating cycle is then used for effective execution in the following operating cycles as long as the supply voltage recovers to the restore threshold without a power interruption.
+The minimum capacitance (dashed line in \fref{fig:fpwconstcurr}) is calculated to deliver correct operation even if the supply current instantaneously drops to zero. 
+If it does not drop to zero, this means that correct operation could have continued even with a smaller capacitance given that the current supply keeps providing energy during execution, though designing a system in this way would be inadvisable owing to unpredictability of the supply. 
+This property is illustrated in \fref{fig:fpwconstcurr}, in the area on the left of the dashed line. 
+It may be observed that, for each of the current values, there is a sudden drop-off towards zero forward progress. 
+This illustrates the hazard of setting the capacitance too small: the stored energy is too low to allow a restore and save to be undertaken.
+The reason for this step change rather than a continuous change is that the implemented IPS only performs one restore operation in the first execution cycle after a reboot and enters a low-power mode with volatile state retained after a save operation. 
+Hence the energy used for restoring state is then used for effective execution in the following operating cycles as long as the supply voltage recovers to the restore threshold without a power interruption.
+% If the volatile state is not retained in low-power mode (i.e. necessary to restore every operating cycle) or the supply only lasts for a limited period, 
  
- % ), the execution may still progress given that the current supply keeps providing energy during execution
-Typically, commercially-available capacitors have a $\pm$20\% tolerance. The effect of this variation on maximum forward progress is shown to be negligible ($<$ 0.23\%) in \fref{fig:fpwconstcurr}. However, it must be pointed out that the effect would be much more pronounced if operating at the minimum capacitance as the variation of forward progress is larger with smaller capacitance values. Thus, it is recommended that a tolerance is considered when designing IPSs with minimum capacitance.
-
-%If the volatile state is not retained in low-power mode (i.e. necessary to restore every operating cycle) or the supply only lasts for a limited period, 
-
-% red zone: when supply current doesn't last for long. 
-% (Regarding the red zone, potentially show a graph of the number of operating cycles to approximate constant current supply.)
+Typically, commercially-available capacitors have a $\pm$20\% tolerance. 
+The effect of this variation on maximum forward progress is shown to be negligible ($<$ 0.23\%) in \fref{fig:fpwconstcurr}. 
+However, it must be pointed out that the effect would be much more pronounced if operating at the minimum capacitance as the variation of forward progress is larger with smaller capacitance values. 
+Thus, it is recommended that a tolerance is considered when designing IPSs with minimum capacitance.
 
 \begin{figure}
-  \centering
-  \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/StorCCur6Fig} 
-  \caption{Forward progress against energy storage capacitance at different levels of constant supply current. Error bars around optimal points denote the impact of typical $\pm$20\% capacitance tolerance. }
-  \label{fig:fpwconstcurr}
+    \centering
+    \includegraphics[width=\columnwidth]{ch3_sizingeffect/figures/StorCCurMax4Fig}
+    \caption{Maximum forward progress improvement by sizing energy storage given a spectrum of supply current (normalised by the minimum capacitance case), with the corresponding capacitance for maximum and sub-maximum (95\% of maximum) forward progress improvement. }
+    \label{fig:maxfwp}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/StorCCurMax4Fig}
-  \caption{Maximum forward progress improvement by sizing energy storage given a spectrum of supply current (normalised by the minimum capacitance case), with the corresponding maximum and sub-maximum (95\% of maximum) capacitance. }
-  \label{fig:maxfwp}
-\end{figure}
-
-\fref{fig:maxfwp} shows that an improvement in forward progress of up to 65\%  can be achieved when using the optimal capacitance instead of the minimum. However, it may not be desirable to set the capacitance solely for maximising forward progress, because there are often trade-offs with other factors including increased interruption periods and dimensions. 
-% (explored in \sref{subsec:tradeoff}).
-% In real-world energy source conditions, the supply current varies across this spectrum, and hence leads to an overall progress improvement based on its supply distribution. 
-% This improvement exists only when the device operates in the Intermittent mode, since the device keeps either inactive in the Off mode or active in the On mode without the need for restoring and saving state. 
-% Correspondingly, the optimal energy storage capacity is also plotted against supply current. 
+\fref{fig:maxfwp} shows that an improvement in forward progress of up to 65\%  can be achieved when using \nm{C}{$\alpha$\_max} instead of the minimum. 
+However, it may not be desirable to set the capacitance solely for maximising forward progress, because there are often trade-offs with other factors including increased interruption periods and dimensions (later explored in \sref{subsec:tradeoff}).
+In real-world energy source conditions, the supply current varies across this spectrum, and hence leads to an overall progress improvement based on its supply distribution. 
+This improvement exists only when the device operates in the \textit{Intermittent} mode, since the device keeps either inactive in the \textit{Off} mode or active in the \textit{On} mode without the need for restoring and saving state. 
+Correspondingly, \nm{C}{$\alpha$\_max} is also plotted against supply current. 
 % This optimal capacity exists because of the side effect of capacitor leakage; without capacitor leakage effect, the forward progress would keep approaching the ideal case (as explained in \sref{subsec:formulation}). 
-While a large improvement can be delivered with the optimal capacitance, as shown in \fref{fig:maxfwp}, 95\% of this gain can still be obtained with significantly smaller capacitances (mean 31\% of the optimal value).
+While a large improvement can be delivered with \nm{C}{$\alpha$\_max}, as shown in \fref{fig:maxfwp}, 95\% of this gain can still be obtained with significantly smaller capacitances (mean 31\% of \nm{C}{$\alpha$\_max}).
 For example, reducing from \SI{325}{\micro\farad} to \SI{90}{\micro\farad} gives 95\% of the maximum improvement with a \SI{0.5}{\milli\ampere} supply. 
-
-% in real deployment, storage fixed while current varies, change over a range, we may need to pick a capacity that optimise the majority of energy conditions. 
 
 \subsubsection{Impact of Volatile State Size}
 
-The size of volatile state differs across applications with different amounts of RAM usage, and hence incurs varying time and energy overheads for restore and save operations. We measured time overheads of restore and save operations in the minimum case (64B register data and a 160B stack) and the maximum case (64B register data and a full 2048B RAM) respectively as shown in \tref{tab:ramscale}. As these time overheads are expected to be linear to the state size~\cite{sliper2019efficient}, the model can be tuned for various volatile state sizes by linearly scaling the profiled values. 
-
-% In the MCU we explore, volatile state includes CPU registers and SRAM data, which takes 64B and 160-2048B. 
+The size of volatile state differs across applications with different amounts of RAM usage, and hence incurs varying time and energy overheads for restore and save operations. 
+We measured time overheads of restore and save operations in the minimum case (64B register data and a 160B stack) and the maximum case (64B register data and a full 2048B RAM) respectively as shown in \tref{tab:ramscale}. 
+As these time overheads are expected to be linear to the state size~\cite{sliper2019efficient}, the model can be tuned for various volatile state sizes by linearly scaling the profiled values. 
 
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
@@ -147,12 +160,19 @@ The size of volatile state differs across applications with different amounts of
     \end{tabular}
 \end{table}
 
-An example of this is plotted in \fref{fig:ram}. The forward progress improvement by sizing energy storage increases with the volatile state size, and the optimal capacitance grows accordingly. The improvement becomes insignificant when the volatile state size is small because the restore and save overheads are already negligible. For example, when the workload uses the least volatile state (the leftmost point), the maximum progress improvement is only 3.6\% although the restore and save overheads are reduced by 93\%. 
-% This indicates the more efficiently IPSs save/restore, the more useless this work is. 
+An example of this is plotted in \fref{fig:ram}. 
+The forward progress improvement by sizing energy storage increases with the volatile state size, and \nm{C}{$\alpha$\_max} grows accordingly. 
+The improvement becomes insignificant when the volatile state size is small because the restore and save overheads are already negligible. 
+For example, when the workload uses the least volatile state (the leftmost point), the maximum progress improvement is only 3.6\% although the restore and save overheads are reduced by 93\%. 
+% This indicates the more efficiently IPSs save/restore, the more useless this work is :p 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\columnwidth]{ch3_sizingeffect/figures/RSTORAM3Fig}
+    \includegraphics[width=\columnwidth]{ch3_sizingeffect/figures/RSTORAM3Fig}
     \caption{Impact of RAM usage (linear to restore/save overheads) on sizing energy storage with \SI{0.4}{\milli\ampere} current supply. Improvement and reduction are normalised by the minimum capacitance case. }
     \label{fig:ram}
 \end{figure}
+
+Where the size of the volatile state may vary at run time, a different capacitor size within the range \SIrange{108}{355}{\micro\farad} may have been recommended (\fref{fig:ram}). 
+However, as can be seen from \fref{fig:fpwconstcurr}, there is a minimal difference in forward progress across this range. 
+In the worst case, a 2.7\% reduction results from setting \nm{C}{$\alpha$\_max} for the minimum state size, while running with the largest state size.
