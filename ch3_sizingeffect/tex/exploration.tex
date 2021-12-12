@@ -37,8 +37,8 @@ We assume a typical load of $<$ \SI{4.0}{\volt} so, to minimise leakage, we sele
 We configured the load with experimentally measured current draws and time overheads.
 We only consider computational loads in this study, as handling of peripherals in intermittent systems is still an ongoing research topic~\cite{rodriguez2018restop, Maeng:2019:SPI:3314221.3314613}. 
 
-We implemented and parameterised a reactive IPS~\cite{balsamo2015hibernus} on a development board of a TI MSP430FR6989 MCU. 
-The load parameters are profiled with the MCU running a Dijkstra path finding algorithm with \SI{1696}{\byte} RAM usage at \SI{8}{\mega\hertz}. 
+We implemented and parameterised a reactive IPS~\cite{balsamo2015hibernus} on a TI MSP430FR6989-based development board. 
+The load parameters were profiled with the MCU running a Dijkstra path finding algorithm with \SI{1696}{\byte} RAM usage at \SI{8}{\mega\hertz}. 
 The supply voltage monitoring circuits use the MCU's internal comparator and an external \SI{3}{\mega\ohm} voltage divider. 
 The restore and save voltage thresholds are set as \nm{V}{r} = \SI{2.4}{\volt} and \nm{V}{s} = \SI{2.1}{\volt} respectively. 
 The MCU shutdown voltage \nm{V}{off} is \SI{1.8}{\volt}. 

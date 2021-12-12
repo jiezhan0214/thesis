@@ -96,7 +96,7 @@ We develop an experimentally-validated model of reactive IPSs to estimate forwar
 Taking advantage of the model, we explore the effect of energy storage capacitance on forward progress with respect to supply current and volatile state size. 
 The main contributions in this chapter can be summarised as:
 \begin{itemize}
-    \item A reactive IPS model which accurately estimates forward progress; experimental validation shows a 0.5\% mean error. 
+    \item A reactive IPS model which accurately estimates forward progress; experimental validation based on a TI MSP430FR6989 MCU shows a 0.5\% mean absolute percentage error across a range of current inputs and energy storage capacitance. 
 	\item An exploration based on the model, where we analyse the energy storage sizing effect on forward progress with respect to supply current and volatile state size, showing up to 65\% forward progress improvement.
     % while reduces capacitor volume by \SI{71.7}{\percent} and interruption periods by \SI{83.8}{\percent} as simulated with real energy availability data (Section~\ref{section:demo}). 
     % that trades off forward progress, capacitor volume, and interruption periods in IPSs . 
@@ -108,14 +108,7 @@ The main contributions in this chapter can be summarised as:
     % \item Experimental validation of the theoretical model, which shows high accuracy with \SI{0.5}{\percent} mean absolute percentage error, and a \SI{43}{\micro\farad} capacitor suggested by the sizing approach improves forward progress by up to \SI{55.2}{\percent} and \SI{30.4}{\percent} compared to a theoretical minimum \SI{6.2}{\micro\farad} one and an on-board \SI{10}{\micro\farad} one across various levels of supply current. 
 
     % \item where we found that a properly sized capacitor results in up to 30.4\% more forward progress in experiment compared to an on-board one, and improves mean forward progress by up to 35.0\% over one-year indoor and outdoor light energy harvesting simulation compared to a minimum one. 
-    
-    % \item experiments: which was experimentally validated with accuracy of 0.5\% mean absolute percentage error across various current input. 
-
-    % \item We validate our formulation and model via experiments based on a TI MSP430FR6989 microcontroller, where the results show that 
 \end{itemize}
-%\color{blue}
-% While most IPSs are designed with a minimal amount of energy storage, 
-The associated simulation tool, coded in C, is available open-source~\footnote{\url{https://git.soton.ac.uk/energy-driven/energy-storage-sizing}}. %} with real energy availability data (Section~\ref{section:demo}
 
 As discussed in \cref{Chapter:Introduction}, \textit{forward progress} denotes the computation beneficial to the progress of the active application, excluding lost progress due to power failures and state-saving and -restoring operations~\cite{7478428}. 
 The amount of forward progress directly determines application performance, e.g. program iteration rate or task completion time. 
