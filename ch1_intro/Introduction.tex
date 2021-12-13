@@ -144,7 +144,7 @@ An example unsuitable application can be a periodic sensing task without periodi
   
   This application intends to capture kitchen events, such as dishwasher working, fan on, and refrigerator cooling, to record equipment usage. 
   As such events usually last for tens of seconds to a few hours, the device does not need to operate immediately after the event occurs or disappears. 
-  An implementation of this application is shown by Maeng et al.~\cite{maeng2019supporting}. 
+  An implementation of this application is shown by Maeng \textit{et al.}~\cite{maeng2019supporting}. 
   The device iterates the following tasks in turn during power-on periods: sampling acoustic information from a microphone, classifying kitchen events with a pre-trained model, and transmitting the results in Bluetooth Low-Energy (BLE) packets to an always-on server. 
   The device harvests RF energy from a dedicated RFID reader, and the packets are transmitted every a few seconds as reported. 
   This application is to complete program iterations as frequently as possible so as to improve the accuracy of event records. 
@@ -153,7 +153,7 @@ An example unsuitable application can be a periodic sensing task without periodi
 
   This application intends to monitor indoor temperature for air conditioning. 
   As the room temperature does not usually change over a few minutes, the temperature monitor does not need to wake up frequently or periodically. 
-  An implementation of this application is shown by Colin et al.~\cite{colin2018reconfigurable}. 
+  An implementation of this application is shown by Colin \textit{et al.}~\cite{colin2018reconfigurable}. 
   During power-on periods, the device samples temperature by an external analog sensor. 
   If the temperature is detected to be out of a pre-defined range, the device sends a BLE packet to alarm the server. 
   The device is also powered by a dedicated RFID reader. 
