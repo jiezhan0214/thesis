@@ -21,7 +21,7 @@ Prior works on intermittent peripheral operations either customise a design-time
 
 % *** Offline profiling and fixed threshold is impractical due to variability ***
 
-However, in this paper we argue that manually profiling each peripheral operation and customising energy thresholds is impractical due to variability in IPSs, where we have considered the variability in the data amount to process, peripheral configurations, devices, and energy buffering capacitance (detailed in Section~\ref{subsec:dynamic_energy_consumption}). 
+However, in this paper we argue that manually profiling each peripheral operation and customising energy thresholds is impractical due to variability in IPSs, where we have considered the variability in the data amount to process, peripheral configurations, devices, and energy buffering capacitance (detailed in \sref{subsec:dynamic_energy_consumption}). 
 A fixed threshold can be violated if any of the above cases happen, and lead to non-termination\footnote{Non-termination happens when the pre-defined energy budget is less than how much the operation consumes and the supply is not strong enough to fill the energy gap. It is one of the main causes for failures in intermittent systems. }.
 In practical deployment, considering the complexity and labour effort, it is unrealistic to profile every atomic operation for every device under every runtime scenario at design time and customise the energy budgets accordingly. 
 
@@ -48,8 +48,9 @@ Therefore, \nn{} enables IPSs to allocate a barely sufficient energy budget desp
 The main contributions of this chapter can be summarised as follows:
 
 \begin{enumerate}
-    \item An exploration of the runtime variations of energy consumption in IPSs that compromise existing approaches in comparison with an adaptive thresholding scheme (Section~\ref{sec:design_exploration}). 
-    \item A method of runtime energy profiling of tasks for IPSs without disconnecting supply (Section~\ref{sec:method1}), showing a high accuracy within \SI{5}{\milli\volt} (Section~\ref{sec:experiment}).
-    \item An adaptive thresholding scheme that, utilising the runtime energy profiling method, dynamically allocates barely sufficient energy budgets for tasks, with an optional scaling based on user-defined parameters (Section~\ref{sec:method2}). The proposed scheme enables a system to survive with 67.5\% less energy buffering capacitance than the initially allocated amount and presents up to a 98\% speedup with variable data sizes, compared to SoA approaches (Section~\ref{sec:experiment}).
-    \item Implementation of the proposed runtime energy profiling and threshold adaptation method (Section~\ref{sec:implementation}).
+    \item An exploration of the runtime variations of energy consumption in IPSs that compromise existing approaches in comparison with an adaptive thresholding scheme (\sref{sec:design_exploration}). 
+    \item A method of runtime energy profiling of tasks for IPSs without disconnecting supply (\sref{sec:method1}), showing a high accuracy within \SI{5}{\milli\volt} (\sref{sec:experiment}).
+    \item An adaptive thresholding scheme that, utilising the runtime energy profiling method, dynamically allocates barely sufficient energy budgets for tasks, with an optional scaling based on user-defined parameters (\sref{sec:method2}). 
+    The proposed scheme enables a system to survive with 67.5\% less energy buffering capacitance than the initially allocated amount and presents up to a 98\% speedup with variable data sizes, compared to SoA approaches (\sref{sec:experiment}).
+    \item Implementation of the proposed runtime energy profiling and threshold adaptation method (\sref{sec:implementation}).
 \end{enumerate}

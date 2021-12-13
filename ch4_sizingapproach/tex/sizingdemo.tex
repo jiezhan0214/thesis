@@ -1,17 +1,17 @@
 \section{Sizing under Real-World Energy Conditions} \label{sec:c4_demo}
 
-In this section, we model an ICS with a photovoltaic (PV) energy harvester to explore the energy storage sizing effect in real-world energy conditions, and demonstrate use of the proposed sizing approach. 
+In this section, we model an IPS with a photovoltaic (PV) energy harvester to explore the energy storage sizing effect in real-world energy conditions, and demonstrate use of the proposed sizing approach. 
 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=\columnwidth]{ch4_sizingapproach/figures/solarmodel4}
-    \caption{System model of a PV-based ICS.}
+    \caption{System model of a PV-based IPS.}
     \label{fig:Model}
 \end{figure}
 
 \subsection{Simulation Configuration}
 
-We integrate the validated reactive ICS model into a system model with a PV energy-harvesting supply as shown in \figurename{~\ref{fig:Model}}. 
+We integrate the validated reactive IPS model into a system model with a PV energy-harvesting supply as shown in \figurename{~\ref{fig:Model}}. 
 The energy storage model and the intermittent load model are as presented in \sref{sec:c3_exploration}. 
 
 We use a converter-less supply circuit where only a Schottky diode is connected to the energy harvester output in order to prevent current backflow. 
@@ -162,7 +162,7 @@ It can also be inferred that optimising energy storage can either improve forwar
 
 \subsubsection{Interruption Period} \label{subsubsec:intper}
 Besides forward progress, we also explore how the capacitance can change the interruption periods. 
-When interrupted by insufficient power supply, an ICS enters an interruption period where it saves its volatile state, waits for supply voltage to recover, and restores the state to resume execution, without making any forward progress. Applications that require frequent sensing may be negatively affected by long interruption periods. We measure an interruption period as \textit{the period between two successive execution periods}, e.g. a consecutive `SLR' period in \figurename{~\ref{fig:operatingCycle}} forms an interruption period. 
+When interrupted by insufficient power supply, an IPS enters an interruption period where it saves its volatile state, waits for supply voltage to recover, and restores the state to resume execution, without making any forward progress. Applications that require frequent sensing may be negatively affected by long interruption periods. We measure an interruption period as \textit{the period between two successive execution periods}, e.g. a consecutive `SLR' period in \figurename{~\ref{fig:operatingCycle}} forms an interruption period. 
 We record all the interruption periods during a one-year simulation with \SIrange{10}{50}{\micro\farad} capacitors, the Denver 2018 dataset, and an \SI{80}{\square\milli\meter} PV panel. 
 \figurename{~\ref{fig:interruption}} presents the distribution of all the interruption periods. 
 With increased energy storage, the interruption period is prolonged. For example, the 90th percentile of interruption periods increases from \SI{32.2}{\milli\second} at \SI{10}{\micro\farad} to \SI{123.4}{\milli\second} at \SI{50}{\micro\farad} at an approximate rate of \SI{23}{\milli\second} per \SI{10}{\micro\farad}. 

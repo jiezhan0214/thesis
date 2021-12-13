@@ -43,7 +43,7 @@ At design time, RESTOP needs to profile the worst-case energy consumption for re
 
 
 As reviewed above, prior work profiles the energy consumption of atomic peripheral operations at design time to determine a voltage threshold or a capacitor size that avoids non-termination. 
-However, this does not actually guarantee the completion of every atomic operation because energy consumption can change with any runtime conditions different to the profiling setup (demonstrated in Section~\ref{subsec:dynamic_energy_consumption}). 
+However, this does not actually guarantee the completion of every atomic operation because energy consumption can change with any runtime conditions different to the profiling setup (demonstrated in \sref{subsec:dynamic_energy_consumption}). 
 % Hence, previous designs typically achieve atomicity by carefully managing the system state, such that the atomic operation does not output valid data until completion, and, if a power failure happens during the operation, the system state rolls back to the start of the operation upon power recovery (rather than checkpoint and resume). 
 Hence, to tolerate dynamic variations, previous designs should usually leave an inefficiently large margin when allocating energy budgets. 
 If this large margin is not given, they can cause either non-termination or high overheads of tracking and restoring state, where \debs{} fails, Samoyed undo-logs the NVM data, and RESTOP re-issues peripheral instructions. 

@@ -230,7 +230,7 @@ This thesis will focus on how to improve the energy allocation of IPSs in order 
 % This effect is especially noticeable in reactive intermittent systems (\sref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. 
 % On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of IPSs~\cite{colin2018reconfigurable, wu2018extensible}. 
 % The trade-off of scaling energy storage in intermittent computing systems should be fully studied.
-With the goal of minimizing device dimensions and interruption periods, most ICS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+With the goal of minimizing device dimensions and interruption periods, most IPS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
 This is typically just sufficient for the most energy-expensive atomic operation, e.g. saving and restoring a complete state~\cite{balsamo2015hibernus}. 
 However, a system with minimum energy storage may frequently go through a cycle of: wake up, restore state, execute program, save state, and halt. 
 Provisioning more energy storage can prolong the power-on cycles, reduce the overheads, and hence increase forward progress, but can also increase system leakage and decrease forward progress. 
