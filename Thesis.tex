@@ -1,7 +1,7 @@
 \input{Settings}
 
 \begin{document}
-%% ------------------ FRONT MATTER ORGANISATION -------------------
+% ------------------ FRONT MATTER ORGANISATION -------------------
 \pagenumbering{gobble} % removes page number
 % \copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
 % \raggedright                  %% Set the style to Left justification, remove for fill justification
@@ -13,27 +13,27 @@
 \tableofcontents
 \listoffigures
 \listoftables
-%% The List of listings does not, by default, appear in the ToC, so....
+% The List of listings does not, by default, appear in the ToC, so....
 % \addtotoc{Listings}
 % \lstlistoflistings
 % \listofaddmaterial
 % \addtolom{Material Name e.g Map}
 % \addtolom{Material Name e.g CD}
 % \addtolom{Test Material}
-%% ---------- AUTHORSHIP DECLARATION/ ACKNOW. / DEDICATORY ----------
-%% Either include citations like below (as many as required spaced with commas or 'and').
-%% \bibentry command must be used here with prepublished papers
-% \authorshipdeclaration{\bibentry{Gunn:2001:pdflatex}\newline\bibentry{Lovell:2011:updated}\newline\bibentry{Gunn:2011:updated2}}
-%% Or state no citations like below
-%% \authorshipdeclaration{}
-%% -----------------------
+% ---------- AUTHORSHIP DECLARATION/ ACKNOW. / DEDICATORY ----------
+% Either include citations like below (as many as required spaced with commas or 'and').
+% \bibentry command must be used here with prepublished papers
+\authorshipdeclaration{\newline\bibentry{zhan2021exploring}\newline\bibentry{zhan2020adaptive}}
+% Or state no citations like below
+% \authorshipdeclaration{}
+% -----------------------
 \acknowledgements{Thanks to \dots}
 \dedicatory{To \dots}
-%%Lightweight Definitions and Abbreviations see package:nomencl for alternative
-%% Include if relevant to discipline
+% Lightweight Definitions and Abbreviations see package:nomencl for alternative
+% Include if relevant to discipline
 % \listofsymbols{ll}{$w$ & The weight vector\\$\S$ & If relevant to discipline}
 \mainmatter
-%% ------------------ MAIN MATTER (CONTENT) --------------------
+% ------------------ MAIN MATTER (CONTENT) --------------------
 
 
 \include{ch1_intro/Introduction}            % Chapter 1
