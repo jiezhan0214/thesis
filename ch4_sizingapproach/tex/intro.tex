@@ -1,21 +1,28 @@
-Having presented the effect of energy storage sizing, this chapter focusses on the energy storage sizing effect of the whole system under real-world energy conditions, and trading off multiple design factors. 
+Having analysed the sizing effect of energy storage on IPS performance, this chapter focusses on the energy storage sizing effect when deploying IPSs under real-world energy conditions, and providing an approach that recommends an energy storage size. 
+
 As presented in \cref{chapter:sizingeffect}, providing more energy storage than the minimum can improve forward progress.
-However, it was also revealed in \sref{subsec:sizees} that to obtaining the maximum forward progress improvement using \nm{C}{$\alpha$\_max} can take 3.2$\times$ capacitance compared to the one that achieves 95\% of the maximum improvement. 
-% However, this can also bring . 
+However, it was also revealed in \sref{subsec:sizees} that to obtain the maximum forward progress improvement with \nm{C}{$\alpha$\_max} can take 3.2$\times$ capacitance compared to the one that achieves 95\% of the maximum improvement. 
+A larger capacitor typically occupies more physical space, which may contradict with some IPS applications that require miniaturised size, e.g. implantable medical devices~\cite{amar2015power}.
+Also, a larger capacitor takes longer to recharge, hence prolonging the period of power interruption and compromising reactivity. 
+A systematic method is in need to decide the energy storage size for deploying IPSs, considering a trade-off of multiple design factors. 
 
 % The need for long-term simulation, reflecting micro operation, but fast design exploration
-Current tools for IPSs (\sref{sec:c4_review}) are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
+However, current tools for IPSs (reviewed in \sref{sec:c4_review}) are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
 This chapter presents an approach for sizing energy storage in IPSs, quantifying and trading off forward progress, capacitor volume, and interruption periods. 
-The main contributions are:
+With the model in \sref{chapter:sizingeffect} integrated, the proposed sizing approach is able to fast explore the relationship between the energy storage size and forward progress with long-term real-world energy conditions. 
+An example cost function is also provided to trade off multiple design factors so as to recommend an energy storage size. 
+The main contributions in this chapter are as follows:
 \begin{itemize}
     \item A model-based sizing approach that recommends appropriate energy storage capacitance in IPSs (\sref{sec:c4_approach}).
     \item An evaluation of the impact of sizing in real-world conditions using real energy availability data (\sref{sec:c4_demo}). 
     This includes a cost function-based method for trading off parameters. 
-    In an example, this reduced capacitor volume and interruption periods by 83\% and 91\% respectively, while sacrificing 7\% of forward progress.
+    In an example, this reduced capacitor volume and interruption periods by 83\% and 91\% respectively, while sacrificing 7\% of forward progress, compared to solely maximising forward progress.
 \end{itemize}
 
 The associated simulation tool, coded in C, is available open-source~\footnote{\url{https://git.soton.ac.uk/energy-driven/energy-storage-sizing}}. 
 
-% We further propose an approach for identifying the proper energy storage size for deploying energy-harvesting intermittent computing (EHIC) devices, which improves forward progress while balances dimensions and interruption periods. 
-% We integrate the reactive intermittent computing model into a photovoltaic-based (PV-based) EHIC device framework. 
-% We demonstrate the sizing approach with the framework given various real-world indoor and outdoor light source datasets. 
+The remainder of this chapter is organised as follows. 
+\sref{sec:c4_review} reviews the current tools and models for IPSs. 
+\sref{sec:c4_approach} proposes an approach for sizing energy storage in IPS deployment 
+\sref{sec:c4_demo} configures and demonstrates the proposed sizing approach with real-world energy source data, with forward progress, capacitor volume, and interruption periods being estimated and traded off.  
+Finally, \sref{sec:c4_summary} summarises this chapter. 
