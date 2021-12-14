@@ -1,6 +1,10 @@
 Having presented the effect of energy storage sizing, this chapter focusses on the energy storage sizing effect of the whole system under real-world energy conditions, and trading off multiple design factors. 
+As presented in \cref{chapter:sizingeffect}, providing more energy storage than the minimum can improve forward progress.
+However, it was also revealed in \sref{subsec:sizees} that to obtaining the maximum forward progress improvement using \nm{C}{$\alpha$\_max} can take 3.2$\times$ capacitance compared to the one that achieves 95\% of the maximum improvement. 
+% However, this can also bring . 
+
+% The need for long-term simulation, reflecting micro operation, but fast design exploration
 Current tools for IPSs (\sref{sec:c4_review}) are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
-% the challenge of sizing energy storage to improve forward progress while moderating the physical size and interruption periods is largely unaddressed.
 This chapter presents an approach for sizing energy storage in IPSs, quantifying and trading off forward progress, capacitor volume, and interruption periods. 
 The main contributions are:
 \begin{itemize}
@@ -11,3 +15,7 @@ The main contributions are:
 \end{itemize}
 
 The associated simulation tool, coded in C, is available open-source~\footnote{\url{https://git.soton.ac.uk/energy-driven/energy-storage-sizing}}. 
+
+% We further propose an approach for identifying the proper energy storage size for deploying energy-harvesting intermittent computing (EHIC) devices, which improves forward progress while balances dimensions and interruption periods. 
+% We integrate the reactive intermittent computing model into a photovoltaic-based (PV-based) EHIC device framework. 
+% We demonstrate the sizing approach with the framework given various real-world indoor and outdoor light source datasets. 
