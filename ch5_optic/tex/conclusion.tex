@@ -1,2 +1,20 @@
 \section{Summary}
-\todo[inline]{Summary to do.}
+
+Though previous IPS designs adopt fixed energy thresholds profiled at design time for atom tasks, this chapter has shown that this can cause non-termination or reduce system energy efficiency. 
+We found that the variability in IPSs can significantly change energy consumption.
+We presented four examples of such variability, i.e. variable data sizes, variable peripheral configurations, device variability, and capacitor ageing, all of which can violate a predefined energy threshold at runtime. 
+
+To address this issue, we proposed \nn{}, a runtime energy profiling and adaptation method. 
+We proposed two methods of runtime energy profiling. 
+A disconnecting-supply method measures the supply voltage difference before and after executing a task while short-circuiting the supply. 
+While this is straight forward, it wastes the energy input during the task execution.
+A connecting-supply method for runtime energy profiling is also proposed, where it estimates the energy input during the task execution by measuring the current input before the task and compensating the supply voltage difference of execution. 
+Experimental results has shown the proposed profiling method has a high accuracy of less than \SI{5}{\milli\volt}.
+This enables IPSs to profile tasks' energy consumption at runtime and alleviates manual profiling efforts in development.
+We also proposed a runtime energy adaptation routine that adapts the voltage threshold for a task utilising the proposed runtime energy profiling, with an option of linearly scaling the threshold by user-defined parameters. 
+
+We implemented \nn{} on a TI MSP430FR5994 MCU, with an external supply voltage monitor that can be efficiently configured and wake up the MCU when a threshold is hit. 
+The experimental results showed that \nn{} can reliably adapts its threshold for a new task on a new device. 
+\nn{} can also adapt to an increased $\Delta \symb{V}{task}$ caused by increased energy consumption or device ageing, e.g. up to 67.5\% capacitance reduction that emulates an ageing capacitor, while the SoA fails. 
+Finally, with variable data sizes or configurations, \nn{} is able to efficiently set barely sufficient energy thresholds that lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA. 
+

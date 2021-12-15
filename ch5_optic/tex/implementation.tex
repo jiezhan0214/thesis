@@ -54,8 +54,13 @@ where \nm{V}{end} is the target end voltage, which we set at \SI{2}{\volt} becau
 In order to speed up the threshold setting from this non-linear relationship (\eref{eq:adc_thr}), We generated a look-up table to efficiently convert a profiling result \nm{N}{profiling} into the corresponding voltage threshold setting \nm{N}{wiper}. 
 To avoid unnecessarily fine-grained steps, we equally divide \nm{N}{profiling} by a step of \nm{N}{step}. We recommend setting \nm{N}{step} as a power of 2 for an efficient threshold conversion, and we set \nm{N}{step} as 32, which translates to a voltage step of about \SI{31}{\milli\volt}.
 We traversed \nm{N}{wiper} to find the closest \nm{V}{th} for each step of \nm{N}{profiling}, and the look-up table is then formed by the array of \nm{N}{wiper}. 
-We also shifted the look-up table by one step higher so that the look-up table can inherently round up. 
-Therefore, the corresponding threshold setting \nm{N}{wiper} of a profiling result \nm{N}{profiling} can be found in the look-up table with a computation-efficient index of $\frac{\nmm{N}{profiling}}{\nmm{N}{step}}$.
+We also shifted the look-up table by one step higher so that the look-up table can inherently round up the threshold. 
+Therefore, the corresponding threshold setting \nm{N}{wiper} of a profiling result \nm{N}{profiling} can be found in the look-up table with a computation-efficient index of $\frac{\nmm{N}{profiling}}{\nmm{N}{step}}$ as shown in \eref{eq:n_wiper}.
+\begin{equation}
+    \nmm{N}{wiper} = lookup\_table(\frac{\nmm{N}{profiling}}{\nmm{N}{step}})
+    \label{eq:n_wiper}
+\end{equation}
+
 
 \subsection{Software}
 

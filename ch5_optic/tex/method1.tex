@@ -1,5 +1,7 @@
 \section{\nn{} Runtime Energy Profiling} \label{sec:method1}
 
+\todo[inline]{Add the disconnecting supply method. }
+
 \nn{}'s runtime energy profiling method efficiently profiles the maximum drop of supply voltage that a task can cause, i.e. the aforementioned $\Delta \nmm{V}{task}$. 
 Unlike the previous disconnecting-supply method, \nn{}'s performs energy profiling with the supply connected, so as to reserve energy input during profiling.
 When the supply is connected, $\Delta \nmm{V}{task}$ cannot be measured simply by two voltage measurements at the beginning and the end of a task because the supply keeps charging the system during execution. 
