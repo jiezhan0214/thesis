@@ -33,23 +33,23 @@ Three common peripheral tasks in IoT sensors were used as the benchmarks for eva
 
 \input{ch5_optic/figures/profiling_accuracy/profiling_accuracy.tex}
 
-\todo[inline]{Should provide a reason for the 5mV division in Figure 5.9.}
-
 We first measured the profiling accuracy of \nn{}'s runtime energy profiling ability. 
 A hundred profiling results were obtained for each workload. 
 Manual profiling was also conducted by disconnecting the power supply during task execution and reading $\Delta\nmm{V}{task}$ from a scope, and used as a reference that we evaluate the profiling results against. 
+The results are divided in a \SI{5}{\milli\volt} step because the resolution of our scope is \SI{5}{\milli\volt}, below which the manual profiled reference is not even accurate. 
+
 As shown in \fref{fig:profiling_accuracy}, the profiling errors are low and relatively consistent (mostly within \SI{5}{\milli\volt}) across the three workload with different levels of energy consumption. 
 The error becomes insignificant with energy-hungry tasks, e.g. RF. 
 Compared to the step of voltage thresholds in our implementation (around \SI{30}{\milli\volt}), this \SI{5}{\milli\volt} error is acceptable as it can convert to a relatively stable threshold assuming a fixed energy consumption. 
+
 Additionally, the average profiling results are shown to be a slightly higher than the reference, which 
 seems to contradict the theoretical error that is supposed to make the profiling undershoot.
-This is majorly due to a positive error in the MCU's internal 1/2 \nm{V}{cc} divider, which also evidences that the theoretical error is insignificant and easily compensated by other factors. 
+This is majorly due to a positive error in the MCU's internal 1/2 \nm{V}{cc} divider from an observation that the Naive approach produced a higher reading. 
+This also evidences that the theoretical error is insignificant and easily compensated by other factors. 
 
 \todo[inline]{Energy saving compared to the disconnect-supply profiling method?}
 
 \subsection{Reliability with Dynamic Energy Consumption}
-
-Question: Can it still make forward progress correctly with changes (as listed below) while other SoA approaches can't? 
 
 We evaluated whether \nn{} can adapt to variability in IPSs and keep making forward progress.
 We classified the variability in three categories according to the frequency of these changes: 
@@ -133,9 +133,8 @@ The average completion rate in a \SI{30}{\second} window was recorded as a perfo
 As shown in \fref{fig:datasize}, \nn{} managed to make 64\% and 98\% more progress compared to Samoyed and \debs{} respectively on the AES workload. On the RF workload, the improvement compared to \debs{} is 10\% while Samoyed failed because the radio cannot reset to the correct state after a power failure and draws large current. 
 The improvement of \nn{} comes from a lower threshold from which the system can harvest more energy and save the time on waiting for unnecessary energy. 
 
-\subsection{Overheads}
-
-\todo[inline]{Results of current, time, and memory overheads to be measured.}
+% \subsection{Overheads}
+% \todo[inline]{Results of current, time, and memory overheads to be measured.}
 
 % Current \& time overheads of profiling and adaptation (with a further breakdown according to sub-operations) compared to Plain C. 
 %Time is measured by GPIO signals, and current is calculated by measuring voltage droops. 

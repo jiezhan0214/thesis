@@ -1,7 +1,5 @@
 \section{\nn{} Runtime Energy Profiling} \label{sec:method1}
 
-\todo[inline]{Add the disconnecting supply method. }
-
 \nn{}'s runtime energy profiling method efficiently profiles the maximum drop of supply voltage that a task can cause, i.e. the aforementioned $\Delta \nmm{V}{task}$. 
 Unlike the previous disconnecting-supply method, \nn{}'s performs energy profiling with the supply connected, so as to reserve energy input during profiling.
 When the supply is connected, $\Delta \nmm{V}{task}$ cannot be measured simply by two voltage measurements at the beginning and the end of a task because the supply keeps charging the system during execution. 
@@ -14,9 +12,36 @@ Usually, these two functions can be achieved with efficient on-chip ADCs and tim
 
 % Atomicity: no preemption during the task. 
 
+\subsection{A disconnecting-supply approach}
+
+Before introducing \nn{}'s energy profiling method, a naive method for runtime energy profiling is disconnecting the supply and measure the supply voltage at the beginning (\nm{V}{1}) and the end (\nm{V}{2}) of a task, hence $\Delta\nmm{V}{task}$ can be calculated as:
+\begin{equation}
+    \Delta\nmm{V}{task} = \nmm{V}{1} - \nmm{V}{2}
+    \label{eq:naive_profiling}
+\end{equation}
+However, this can waste the energy input during the task execution. 
+The total wasted charge is: 
+\begin{equation}
+    \nmm{Q}{waste} = \nmm{I}{in}\nmm{T}{task}
+    \label{eq:qwaste}
+\end{equation}
+which increases linearly with the current input and the time length of a task. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\columnwidth]{ch5_optic/figures/naive_circuit.pdf}
+  \caption{Experimental schematic.}
+  \label{fig:naive_circuit}
+\end{figure}
+
+An example circuit to achieve this method is shown in \fref{fig:naive_circuit}. 
+It utilises an N-channel FET to short-circuit the energy harvesting supply during calibration, with a pull-down resistor to keep the gate low when MCU is not powered. 
+The supply is decoupled by a diode to prevent current backflow. 
+The MSP430FR5994 MCU uses its internal comparator and ADC to monitor and measure a divided supply voltage $\frac{1}{3}V_{cc}$. 
+
 \subsection{Principles}
 
-To obtain $\Delta \nmm{V}{task}$, \nn{}'s runtime energy profiling method compensates the voltage difference before and after an operation by an estimated voltage gain brought by the supply during the operation.
+To obtain $\Delta\nmm{V}{task}$, \nn{}'s runtime energy profiling method compensates the voltage difference before and after an operation by an estimated voltage gain brought by the supply during the operation.
 The estimated voltage gain is calculated by measuring the charging ability in the last charge cycle and scaling it with the duration of the discharge cycle. 
 Thus, \nn{} takes three voltage readings and two timer readings to perform one energy profiling. 
 

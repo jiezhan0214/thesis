@@ -1,8 +1,8 @@
-\begin{figure}[t]
+\begin{figure}
     \centering
     \begin{tikzpicture}
     \begin{groupplot}[
-        group style={group size=3 by 1,horizontal sep=5pt},
+        group style={group size=3 by 2,horizontal sep=5pt,vertical sep=60pt},
         width=0.4\columnwidth, height=5.5cm,
         xmin=-13,xmax=13,
         ymin=0,ymax=110,
@@ -14,114 +14,66 @@
         area style,
         xlabel={Error (\SI{}{\milli\volt})},
         xlabel style={yshift=3pt,},
-        title style={at={(0.5,0)},anchor=north,yshift=-1.5cm},
+        title style={at={(0.5,0)},anchor=north,yshift=-35pt},
         ]
 
-        \nextgroupplot [title={(a) DMA},yticklabel={\pgfmathprintnumber\tick\%}]
+        \nextgroupplot [title={(a) \nn{}, DMA},yticklabel={\pgfmathprintnumber\tick\%}]
         \addplot 
             plot [ybar interval,mark=no,black,fill=Set1-B,]
             table [x=v_error,y=repa_dma,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
         \node (n1) at (axis cs:0,100) {};
         \node (n2) at (axis cs:0,0) {};
         \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
-        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,108) {$\Delta V_{\text{task}}$=\SI{107}{\milli\volt}};
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{107}{\milli\volt}};
 
-        \nextgroupplot [title={(b) AES},yticklabel=\empty]
+        \nextgroupplot [title={(b) \nn{}, AES},yticklabel=\empty]
         \addplot 
             plot [ybar interval,mark=no,black,fill=Set1-B,]
             table [x=v_error,y=repa_aes,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
         \node (n1) at (axis cs:0,100) {};
         \node (n2) at (axis cs:0,0) {};
         \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
-        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,108) {$\Delta V_{\text{task}}$=\SI{583}{\milli\volt}};
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{583}{\milli\volt}};
 
-        \nextgroupplot [title={(c) RF},yticklabel=\empty]
+        \nextgroupplot [title={(c) \nn{}, RF},yticklabel=\empty]
         \addplot 
             plot [ybar interval,mark=no,black,fill=Set1-B,]
             table [x=v_error,y=repa_radio,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
         \node (n1) at (axis cs:0,100) {};
         \node (n2) at (axis cs:0,0) {};
         \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
-        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,108) {$\Delta V_{\text{task}}$=\SI{720}{\milli\volt}};
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{720}{\milli\volt}};
+
+        % Naive approach
+        \nextgroupplot [title={(d) Naive, DMA},yticklabel={\pgfmathprintnumber\tick\%}]
+        \addplot 
+            plot [ybar interval,mark=no,black,fill=Set1-B,]
+            table [x=v_error,y=naive_dma,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
+        \node (n1) at (axis cs:0,100) {};
+        \node (n2) at (axis cs:0,0) {};
+        \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{107}{\milli\volt}};
+
+        \nextgroupplot [title={(e) Naive, AES},yticklabel=\empty]
+        \addplot 
+            plot [ybar interval,mark=no,black,fill=Set1-B,]
+            table [x=v_error,y=naive_aes,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
+        \node (n1) at (axis cs:0,100) {};
+        \node (n2) at (axis cs:0,0) {};
+        \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{583}{\milli\volt}};
+
+        \nextgroupplot [title={(f) Naive, RF},yticklabel=\empty]
+        \addplot 
+            plot [ybar interval,mark=no,black,fill=Set1-B,]
+            table [x=v_error,y=naive_radio,col sep=comma] {ch5_optic/figures/profiling_accuracy/profiling_accuracy.csv};
+        \node (n1) at (axis cs:0,100) {};
+        \node (n2) at (axis cs:0,0) {};
+        \draw [color=Set1-A,ultra thick,dashed] (n2) -- (n1);
+        \node [anchor=north, font=\footnotesize, color=Set1-A] at (axis cs:0,110) {$\Delta V_{\text{task}}$=\SI{720}{\milli\volt}};
+
     \end{groupplot}
     \end{tikzpicture}
-    \caption{Error Distribution of \nn{}'s Runtime Energy Profiling given a PV supply. }
+    \caption{Error Distribution of \nn{}'s Runtime Energy Profiling given a PV supply, compared to the "Naive" disconnecting-supply method. }
     \label{fig:profiling_accuracy}
 \end{figure} 
-
-% Old figure
-% \begin{figure*}[t]
-%     \centering
-%     \begin{tikzpicture}
-%     \begin{groupplot}[
-%         group style={group size=3 by 2, vertical sep=43pt},
-%         width=0.7\columnwidth, height=3.7cm,
-%         xmin=-15,xmax=15,
-%         ymin=0,ymax=100,
-%         xtick distance=5,
-%         % xtick pos=top,
-%         xticklabel pos=bottom,
-%         yticklabel={\pgfmathprintnumber\tick\%},
-%         every tick label/.append style={font=\small},
-%         minor x tick num=0,
-%         area style,
-%         xlabel={Error (\SI{}{\milli\volt})},
-%         xlabel style={yshift=3pt,},
-%         title style={yshift=-7pt,},
-%         ]
-
-%         \nextgroupplot [title={(a) REPA, DMA Transfer}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=repa_dma,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{107}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-
-%         \nextgroupplot [title={(b) REPA, AES Encryption}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=repa_aes,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{583}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-
-%         \nextgroupplot [title={(c) REPA, Radio Transmission}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=repa_radio,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{720}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-
-%         \nextgroupplot [title={(d) Naive, DMA Transfer}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=naive_dma,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{107}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-
-%         \nextgroupplot [title={(e) Naive, AES Encryption}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=naive_aes,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{583}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-
-%         \nextgroupplot [title={(f) Naive, Radio Transmission}]
-%         \addplot 
-%             plot [ybar interval,mark=no,black,fill=Set1-B,]
-%             table [x=v_error,y=naive_radio,col sep=comma] {figures/profiling_accuracy/profiling_accuracy.csv};
-%         \node [anchor=north, font=\footnotesize, color=Set1-A] (n1) at (axis cs:0,100) {\SI{720}{\milli\volt}};
-%         \node (n2) at (axis cs:0,0) {};
-%         \draw [color=Set1-A,thick,dashed] (n2) -- (n1);
-        
-%     \end{groupplot}
-
-
-%     \end{tikzpicture}
-%     \caption{Profiling accuracy. }
-%     \label{fig:profiling_accuracy}
-% \end{figure*} 
