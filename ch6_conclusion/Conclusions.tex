@@ -1,74 +1,39 @@
 \chapter{Conclusions and Future Work} \label{chapter:conclusion}
 
-\section{Conclusions} 
+% Background and Motivation
+Enabled by energy harvesting and low-power computing techniques, IPSs are expected to be a promising system paradigm for numerous IoT sensors in the near future, with forecasts of hundreds of billions being installed~\cite{sparks2017trillion}.
+IPSs adapt to the intrinsically variable and uncontrollable power input of energy harvesters, and thus, circumvent large volume, environmental impact, and limited lifespan of large energy buffers, i.e. batteries and supercapacitors, that contradict with the requirements of future IoT sensors.
 
-Intermittent computing enables continuity of computation on energy harvesting sensor nodes despite frequent power failures by managing system volatile and non-volatile states. With a goal of minimising device dimensions and cost, intermittent computing systems only adopt energy storage (e.g. a decoupling capacitor) at the minimum requirement of ensuring computing correctness. However, given power production is less than power consumption, such systems have to frequently wake up, execute shortly, and halt, wasting energy on state managing operations. A method of sizing energy storage and energy harvester for intermittent computing devices under real-world deployment is proposed. This sizing method provides a suggestion on how to balance performance and dimensions in sizing energy harvester. In a suggested range of energy harvester sizes, increasing storage from 20\textmu F to 80\textmu F and improve 5.7-22.2\% on application execution speed under real-world energy source conditions while not affect device dimensions. 
+While existing IPS technology has mainly focussed on the computing part, i.e. efficiently and correctly retaining the system state across power interruptions, this thesis has explored energy budgeting in IPSs. 
+The energy budget in an IPS is represented as the energy of an active cycle when the load wakes up and executes program. 
+As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, we have conducted the research following the two aspects. 
 
-A power-neutral system has to match the power consumption with the available power instantaneously through DVFS since it has almost no energy storage. However, this affects the overall performance, since a system performing DVFS can obtain more computation when operating within a constrained range of frequency instead of scaling frequency according to the harvested power. Based on this, a study on the effect of energy storage capacity on the performance of power-neutral systems is proposed. In this study, the analysis shows that with the increase in capacitance, the system is able to operate within a more stable range of frequency, and hence more forward progress achieved given the same power input and within the same time. It is reported in the simulation that when properly selecting the size of the capacitor, the forward progress can be improved by 14.6\% given a sinusoidal power input.
+% Recap of main work and findings in this thesis
+To minimise device dimensions and interruption periods, most IPSs have adopted only a minimum amount of energy storage. 
 
-% Computing devices powered by energy harvesters violates one of the most basic assumptions in conventional computing theory: a reliable power supply. In energy harvesting computing, power neutral computing and transient computing are recently proposed to mitigate the deficiencies of large energy buffers that involved in energy neutral computing, while still maintaining continuous execution despite power outages, embracing high power efficiency and minimising the volume and weight of devices. However, existing works only focus on the design paradigms to ensure the continuity of execution without considering the full utilization of the input power. Therefore, it is still a problem that how to manage performance and schedule tasks given an uncontrollable power in order to achieve more forward progress. 
+
+
+\section{Answers to Research Questions}
 
 \section{Future Work}
 
-% \begin{figure}[!htb]
-%   \centering
-% \begin{tikzpicture}
-% \begin{ganttchart}[
-%   hgrid,
-%   vgrid,
-%   time slot format=isodate-yearmonth, % Sets the time format
-%   time slot unit=month, % Time resolution
-%   title label font=\tiny,
-%   bar label font=\tiny,
-%   group label font=\footnotesize\bfseries,
-%   x unit=7mm,
-%   y unit chart=5mm,
-%   ]{2020-08}{2021-10} % !! Input start-date, end date here (YYYY-MM)
-% \gantttitlecalendar{year, month}\\
+Can the threshold go even lower?
 
-%   \ganttgroup{Energy storage sizing}{2020-08}{2020-12}\\
-%   \ganttbar{Under TCAD revision}{2020-08}{2020-09}\\
-%   \ganttbar[
-%     progress=100,
-%     progress label text={\hspace{-0.3cm}$\rightarrow$ depend on feedback},
-%   ]{Rebuttal}{2020-10}{2020-12}\\
-
-%   \ganttgroup{Handling atomic tasks}{2020-08}{2021-02}\\
-%   \ganttbar{Implementation}{2020-08}{2020-08}\\
-%   \ganttbar{Experiments}{2020-09}{2020-09}\\
-%   \ganttbar{Paper writeup}{2020-10}{2020-11}\\
-%   \ganttbar[
-%     progress=100,
-%     progress label text={\hspace{-0.3cm}$\rightarrow$ depend on feedback},
-%   ]{Revision}{2020-12}{2021-02}\\
-  
-%   \ganttgroup{PhD milestones}{2020-08}{2021-09}\\
-%   \ganttbar{3rd progression review}{2020-08}{2020-08}\\
-%   \ganttbar{Final thesis}{2021-01}{2021-06}\\
-%   \ganttbar{Final viva \& correction}{2021-07}{2021-09}
-
-%   % \ganttgroup{\begin{tabular}[r]{r} Second project has  \\ a long name\end{tabular}}{2020-10}{2021-06}\\
-%   % \ganttbar[name=ev1]{Evaluation}{2020-07}{2020-08}\\
-%   % \ganttbar[name=ev2]{Evaluation}{2021-04}{2021-05}\\
-%   % \ganttbar[name=p1]{Paper writeup}{2020-09}{2020-09}\\
-%   % \ganttbar[name=p2]{Paper writeup}{2021-06}{2021-06}\\
-%   % \ganttlink{ev1}{p1}
-%   % \ganttlink{ev2}{p2}
-
-%   \ganttvrule[vrule/.append style={thick, ->}, vrule label node/.append style={font={\bfseries\scriptsize}, xshift=-1.5cm, anchor={north west}}]{3rd progression review}{2020-08}
-%   \ganttvrule[vrule/.append style={thick, ->}, vrule label node/.append style={font={\bfseries\scriptsize}, xshift=-0.3cm, anchor={north west}}]{DAC}{2020-11}
-%   \ganttvrule[vrule/.append style={thick, ->}, vrule label node/.append style={font={\bfseries\scriptsize}, xshift=-1.5cm, anchor={north west}}]{PhD final deadline}{2021-09}
-
-% \end{ganttchart}
-% \end{tikzpicture}
-%   \caption{A gantt chart.}
-%   \label{fig:gantt}
-% \end{figure}
+Can IPS change from a MCU-centred system to an EMU-centred system, i.e powering the load modules in turn?
 
 
+% Intermittent computing enables continuity of computation on energy harvesting sensor nodes despite frequent power failures by managing system volatile and non-volatile states. 
+% With a goal of minimising device dimensions and cost, intermittent computing systems only adopt energy storage (e.g. a decoupling capacitor) at the minimum requirement of ensuring computing correctness. 
+% However, given power production is less than power consumption, such systems have to frequently wake up, execute shortly, and halt, wasting energy on state managing operations. 
+% A method of sizing energy storage and energy harvester for intermittent computing devices under real-world deployment is proposed. 
+% This sizing method provides a suggestion on how to balance performance and dimensions in sizing energy harvester. 
+% In a suggested range of energy harvester sizes, increasing storage from 20\textmu F to 80\textmu F and improve 5.7-22.2\% on application execution speed under real-world energy source conditions while not affect device dimensions. 
 
-
-
+% A power-neutral system has to match the power consumption with the available power instantaneously through DVFS since it has almost no energy storage. 
+% However, this affects the overall performance, since a system performing DVFS can obtain more computation when operating within a constrained range of frequency instead of scaling frequency according to the harvested power. 
+% Based on this, a study on the effect of energy storage capacity on the performance of power-neutral systems is proposed. 
+% In this study, the analysis shows that with the increase in capacitance, the system is able to operate within a more stable range of frequency, and hence more forward progress achieved given the same power input and within the same time. 
+% It is reported in the simulation that when properly selecting the size of the capacitor, the forward progress can be improved by 14.6\% given a sinusoidal power input.
 
 %%%%%%%%%%%%%%%%%
 % Interim Thesis future work
@@ -199,9 +164,3 @@ A power-neutral system has to match the power consumption with the available pow
 
 % \textbf{Task 6:} Write the Transfer Thesis.
 
-% \begin{figure}[!htb]
-%   \centering
-%   \includegraphics[width=14cm]{figure/conclusion/timeline}
-%   \caption{Timeline of work plan.}
-%   \label{Figure:timeline}
-% \end{figure}
