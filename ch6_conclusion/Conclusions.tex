@@ -10,8 +10,12 @@ As the energy budget is determined by the energy storage size and the voltage th
 
 % Recap of main work and findings in this thesis
 To minimise device dimensions and interruption periods, most IPSs have adopted only a minimum amount of energy storage. 
+However, \cref{chapter:sizingeffect} has found that this can be energy inefficient as the system has to frequently save and restore the state. 
+Hence, we have proposed a reactive IPS model to explore the sizing effect of energy storage. 
+Derived from the principle operating cycles of IPSs, the proposed model can fast estimates forward progress given supply current and energy storage capacitance, facilitating exploration and understanding of IPSs. 
+We configured the model with experimentally profiled parameters of a reactive IPS. 
 
-
+Accuracy
 
 \section{Answers to Research Questions}
 
@@ -156,7 +160,7 @@ Can IPS change from a MCU-centred system to an EMU-centred system, i.e powering 
 
 % \textbf{Task 4:} Refine the current power management control scheme to fully exploit the advantage of an increased energy storage. 
 
-% \textbf{Task 4.1:} Improve the performance adaptation scheme to better exploit the energy storage, because currently increasing energy storage capacity results in less voltage variation which indicates less proportion of energy storage is utilized. If the control scheme can allow more voltage variation while still deliver the same forward progress, the storage size, and hence the volume of devices, can be reduced.
+% \textbf{Task 4.1:} Improve the performance adaptation scheme to better exploit the energy storage, because currently increasing energy storage capacity results in less voltage variation which indicates less proportion of energy storage is utilised. If the control scheme can allow more voltage variation while still deliver the same forward progress, the storage size, and hence the volume of devices, can be reduced.
 
 % \textbf{Task 4.2:} Include sleep state which introduces a unique point on the system power function (zero performance and nearly zero power consumption). This can violate the prior statement, which is drawn when assuming that the system is always active, that it is always better to reduce the variation of operating frequency.
 
