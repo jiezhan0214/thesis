@@ -1,23 +1,50 @@
 \chapter{Conclusions and Future Work} \label{chapter:conclusion}
 
-% Background and Motivation
 Enabled by energy harvesting and low-power computing techniques, IPSs are expected to be a promising system paradigm for numerous IoT sensors in the near future, with forecasts of hundreds of billions being installed~\cite{sparks2017trillion}.
 IPSs adapt to the intrinsically variable and uncontrollable power input of energy harvesters, and thus, circumvent large volume, environmental impact, and limited lifespan of large energy buffers, i.e. batteries and supercapacitors, that contradict with the requirements of future IoT sensors.
 
 While existing IPS technology has mainly focussed on the computing part, i.e. efficiently and correctly retaining the system state across power interruptions, this thesis has explored energy budgeting in IPSs. 
 The energy budget in an IPS is represented as the energy of an active cycle when the load wakes up and executes program. 
-As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, we have conducted the research following the two aspects. 
+As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, we have conducted the research following the two aspects, where \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach} explored the energy storage sizing effect and \cref{chapter:opta} proposed runtime profiling and adaptation of voltage thresholds. 
 
 % Recap of main work and findings in this thesis
 To minimise device dimensions and interruption periods, most IPSs have adopted only a minimum amount of energy storage. 
-However, \cref{chapter:sizingeffect} has found that this can be energy inefficient as the system has to frequently save and restore the state. 
-Hence, we have proposed a reactive IPS model to explore the sizing effect of energy storage. 
-Derived from the principle operating cycles of IPSs, the proposed model can fast estimates forward progress given supply current and energy storage capacitance, facilitating exploration and understanding of IPSs. 
-We configured the model with experimentally profiled parameters of a reactive IPS. 
+However, in \cref{chapter:sizingeffect}, we have found that this can be energy inefficient as the system has to frequently save and restore the state. 
+Hence, we have proposed a reactive IPS model to explore the sizing effect of energy storage on forward progress. 
+Derived from the pattern of operating cycles in IPSs, the proposed model can fast and accurately estimates forward progress given supply current and energy storage capacitance, facilitating exploration and understanding of IPSs. 
+We configured the proposed model with experimentally profiled parameters on a reactive IPS platform.
+The model was experimentally validated with a 0.5\% mean error across multiple conditions of supply current and energy storage capacitance. 
+We then explored the energy storage sizing effect with respect to supply current and volatile state size, showing a forward progress improvement of up to 65\% compared to using minimised energy storage.
+We also found that the forward progress improvement from sizing energy storage becomes significant when supply current is low and when volatile state size is large. 
+Additionally, we also found that the energy storage capacitance that achieves the maximum forward progress improvement (i.e. \nm{C}{$\alpha$\_max} as denoted in \cref{chapter:sizingeffect}) can be 3.2$\times$ as large as the one that gains a 95\% improvement. 
+With considerations on volume and charging time of a large capacitor, this indicates that we need an energy storage sizing approach that comprehends multiple design factors in IPSs instead of maximising forward progress only.
 
-Accuracy
+Extended from \cref{chapter:sizingeffect}, an energy storage sizing approach for deploying IPSs was proposed in \cref{chapter:sizingapproach}.
+Following a modelling and simulation process, the sizing approach is able to output forward progress, capacitor volume, and interruption periods given long-term energy source data, energy harvester configurations, and energy storage capacitance.
+Through iterations with different capacitance values, the sizing approach trades off various properties of the system with a cost function and recommends an appropriate energy storage size. 
+We have configured and demonstrated the sizing approach with parameters profiled on an IPS and real-world data of indoor and outdoor PV sources. 
+The results showed up to a 43\% annual forward progress gain by sizing energy storage.
+Corresponding to \cref{chapter:sizingeffect}, this improvement is more significant with weaker power input, e.g. a smaller PV panel size. 
+With an example cost functions, the results showed that the suggested energy storage capacitance achieves 93\% of the maximum forward progress while saving 83\% capacitor volume and 91\% interruption periods, compared to the one that solely maximises forward progress.
+Combining the findings in \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach}, we conclude that energy storage should be carefully designed, rather than minimised or indiscriminately picked, to efficiently operate IPSs. 
 
-\section{Answers to Research Questions}
+While the energy storage size studied, \cref{chapter:opta} has focussed on the voltage thresholds of an energy budget. 
+We found that, with the runtime variability of energy consumption, the prior SoA approaches can cause non-termination or reduce system energy efficiency.
+We have exemplified the variable energy consumption in four cases, which are variable data sizes, variable peripheral configurations, device variability, and capacitor ageing. 
+Motivated by this, we proposed \nn{}, a runtime energy profiling and adaptation method. 
+\nn{}'s runtime energy profiling measured $\Delta\nmm{V}{task}$ (as explained in \sref{sec:design_exploration}) with supply connected to save the input energy during profiling.
+To obtain $\Delta\nmm{V}{task}$, it measures the input current before the task and compensates the supply voltage difference of executing a task by the input current.
+Utilising the runtime energy profiling method, \nn{}'s runtime energy adaptation adapts the voltage threshold for a task, efficiently allocating a barely sufficient threshold according to its runtime energy consumption. 
+\nn{}'s runtime energy adaptation also provides an option of linearly scaling the threshold by user-defined parameters, allowing a fast switching of thresholds without excessive profiling. 
+We implemented \nn{} on a TI MSP430FR5994 MCU with an external supply voltage monitor. 
+The experimental results has shown multiple findings as follows.
+\nn{}'s runtime energy profiling has a low error within \SI{5}{\milli\volt}, enabling IPSs to perform energy profiling at runtime and alleviating manual profiling efforts.
+\nn{} can adapt its threshold for a new task or on a new device. 
+\nn{} is also able to cope with an increased $\Delta\nmm{V}{task}$ from increased energy consumption or capacitor ageing, where it survived with up to 68\% capacitance reduction while the SoA failed, allowing IPSs to operate beyond capacitor lifetime. 
+Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variable data sizes, which lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA approaches.
+
+% \section{Answers to Research Questions}
+\todo[inline]{Answers to research questions?}
 
 \section{Future Work}
 

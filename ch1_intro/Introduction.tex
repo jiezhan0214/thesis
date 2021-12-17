@@ -64,7 +64,7 @@ According to the style of saving and restoring state, approaches in IPSs can be 
 Proactive approaches save and restore state at design-time or compile-time defined points, whilst reactive approaches do that upon an imminent power failure when supply falls below a low threshold (\nm{V}{cc}$<$\nm{V}{L}). 
 Details of these approaches are illustrated in \cref{chapter:review}.
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=\columnwidth]{ch1_intro/figures/IPSarch}
   \caption{A conceptual architecture of an IPS.}
@@ -154,7 +154,7 @@ An example unsuitable application can be a periodic sensing task without periodi
   During power-on periods, the device samples temperature by an external analog sensor. 
   If the temperature is detected to be out of a pre-defined range, the device sends a BLE packet to alarm the server. 
   The device is also powered by a dedicated RFID reader. 
-  Similar to Application 1, the device is expected to maximize sampling frequency in order to capture out-of-range temperature as soon as possible.
+  Similar to Application 1, the device is expected to maximise sampling frequency in order to capture out-of-range temperature as soon as possible.
 
   \item \textbf{Category 2: Application activity in correlation with available power.}
   
@@ -184,7 +184,7 @@ An example unsuitable application can be a periodic sensing task without periodi
 As shown in the above application, a common application specification of IPSs is to do as much 'work' as possible under the same energy conditions, e.g. completing program iterations as frequently as possible, because the energy cannot be saved for later use. 
 Other types of 'work' could include improving sensing accuracy or processing offloaded tasks received from other devices. 
 To generally describe the 'work', in IPSs, \textit{forward progress} denotes the effective application progress, excluding lost progress due to power failures and the progress on saving and restoring state~\cite{7478428}.
-As indicated by the above applications, an IPS should maximize forward progress using the limited energy. 
+As indicated by the above applications, an IPS should maximise forward progress using the limited energy. 
 
 % \subsection{General Architecture of Energy Harvesting Sensor Nodes}
 
@@ -206,7 +206,7 @@ As indicated by the above applications, an IPS should maximize forward progress 
 % Due to the lifespan, pollution, dimension problems of batteries and supercapacitors, there is a demand for adapting computing architecture to energy harvesting supply with small storage, e.g. a capacitor. 
 % Various approaches in intermittent computing and PN computing emerge to enable and improve energy harvesting computing in the scenario of minimized storage in order to reduce dimensions and cost as well as to increase lifespan of IoT devices. 
 
-As illustrated with the previous background and application examples, a major target for many IPS approaches is to maximize forward progress given restricted energy condition. 
+As illustrated with the previous background and application examples, a major target for many IPS approaches is to maximise forward progress given restricted energy condition. 
 Various approaches have been proposed for the load to efficiently sustain computing state across power failures, so as to leave more energy for forward progress. 
 However, energy efficiency can not only be explored from the load side, but can also be explored from a system perspective, where the energy allocation of IPSs has not yet been widely studied. 
 The energy allocation of IPSs are mainly represented in two specifications -- the system energy storage size and the voltage threshold to wake up the load. 
@@ -227,7 +227,7 @@ This thesis will focus on how to improve the energy allocation of IPSs in order 
 % This effect is especially noticeable in reactive intermittent systems (\sref{Section:reactiveic}), where the energy and time overheads of saving and restoring operations are proportional to the frequency of power outages. 
 % On the other hand, increasing energy storage also increases the system leakage power and affects the reactivity (the energy and the charging time to activate devices) of IPSs~\cite{colin2018reconfigurable, wu2018extensible}. 
 % The trade-off of scaling energy storage in intermittent computing systems should be fully studied.
-With the goal of minimizing device dimensions and interruption periods, most IPS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
+With the goal of minimising device dimensions and interruption periods, most IPS approaches adopt a minimum amount of energy storage~\cite{balsamo2016hibernus++, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
 This is typically just sufficient for the most energy-expensive atomic operation, e.g. saving and restoring a complete state~\cite{balsamo2015hibernus}. 
 However, a system with minimum energy storage may frequently go through a cycle of: wake up, restore state, execute program, save state, and halt. 
 Provisioning more energy storage can prolong the power-on cycles, reduce the overheads, and hence increase forward progress, but can also increase system leakage and decrease forward progress. 
@@ -246,7 +246,7 @@ Hence, another focus of this thesis will be exploring an energy storage sizing a
 \item 
 Apart from the energy storage size, the voltage threshold that wakes up an IPS also determines the energy budget of one power-on cycle. 
 Existing approaches use one or a few fixed voltage thresholds, which are calibrated at design time. 
-Some approaches (e.g.~\cite{gomez2016dynamic}) minimize the threshold for each task, but the fixed threshold can be violated at runtime due to variability in energy consumption, leaving the system in non-termination. 
+Some approaches (e.g.~\cite{gomez2016dynamic}) minimise the threshold for each task, but the fixed threshold can be violated at runtime due to variability in energy consumption, leaving the system in non-termination. 
 The variable energy consumption can come from many reasons, which include, but not limited to, variability in data amounts, peripheral configurations, devices, and capacitance degradation. 
 In contrast, some approaches (e.g.~\cite{maeng2019supporting}) set a universal high threshold, such that the energy budget should be mostly enough for all tasks. 
 However, waiting for a high voltage threshold can be energy-inefficient because, typically, current input reduces with higher voltage and a high operating voltage also increases system quiescent current consumption. 
@@ -283,7 +283,7 @@ The goal is to explore whether sizing the energy storage capacity can change the
 
 While the last question explores the energy storage sizing effect on computational performance, this question encompasses more design factors in IPSs that a capacitor size can affect. 
 Increasing energy storage capacity may benefit forward progress, but may also exhibit side effects. 
-A larger capacitor typically has larger physical dimensions, which are a key design factor that IPSs should minimize in some application scenarios, e.g. wearable and implantable sensors. 
+A larger capacitor typically has larger physical dimensions, which are a key design factor that IPSs should minimise in some application scenarios, e.g. wearable and implantable sensors. 
 Also, a larger capacitor also leads to longer charge-discharge cycles, and thus prolongs interruption periods and undermines system reactivity to external events. 
 The goal is to study the trade-off and to propose an approach that recommends an energy storage size for practical deployment.
 % Most IPSs minimize energy storage capacity so as to minimize device dimensions and interruption periods~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
@@ -297,7 +297,7 @@ Energy consumption of tasks can change at runtime with regards to many factors, 
 A design concept is to allocate just enough energy for each task.
 This design concept can further break into two aspects -- safety and efficiency. 
 The safety aspect means that the IPS should intend to avoid non-termination by allocating enough energy for tasks.
-The efficiency aspect means that, while meeting the safety aim, the IPS should minimize the energy budget, such that the system can wait for the least possible energy threshold, maintaining energy efficiency and forward progress. 
+The efficiency aspect means that, while meeting the safety aim, the IPS should minimise the energy budget, such that the system can wait for the least possible energy threshold, maintaining energy efficiency and forward progress. 
 The goal is to devise an approach that can enable IPSs to run with variable energy consumption of tasks, following the above design concept. 
 
 % Energy profiling of tasks is done at design time in SoA approaches. 
@@ -330,7 +330,7 @@ The contributions done to the address the research questions in this thesis are:
 \begin{itemize}
   \item[1.] Exploration and analysis of the energy storage sizing effect on reactive intermittent computing system, where we quantify and explain the relationship between energy storage capacity and forward progress.
   \item[2.] A method and a simulation tool for sizing energy storage in deploying IPSs, where forward progress, dimensions, and interruption periods are traded off in a cost function.
-  \item[3.] A runtime energy profiling and voltage threshold adaptation approach for efficiently performing atomic operations and coping with capacitor degradation. 
+  \item[3.] A runtime energy profiling and voltage threshold adaptation approach for efficiently performing atomic operations in cases of variable runtime energy consumption. 
   % \item[4.] A configurable model of reactive IC systems, including the interrelationship among energy harvesting supply, energy storage, and a processing load.
 \end{itemize}
 
