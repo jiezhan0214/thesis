@@ -4,39 +4,39 @@ Enabled by energy harvesting and low-power computing techniques, IPSs are expect
 IPSs adapt to the intrinsically variable and uncontrollable power input of energy harvesters, and thus, circumvent large volume, environmental impact, and limited lifespan of large energy buffers, i.e. batteries and supercapacitors, that contradict with the requirements of future IoT sensors.
 
 While existing IPS technology has mainly focussed on the computing part, i.e. efficiently and correctly retaining the system state across power interruptions, this thesis has explored energy budgeting in IPSs. 
-The energy budget in an IPS is represented as the energy of an active cycle when the load wakes up and executes program. 
-As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, we have conducted the research following the two aspects, where \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach} explored the energy storage sizing effect and \cref{chapter:opta} proposed runtime profiling and adaptation of voltage thresholds. 
+The energy budget in an IPS is represented as the energy allocated for an active cycle when the load wakes up and executes program. 
+As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, this thesis has conducted the research following the two aspects, where \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach} explored the energy storage sizing effect and \cref{chapter:opta} proposed runtime profiling and adaptation of voltage thresholds. 
 
 % Recap of main work and findings in this thesis
 To minimise device dimensions and interruption periods, most IPSs have adopted only a minimum amount of energy storage. 
-However, in \cref{chapter:sizingeffect}, we have found that this can be energy inefficient as the system has to frequently save and restore the state. 
-Hence, we have proposed a reactive IPS model to explore the sizing effect of energy storage on forward progress. 
+However, as found in \cref{chapter:sizingeffect}, this can be energy inefficient as the system has to frequently save and restore the state. 
+Hence, a reactive IPS model was proposed to explore the sizing effect of energy storage on forward progress. 
 Derived from the pattern of operating cycles in IPSs, the proposed model can fast and accurately estimates forward progress given supply current and energy storage capacitance, facilitating exploration and understanding of IPSs. 
-We configured the proposed model with experimentally profiled parameters on a reactive IPS platform.
+The proposed model was configured with experimentally profiled parameters on a reactive IPS platform.
 The model was experimentally validated with a 0.5\% mean error across multiple conditions of supply current and energy storage capacitance. 
-We then explored the energy storage sizing effect with respect to supply current and volatile state size, showing a forward progress improvement of up to 65\% compared to using minimised energy storage.
-We also found that the forward progress improvement from sizing energy storage becomes significant when supply current is low and when volatile state size is large. 
-Additionally, we also found that the energy storage capacitance that achieves the maximum forward progress improvement (i.e. \nm{C}{$\alpha$\_max} as denoted in \cref{chapter:sizingeffect}) can be 3.2$\times$ as large as the one that gains a 95\% improvement. 
-With considerations on volume and charging time of a large capacitor, this indicates that we need an energy storage sizing approach that comprehends multiple design factors in IPSs instead of maximising forward progress only.
+The energy storage sizing effect was then explored with respect to supply current and volatile state size, showing a forward progress improvement of up to 65\% compared to using minimised energy storage.
+The forward progress improvement from sizing energy storage becomes significant when supply current is low and when volatile state size is large. 
+Additionally, the energy storage capacitance that achieves the maximum forward progress improvement (i.e. \nm{C}{$\alpha$\_max} as denoted in \cref{chapter:sizingeffect}) can be 3.2$\times$ as large as the one that gains a 95\% improvement. 
+With considerations on volume and charging time of a large capacitor, this indicates that an energy storage sizing approach is in need to comprehend multiple design factors in IPSs instead of maximising forward progress only.
 
-Extended from \cref{chapter:sizingeffect}, an energy storage sizing approach for deploying IPSs was proposed in \cref{chapter:sizingapproach}.
+As indicated in \cref{chapter:sizingeffect}, an energy storage sizing approach for recommending an energy storage size considering multiple design factors when deploying IPSs was proposed in \cref{chapter:sizingapproach}.
 Following a modelling and simulation process, the sizing approach is able to output forward progress, capacitor volume, and interruption periods given long-term energy source data, energy harvester configurations, and energy storage capacitance.
 Through iterations with different capacitance values, the sizing approach trades off various properties of the system with a cost function and recommends an appropriate energy storage size. 
-We have configured and demonstrated the sizing approach with parameters profiled on an IPS and real-world data of indoor and outdoor PV sources. 
+The sizing approach was configured and demonstrated with parameters profiled on an IPS and real-world data of indoor and outdoor PV sources. 
 The results showed up to a 43\% annual forward progress gain by sizing energy storage.
 Corresponding to \cref{chapter:sizingeffect}, this improvement is more significant with weaker power input, e.g. a smaller PV panel size. 
-With an example cost functions, the results showed that the suggested energy storage capacitance achieves 93\% of the maximum forward progress while saving 83\% capacitor volume and 91\% interruption periods, compared to the one that solely maximises forward progress.
-Combining the findings in \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach}, we conclude that energy storage should be carefully designed, rather than minimised or indiscriminately picked, to efficiently operate IPSs. 
+With an example cost function, the results showed that the suggested energy storage capacitance achieves 93\% of the maximum forward progress while saving 83\% capacitor volume and 91\% interruption periods, compared to the one that solely maximises forward progress.
+Combining the findings in \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach}, the conclusion is that energy storage should be carefully designed, rather than minimised or indiscriminately picked, to efficiently operate IPSs. 
 
 While the energy storage size studied, \cref{chapter:opta} has focussed on the voltage thresholds of an energy budget. 
-We found that, with the runtime variability of energy consumption, the prior SoA approaches can cause non-termination or reduce system energy efficiency.
-We have exemplified the variable energy consumption in four cases, which are variable data sizes, variable peripheral configurations, device variability, and capacitor ageing. 
-Motivated by this, we proposed \nn{}, a runtime energy profiling and adaptation method. 
-\nn{}'s runtime energy profiling measured $\Delta\nmm{V}{task}$ (as explained in \sref{sec:design_exploration}) with supply connected to save the input energy during profiling.
+With the runtime variability of energy consumption, the prior SoA approaches can cause non-termination or reduce system energy efficiency.
+The variable energy consumption has been exemplified in four cases, which are variable data sizes, variable peripheral configurations, device variability, and capacitor ageing. 
+Motivated by this variability, \nn{}, a runtime energy profiling and adaptation method, was presented in \cref{chapter:opta}. 
+\nn{}'s runtime energy profiling measures $\Delta\nmm{V}{task}$, the drop of supply voltage caused by a task without any incoming energy meanwhile, with supply connected to save the input energy during profiling.
 To obtain $\Delta\nmm{V}{task}$, it measures the input current before the task and compensates the supply voltage difference of executing a task by the input current.
 Utilising the runtime energy profiling method, \nn{}'s runtime energy adaptation adapts the voltage threshold for a task, efficiently allocating a barely sufficient threshold according to its runtime energy consumption. 
 \nn{}'s runtime energy adaptation also provides an option of linearly scaling the threshold by user-defined parameters, allowing a fast switching of thresholds without excessive profiling. 
-We implemented \nn{} on a TI MSP430FR5994 MCU with an external supply voltage monitor. 
+\nn{} was implemented on a TI MSP430FR5994 MCU with an external supply voltage monitor. 
 The experimental results has shown multiple findings as follows.
 \nn{}'s runtime energy profiling has a low error within \SI{5}{\milli\volt}, enabling IPSs to perform energy profiling at runtime and alleviating manual profiling efforts.
 \nn{} can adapt its threshold for a new task or on a new device. 
@@ -44,154 +44,10 @@ The experimental results has shown multiple findings as follows.
 Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variable data sizes, which lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA approaches.
 
 % \section{Answers to Research Questions}
-\todo[inline]{Answers to research questions?}
+% \todo[inline]{Answers to research questions?}
 
 \section{Future Work}
 
-Can the threshold go even lower?
+Can IPS change from an MCU-centred system to an EMU-centred system, i.e powering the load modules in turn?
 
-Can IPS change from a MCU-centred system to an EMU-centred system, i.e powering the load modules in turn?
-
-
-% Intermittent computing enables continuity of computation on energy harvesting sensor nodes despite frequent power failures by managing system volatile and non-volatile states. 
-% With a goal of minimising device dimensions and cost, intermittent computing systems only adopt energy storage (e.g. a decoupling capacitor) at the minimum requirement of ensuring computing correctness. 
-% However, given power production is less than power consumption, such systems have to frequently wake up, execute shortly, and halt, wasting energy on state managing operations. 
-% A method of sizing energy storage and energy harvester for intermittent computing devices under real-world deployment is proposed. 
-% This sizing method provides a suggestion on how to balance performance and dimensions in sizing energy harvester. 
-% In a suggested range of energy harvester sizes, increasing storage from 20\textmu F to 80\textmu F and improve 5.7-22.2\% on application execution speed under real-world energy source conditions while not affect device dimensions. 
-
-% A power-neutral system has to match the power consumption with the available power instantaneously through DVFS since it has almost no energy storage. 
-% However, this affects the overall performance, since a system performing DVFS can obtain more computation when operating within a constrained range of frequency instead of scaling frequency according to the harvested power. 
-% Based on this, a study on the effect of energy storage capacity on the performance of power-neutral systems is proposed. 
-% In this study, the analysis shows that with the increase in capacitance, the system is able to operate within a more stable range of frequency, and hence more forward progress achieved given the same power input and within the same time. 
-% It is reported in the simulation that when properly selecting the size of the capacitor, the forward progress can be improved by 14.6\% given a sinusoidal power input.
-
-%%%%%%%%%%%%%%%%%
-% Interim Thesis future work
-%%%%%%%%%%%%%%%%%
-% \section{Future Work}
-
-% Future works will focus on fully answering the research questions claimed before. The three research questions are reclaimed here with the unsolved work to do on each question. 
-% \begin{itemize}
-%   \item[1.] What is the effect of energy storage capacity and energy harvester size on the behaviours of IC systems?
-
-%   As reported, modelling and simulations are done to understand the relationship between scaling storage and system computing performance. However, both the time-traversing model and the theoretical model should be evaluated with experimental results. If both models are accurate, the proposed sizing method will be validated. 
-  
-%   Also, the current study only covers computing applications, while a practical sensor node typically includes sensing, computing, and communicating tasks. Sensing and communicating tasks are done by peripherals instead of a microprocessor. However, the peripheral operation is atomic and should be executed in one period or otherwise should be re-executed if interrupted. Also, wireless communication accounts for a large portion of energy consumption in a sensor node, and typically should be completed in one burst (unlike computing tasks which can be divided into pieces). The amount of energy storage determines on the largest safe atomic operation or, similarly, the number of completed tasks in a consecutive period. Therefore, a future study should analyse more comprehensive applications which includes high-cost atomic tasks.
-
-%   In order to fully answer this research question, the tasks to do are listed below:
-  
-%   % \textbf{Task 1:} Analyse the effect of energy harvester sizing on the behaviours of IC systems. Use the current model to explore in simulations that how the energy harvester size changes application throughput, and describe this relationship with equations. Search a reference of PV cells and capacitors with respect to their power level or storage capacity and corresponding dimensions and costs.
-
-%   % \textbf{Task 1 Paper: } Write and submit a journal paper towards MDPI Electronics about the sizing method of energy storage and energy harvester on IC systems with current results. 
-
-%   \textbf{Task 1 Experiment: } Validate the theoretical analysis and the simulation results with experiments. Build an external power supply circuit which can switch the capacitor size and the parallel PV cell number. According to the simulation results, pick a set of typical energy storage and harvester pairs (e.g. original, optimal, and oversized pairs) for experiments, and compare their behaviours (such as computing speed, voltage trace, response time) given both artificial and real-world energy conditions.
-
-%   \textbf{Task 2 Peripheral Simulation: } Replace the system application with a typical IoT application, which encompasses sensing, computing, and communicating tasks. Profile the power and time overheads of the sensor and the radio used in a benchmark of applications. Import this power and time profile into the current model, and import the updated application routine. Run simulation and observe the system behaviours as simulation results, such as application throughput, task atomicity, and response time. 
-
-%   \textbf{Task 3 Peripheral Experiment: } Validate the peripheral simulation results in experiments on a microcontroller platform. The experimental method should be similar to Task 2. 
-
-%   \textbf{Task 4: Paper} Publish a journal paper on ACM Transactions on Embedded Computing Systems about the sizing effect of energy storage and harvester on IC systems running IoT applications with peripheral operation.
-
-%   % \item[2.] How can designers size energy harvesters and energy storage in IC systems to maximise application throughput while meeting requirements for device dimensions and costs?
-  
-%   % To achieve this, a tool should be developed with functionality to suit a wide range of energy sources, energy harvesters, energy storage, and load behaviours. In this tool, designers should import the data of energy source conditions and configure the workload with their platform power consumption. A reference of the actual dimensions of energy storage and harvesters should be provided with respect to the power generation ability of energy harvester and energy storage capacity. Designers can then select the sizes of energy storage and harvester that satisfy their design requirements for average execution speed and device dimensions.
-%   % % the conversion relationship from ambient energy to system electricity, the system leakage model, the dimensional relationship between their harvester power level and storage capacity, and the load behaviours.
-
-%   % In order to fully answer this question, the tasks to do are listed below:
-  
-%   % \textbf{Task 6 Tool Guide:} Provide a guideline method of sizing energy storage and harvester, with considerations on what data to acquire and import, what steps to be done, and what outcomes can be obtained from this method. 
-  
-%   % \textbf{Task 7 Build Tool:} Build a software tool for designers to see the sizing effect of energy storage and harvester. Include in this tool with configurations of several example components, such as PV cells of different materials, capacitors made from different materials, and supercapacitors. The designers should import the energy conditions at their deploying location. The results of this tool should show a spectrum of energy storage and harvester sizes with regard to system performance, corresponding dimensions and costs of energy storage and harvester.
-
-%   % \textbf{Task 8 Paper:} Write and submit a paper about this tool towards IEEE International Conference on Application-specific Systems, Architectures and Processors.
-
-%   \item[2.] What is the effect of energy storage capacity on the behaviours of PN systems?
-
-%   The modelling of the current study on this question is based on a multi-core SoC. However, the motivations or applications of using such a powerful load in an energy-harvesting and size-constrained environment is not intuitive. A low-power platform with DVFS should be explored to replace the current platform. 
-
-%   Also, running simulation with small time steps (small enough to achieve real hardware response speed) is time-consuming and not helpful for understanding the factors of performance changes by scaling storage. Relevant formulations can be developed to estimate the system behaviours and avoid running time-consuming simulations. Such formulations should be validated with real experiments with real-world environmental energy sources.
-
-%   \textbf{Task 5 Switch Platform:} Replace the current modelling and simulation platform with an MCU platform adopting DVFS by reconfiguring the load parameters. These parameters include power consumption at each frequencies, the application throughput rate at each frequencies, the cycle counts to complete an application iteration.
-
-%   \textbf{Task 6 Simulation:} Explore in simulations the effect of storage sizing on PN computing systems. Develop formulations to estimate the system application throughput by giving storage capacity and power supply traces. 
-
-%   \textbf{Task 7 Experiment:} Verify in experiments the accuracy of simulation results and formulations. 
-  
-%   \textbf{Task 8 Paper:} Produce a journal paper towards ACM Transactions on Design Automation of Electronic Systems about how the selection of energy storage size improves (or reduces if too large) the system application throughput by affecting the variation of operating frequency.
-% \end{itemize}
-
-% In addition to all the tasks above, a final thesis should be completed by the end of 42nd month, so this task is also included:
-
-% \quad\quad\quad \textbf{Task 9 Final Thesis}
-
-% To achieve the tasks listed above, the work plan from 21st month to 42nd month is shown in~\fref{Figure:timeline}.
-
-% \begin{figure}[!htb]
-%   \centering
-%   \includegraphics[width=8cm]{figure/conclusion/timeline}
-%   \caption{Timeline of the future work plan.}
-%   \label{Figure:timeline}
-% \end{figure}
-
-%%%%%%%%%%%%%%%%%
-% Interim Thesis future work end
-%%%%%%%%%%%%%%%%%
-
-
-
-
-
-% Problem: Some actions (may need a name here) should be completed in one consecutive execution and only once (non-repeatedly), e.g. data transmission. Task-based IC guarantees this requirement, but involves high runtime overheads due to significant code re-execution. Reactive IC executes non-repeatedly, but may suspend and split such actions due to power interrupts. 
-
-% Solution: check energy availability before such actions in reactive IC. 
-
-% Challenge: how to determine the energy consumption of unknown (not profiled at design time) tasks or actions.
-
-% Adapt to power traces at run time.
-
-
-% ======Old Stuff======
-
-% In terms of the current research on the effect of energy storage capacity, there are several things to be addressed in the future. 
-
-% First, more simulations are necessary in order to summarise the characteristics of different power traces and explore a wide operating space of possible energy harvesters. For example, using square pulses as the power supply in simulation, and changing the frequency, duty-cycle, amplitude of the pulses to observe how each of them determine the optimal size of energy storage.
-
-% Second, the simulation results need to be tested and verified in experiments. Specifically, given a varying power input, several supercapacitors are chosen according to the simulation and applied as the energy storage. The performance of different applications is recorded given different supercapacitors, and hence obtain the results of the effect on forward progress. Different platforms can be involved, including microcontroller and SoC. 
-
-% Third, when testing the simulation results in experiments, we need to consider the problem from a perspective of the whole system, such as the current-voltage feature of energy harvesters, the load operating voltage, the conversion circuits for connecting the energy storage between the energy harvesters and the load. 
-
-% Fourth, since the current work simulates a sufficient power input, we need to expand this to a case where the harvested power is insufficient to constantly sustain execution. This case will introduce more factors. For example, the backup and restoration operations cause energy and time overheads, and larger energy storage may help the system to overcome short-term power outages. 
-
-% After fully addressing these issues, we can produce a paper that comprehensively illustrates the relationship between the energy storage size and the forward progress.
-
-% Apart from the current research, task scheduling in energy-driven computing will be a possible solution to improve forward progress. Transient systems may suspend the ongoing tasks anytime when the power interruptions occur. This causes uncertainty in the completion time of tasks, which is different from the assumption of certain completion time in conventional task scheduling. Also, some tasks are required to be executed continuously without interruption. For example, when a transient system is transmitting a data packet and a power failure happens, the transmitting task fails and the energy involved is wasted. Therefore, energy-driven task scheduling is a potential approach to optimise forward progress in transient computing systems. 
-
-% Also, task profiling data are recorded at design time. But the energy consumption and execution time of tasks may vary much due to the specific temperature and performance conditions of devices, so the design-time profiling data are not able to represent the run-time features accurately. Using inaccurate data to perform task scheduling may lead to a remarkable difference between the expected results and the practical results. Therefore, how to adapt an offline profiling method to an online profiling in energy harvesting systems is also a research question.
-
-% Although there are many things to look into in the future, the time before writing the transfer thesis is limited and only a part of the aforementioned future work can be addressed over this period. The work plan of before the 18th month involves the following tasks and the timeline for these tasks is shown in~\fref{Figure:timeline}. 
-
-% \textbf{Task 1:} Expand the current simulation with different types of input power traces besides the sinusoidal one and explore how the characteristics of input power traces determine the optimal energy storage. 
-
-% \textbf{Task 1.1:} Determine the characteristics of the input stimulus so as to parameterise it and explore a wide range of harvesters.
-
-% \textbf{Task 1.2:} Carry out a couple of case studies by recording the output profiles of real energy harvesters, such as solar modules, RF harvesters, and piezoeletric harvesters, and explore what is the appropriate storage size for each power profiles. For each type of energy harvesters, multiple power profiles are necessary for multiple simulations to reduce error and approximate the general case. 
-
-% \textbf{Task 2:} Validate the theoretical analysis and simulations with a small number of experiments using different capacitors as energy storage on microcontroller and SoC platforms. 
-
-% \textbf{Task 2.1:} Build an external power supply circuit which can switch the capacitor size, adopting real energy harvesters as the power input.
-
-% \textbf{Task 2.2:} According to the simulation results, pick several exemplary capacitors for experiments, and compare their application progress.
-
-% \textbf{Task 3:} Consider the study to a more complex case where the system has to operate intermittently due to scarce harvested power and needs to incorporate transient approaches for backup and restoration. 
-
-% \textbf{Task 4:} Refine the current power management control scheme to fully exploit the advantage of an increased energy storage. 
-
-% \textbf{Task 4.1:} Improve the performance adaptation scheme to better exploit the energy storage, because currently increasing energy storage capacity results in less voltage variation which indicates less proportion of energy storage is utilised. If the control scheme can allow more voltage variation while still deliver the same forward progress, the storage size, and hence the volume of devices, can be reduced.
-
-% \textbf{Task 4.2:} Include sleep state which introduces a unique point on the system power function (zero performance and nearly zero power consumption). This can violate the prior statement, which is drawn when assuming that the system is always active, that it is always better to reduce the variation of operating frequency.
-
-% \textbf{Task 5:} Produce a journal paper about how the selection of energy storage improves (or reduces if too large) forward progress by affecting the variation of operating frequency.
-
-% \textbf{Task 6:} Write the Transfer Thesis.
 
