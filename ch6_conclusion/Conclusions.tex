@@ -44,10 +44,34 @@ The experimental results has shown multiple findings as follows.
 Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variable data sizes, which lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA approaches.
 
 % \section{Answers to Research Questions}
-% \todo[inline]{Answers to research questions?}
+\todo[inline]{Answers to research questions?}
 
 \section{Future Work}
 
-Can IPS change from an MCU-centred system to an EMU-centred system, i.e powering the load modules in turn?
+While this thesis has presented extensive research work contributed to the energy budgeting in IPSs, some interesting research topics can be explored in the future so as to achieve a more energy-efficient IPS. 
+
+One interesting research question could be: \textit{can IPSs transform from an MCU-centred system to an EMU-centred system, i.e. powering the load modules in a controllable and programmable order?}
+
+Current IPS approaches are implemented on MCUs.
+To cope with the intermittent power supply, the MCU is programmed with software that manages computing state and energy. 
+To manage energy, the MCU typically interfaces with energy monitoring hardware in the forms of an ADC~\cite{sliper2019efficient}, a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, or an energy management unit (EMU)~\cite{gomez2016dynamic, maeng2019supporting}.
+The processor should not only execute the application program but also take care of the system's stored energy and computing state. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\columnwidth]{ch6_conclusion/figures/EMUIPSarch.pdf}
+  \caption{A conceptual architecture of an EMU-centred IPS.}
+  \label{fig:emuips}
+\end{figure}
+
+Reconsidering the architecture of IPSs.
+Advantages: low quiescent current.
+Need: shared memory among modules and how to maintain state?
 
 
+Is this energy inefficient?
+
+\begin{enumerate}
+    \item How can such a system be programmed?
+    \item How can the system state be retained?
+\end{enumerate}

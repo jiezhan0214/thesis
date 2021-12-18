@@ -109,7 +109,7 @@ In IPSs, the load is typically a microcontroller (MCU) with NVM to sustain compu
 
 % PN computing aims to make more progress from available power by matching system power consumption with power harvested instantaneously. PN computing dynamically adapts system performance, typically by scaling CPU clock frequency, to match the instantaneous system power consumption with the instantaneous harvested power~\cite{balsamo2016graceful, fletcher2017power}. By such performance adaptation, PN systems immediately consume excessive harvested power, prolong system active time when the harvested power drops, and reduce the frequency of system state saving and restoring operations.
 
-\subsection{Applications of Energy-Harvesting IPSs}
+\section{Applications of Energy-Harvesting IPSs}
 
 \todo[inline]{This part intends to illustrate the key performance metric of IPSs through example applications, but it doesn't seem to directly make the point yet. }
 
@@ -119,14 +119,14 @@ While there are various needs of operation periods for various application scena
 Hence, the applications of IPSs should suit, or be adapted to suit, the power availability. 
 Under this consideration, there are two typical categories of application scenarios as seen in recent publications. 
 
-To summarise the application suitability of IPSs, a diagram is shown in~\fref{Figure:appsuit}. 
-An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{Figure:appsuit}).
+To summarise the application suitability of IPSs, a diagram is shown in~\fref{fig:appsuit}. 
+An example unsuitable application can be a periodic sensing task without periodically available power or the period of the energy source does not match the sensing period (left bottom circle in~\fref{fig:appsuit}).
 
-\begin{figure}[!htb]
+\begin{figure}
   \centering
   \includegraphics[width=0.7\columnwidth]{ch1_intro/figures/appsuit2}
   \caption{Application Suitability of Energy-Harvesting IPSs.}
-  \label{Figure:appsuit}
+  \label{fig:appsuit}
 \end{figure}
 
 
