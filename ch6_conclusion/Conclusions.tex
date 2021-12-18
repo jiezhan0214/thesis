@@ -44,7 +44,7 @@ The experimental results has shown multiple findings as follows.
 Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variable data sizes, which lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA approaches.
 
 % \section{Answers to Research Questions}
-\todo[inline]{Answers to research questions?}
+% \todo[inline]{Answers to research questions?}
 
 \section{Future Work}
 
@@ -54,8 +54,20 @@ One interesting research question could be: \textit{can IPSs transform from an M
 
 Current IPS approaches are implemented on MCUs.
 To cope with the intermittent power supply, the MCU is programmed with software that manages computing state and energy. 
-To manage energy, the MCU typically interfaces with energy monitoring hardware in the forms of an ADC~\cite{sliper2019efficient}, a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, or an energy management unit (EMU)~\cite{gomez2016dynamic, maeng2019supporting}.
-The processor should not only execute the application program but also take care of the system's stored energy and computing state. 
+Thus, the processor should execute the application program while taking care of the system's stored energy and computing state. 
+
+%%%%%%
+
+A program becomes 
+
+
+
+
+% To manage energy, the MCU typically interfaces with energy monitoring hardware in the forms of an ADC~\cite{sliper2019efficient}, a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, or an energy management unit (EMU)~\cite{gomez2016dynamic, maeng2019supporting}.
+
+In addition, with sensors and transceivers connected, the system quiescent current consumption can scale.
+
+Each module is powered when it is needed and they communicate through a shared NVM. 
 
 \begin{figure}
   \centering
@@ -64,8 +76,10 @@ The processor should not only execute the application program but also take care
   \label{fig:emuips}
 \end{figure}
 
+One solution could be extending the features of existing EMUs and incorporating IPS functions (e.g. state consistency) into it. 
+
 Reconsidering the architecture of IPSs.
-Advantages: low quiescent current.
+Advantages: low quiescent current, can operate under ultra low power conditions.
 Need: shared memory among modules and how to maintain state?
 
 
