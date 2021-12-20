@@ -39,8 +39,8 @@ Supercapacitors in such a scale occupy large volume in contrast to small IoT dev
 To circumvent the lifetime, pollution, and volume problems in rechargeable batteries and supercapacitors, a research trend in energy-harvesting sensor nodes moved towards eliminating the demand for energy storage and adopting only a minimum amount of energy storage, where the energy storage is only enough for ensuring the most energy-expensive atomic operation\footnote{In this context, an operation is atomic if it should be completed in one consecutive period without power interrupts; otherwise, if interrupted, it should be re-executed from the beginning. Example atomic operations in IoT devices can be peripheral operations and nonvolatile memory read/write operations.}, typically in the form of a \SI{}{\micro\farad}-level capacitor. 
 % Avoiding large energy storage makes IoT devices long-life, maintenance-free, environmentally friendly, and compact (small in dimensions). 
 \todo[inline]{Capacitors have longer lifetime, smaller volume, blabla... Reference for lifetime of electrolytic capacitors. Seems a bit contradictory to contribution 3. }
-Despite the benefits of small capacitors over batteries and supercapacitors, they considerably limit the buffering capacity for varying harvested power. 
-Thus, the variable harvesting power is almost directly connected to the load, e.g. with only a decoupling capacitor. 
+Despite the benefits over batteries and supercapacitors, small capacitors can only buffer a considerably limited amount of energy. 
+Thus, the harvested power is almost directly given to the load and the system only works when the harvested power is available. 
 This violates the demand for stable power supply in conventional computing systems.
 Without any modifications, a conventional system can only work when input power is higher than system power consumption (which is rare for an energy-harvesting supply), and cannot boot up when input power is lower than system power consumption. 
 Hence, it becomes a major concern that how to guarantee forward execution and functionality of such systems with only minimum energy storage.
@@ -56,7 +56,7 @@ Ensuring and improving local processing ability of sensor nodes is crucial for a
 
 With an energy-harvesting supply and small energy buffering capacitance, a system is powered up \textit{intermittently} once a small amount of energy is accumulated in the capacitor. 
 The system has to utilise these intermittent power-on cycles to make application progress. 
-To this end, many approaches for energy-harvesting Intermittently-Powered Systems (IPS) have been proposed in the past few years. 
+To this end, many approaches for energy-harvesting Intermittently-Powered Systems (IPSs) have been proposed in the past few years. 
 The majority of these approaches have been addressing how to sustain computational progress throughout intermittent power-on cycles by correctly and efficiently saving and restoring volatile computing state. 
 The volatile computing state includes CPU registers, Static RAM (SRAM) data, and perhaps peripheral configurations and data, i.e. the volatile part that cannot sustain after a power failure. 
 The volatile state is saved into and restored from non-volatile memory (NVM), where most published approaches use Ferroelectric RAM (FRAM). 

@@ -49,23 +49,23 @@ Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variabl
 \section{Future Work}
 
 While this thesis has presented extensive research work contributed to the energy budgeting in IPSs, some interesting research topics can be explored in the future so as to achieve a more energy-efficient IPS. 
+One interesting research research could be: \textit{can IPSs transform from an MCU-centred system to an EMU-centred system, i.e. powering the load modules in a controllable and programmable order?} 
 
-One interesting research question could be: \textit{can IPSs transform from an MCU-centred system to an EMU-centred system, i.e. powering the load modules in a controllable and programmable order?}
+Currently, an off-the-shelf energy management unit (EMU) for energy harvesting applications, e.g. TI BQ25504~\cite{bq25504}, has the major features of boost charging, voltage detection, and power gating.
+Due to its features, an EMU can improve the energy efficiency of an IPS typically with low power input, where energy can be collected from a very weak supply (e.g. \SI{130}{\milli\volt} input voltage) at a low quiescent current draw (e.g. \SI{330}{\nano\ampere}). 
+While energy management makes a significant impact on IPS performance as illustrated in this thesis, published IPS approaches are implemented on an MCU, and the MCU may interface with an EMU.
+To cope with the intermittent power supply, the MCU manages computing state and stored energy while executing application software, which deviates from what a processor is initially designed to do. 
 
-Current IPS approaches are implemented on MCUs.
-To cope with the intermittent power supply, the MCU is programmed with software that manages computing state and energy. 
-Thus, the processor should execute the application program while taking care of the system's stored energy and computing state. 
+It could be worthwhile to explore a dedicated EMU that manages energy and state for IPSs and powers each load module when necessary.
+% Benefits. 
+A major benefit of this could be a lower quiescent current consumption. % Why not a MCU with additional power gates?
+External peripherals in existing MCU-centred IPSs are powered together with the MCU.
+This increases the quiescent or sleep current when the system waits for energy to refill, especially with more peripherals connected or peripherals with large quiescent current consumption. 
+With an EMU-centred IPS, each load module is power-gated and only powered when it is due to work. 
+Thus, the system can work with a lower input current, ensuring the operation of IPSs in a poor energy condition. 
+Another benefit could be that 
 
-%%%%%%
 
-A program becomes 
-
-
-
-
-% To manage energy, the MCU typically interfaces with energy monitoring hardware in the forms of an ADC~\cite{sliper2019efficient}, a voltage comparator~\cite{kang2018homerun, balsamo2016hibernus++}, or an energy management unit (EMU)~\cite{gomez2016dynamic, maeng2019supporting}.
-
-In addition, with sensors and transceivers connected, the system quiescent current consumption can scale.
 
 Each module is powered when it is needed and they communicate through a shared NVM. 
 
@@ -85,7 +85,13 @@ Need: shared memory among modules and how to maintain state?
 
 Is this energy inefficient?
 
+
+Some potential subdivided research questions related to this topic could be:
 \begin{enumerate}
     \item How can such a system be programmed?
+    \item Is a new programming model necessary for such an architecture?
     \item How can the system state be retained?
+    \item Initialization cost vs power gating benefits
+    \item Integrating the functions of IPSs into a dedicated IC. 
+    \item Can an EMU-centred IPS condition the supply voltage for each module such that modules with different operating voltage levels can cooperate? 
 \end{enumerate}
