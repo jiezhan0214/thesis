@@ -1,5 +1,7 @@
 \chapter{Conclusions and Future Work} \label{chapter:conclusion}
 
+\section{Conclusions}
+
 Enabled by energy harvesting and low-power computing techniques, IPSs are expected to be a promising system paradigm for numerous IoT sensors in the near future, with forecasts of hundreds of billions being installed~\cite{sparks2017trillion}.
 IPSs adapt to the intrinsically variable and uncontrollable power input of energy harvesters, and thus, circumvent large volume, environmental impact, and limited lifespan of large energy buffers, i.e. batteries and supercapacitors, that contradict with the requirements of future IoT sensors.
 
@@ -53,21 +55,25 @@ One interesting research research could be: \textit{can IPSs transform from an M
 
 Currently, an off-the-shelf energy management unit (EMU) for energy harvesting applications, e.g. TI BQ25504~\cite{bq25504}, has the major features of boost charging, voltage detection, and power gating.
 Due to its features, an EMU can improve the energy efficiency of an IPS typically with low power input, where energy can be collected from a very weak supply (e.g. \SI{130}{\milli\volt} input voltage) at a low quiescent current draw (e.g. \SI{330}{\nano\ampere}). 
-While energy management makes a significant impact on IPS performance as illustrated in this thesis, published IPS approaches are implemented on an MCU, and the MCU may interface with an EMU.
-To cope with the intermittent power supply, the MCU manages computing state and stored energy while executing application software, which deviates from what a processor is initially designed to do. 
+While energy management makes a significant impact on IPS performance as illustrated in this thesis, published IPS approaches are implemented on an MCU, where the MCU may interface with an EMU.
+To cope with the intermittent power supply, the MCU manages computing state and stored energy while executing application software, which deviates from what a processor is initially designed for. 
 
-It could be worthwhile to explore a dedicated EMU that manages energy and state for IPSs and powers each load module when necessary.
+It could be worthwhile to explore a dedicated EMU for IPSs that manages energy and state with power-gating on load modules.
 % Benefits. 
 A major benefit of this could be a lower quiescent current consumption. % Why not a MCU with additional power gates?
-External peripherals in existing MCU-centred IPSs are powered together with the MCU.
+External peripherals in existing MCU-centred IPSs are powered together with the MCU as a unified load.
 This increases the quiescent or sleep current when the system waits for energy to refill, especially with more peripherals connected or peripherals with large quiescent current consumption. 
 With an EMU-centred IPS, each load module is power-gated and only powered when it is due to work. 
 Thus, the system can work with a lower input current, ensuring the operation of IPSs in a poor energy condition. 
-Another benefit could be that 
+Other advantages could include (i) a lower control overhead as the IPS software could be offloaded to hardware, (ii) each module can independently work without a processor being active immediately before and after the operation of a module, and (iii) an integral IPS hardware that saves the area overhead of external components. 
 
-
-
-Each module is powered when it is needed and they communicate through a shared NVM. 
+A conceptual architecture of such an EMU-centred IPS is depicted in \fref{fig:emuips}.
+The central control unit is responsible for the configuration of input power regulation (e.g. MPPT), control of which module to power, and the data flow among modules through a shared NVM. 
+Each load module is connected to the EMU through a power gate (PG). 
+The central control unit opens a corresponding PG when a load module is supposed to work.
+The load modules communicate through the shared NVM, where the volatile state and shared data are saved. 
+The concept could be possibly achieved by incorporating IPS functions (e.g. state consistency) into existing EMUs.
+This may reconstruct the hardware architecture of existing IPSs.
 
 \begin{figure}
   \centering
@@ -76,22 +82,18 @@ Each module is powered when it is needed and they communicate through a shared N
   \label{fig:emuips}
 \end{figure}
 
-One solution could be extending the features of existing EMUs and incorporating IPS functions (e.g. state consistency) into it. 
-
-Reconsidering the architecture of IPSs.
-Advantages: low quiescent current, can operate under ultra low power conditions.
-Need: shared memory among modules and how to maintain state?
-
-
-Is this energy inefficient?
-
-
 Some potential subdivided research questions related to this topic could be:
 \begin{enumerate}
-    \item How can such a system be programmed?
-    \item Is a new programming model necessary for such an architecture?
-    \item How can the system state be retained?
-    \item Initialization cost vs power gating benefits
-    \item Integrating the functions of IPSs into a dedicated IC. 
-    \item Can an EMU-centred IPS condition the supply voltage for each module such that modules with different operating voltage levels can cooperate? 
+    \item Is an EMU-centred IPS theoretically more energy-efficient than existing MCU-centred IPSs considering the energy trade-off, e.g. initialisation overheads of modules vs. energy savings of power-gating?
+    \item How could an EMU-centred IPS be implemented?
+    \item Is it possible to integrate the functions of IPSs into a dedicated IC?
+    \item How can such a system be programmed so that it can have a configurable control logic?
+    \item Is a new programming model necessary for an EMU-centred IPS?
+    \item How can the system state be retained across multiple modules in a shared NVM?
+    \item Could an EMU-centred IPS condition the supply voltage for each module such that modules with different operating voltage levels can cooperate? 
 \end{enumerate}
+
+% Final conclusion?
+% In conclusion, this thesis has presented extensive research work towards the energy budgeting for efficient operation of IPSs.
+
+
