@@ -13,13 +13,6 @@
 \tableofcontents
 \listoffigures
 \listoftables
-% The List of listings does not, by default, appear in the ToC, so....
-% \addtotoc{Listings}
-% \lstlistoflistings
-% \listofaddmaterial
-% \addtolom{Material Name e.g Map}
-% \addtolom{Material Name e.g CD}
-% \addtolom{Test Material}
 % ---------- AUTHORSHIP DECLARATION/ ACKNOW. / DEDICATORY ----------
 % Either include citations like below (as many as required spaced with commas or 'and').
 % \bibentry command must be used here with prepublished papers
@@ -27,14 +20,13 @@
 % Or state no citations like below
 % \authorshipdeclaration{}
 % -----------------------
-\acknowledgements{Thanks to \dots}
-\dedicatory{To \dots}
+\input{Acknowledgement}
+\dedicatory{To knowledge}
 % Lightweight Definitions and Abbreviations see package:nomencl for alternative
 % Include if relevant to discipline
 % \listofsymbols{ll}{$w$ & The weight vector\\$\S$ & If relevant to discipline}
 \mainmatter
 % ------------------ MAIN MATTER (CONTENT) --------------------
-
 
 \include{ch1_intro/Introduction}            % Chapter 1
 \include{ch2_review/Review}                 % Chapter 2
@@ -42,13 +34,6 @@
 \include{ch4_sizingapproach/SizingApproach} % Chapter 4
 \include{ch5_optic/OPTIC}                   % Chapter 5
 \include{ch6_conclusion/Conclusions}        % Chapter 6
-
-% \begin{lstlisting}[caption=Listing of what an example listing would be like]
-% This is a test listing
-% The test listing has several lines
-% to show how the listings
-% will be displayed
-% \end{lstlisting}
 
 \appendix
 % \include{AppendixA}
