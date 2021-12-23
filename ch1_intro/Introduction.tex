@@ -290,7 +290,7 @@ The goal is to explore whether sizing the energy storage capacity can change the
 While the last question explores the energy storage sizing effect on computational performance, this question encompasses more design factors in IPSs that a capacitor size can affect. 
 Increasing energy storage capacity may benefit forward progress, but may also have significant drawbacks. 
 A larger capacitor typically has larger physical dimensions, which are a key design factor that IPSs should minimise in some application scenarios, e.g. wearable and implantable sensors. 
-Also, a larger capacitor also leads to longer charge-discharge cycles, and thus prolongs interruption periods and undermines system reactivity to external events. 
+Also, a larger capacitor leads to longer charge-discharge cycles, and thus prolongs interruption periods and undermines system reactivity to external events. 
 The goal is to study the trade-off and to propose an approach that recommends an energy storage size for practical deployment.
 % Most IPSs minimize energy storage capacity so as to minimize device dimensions and interruption periods~\cite{7442814, 10.1145/2700249, 10.1145/2809695.2809707, 10.1145/3281300, 222579}. 
 % A simulation tool of IPSs should be provided, where users can define energy source conditions and energy harvester sizes. 
@@ -328,17 +328,28 @@ The goal is to devise an approach that can enable IPSs to run with variable ener
 
 \section{Research Contributions}
 
-\todo[inline]{Need more explanation}
-
 % \footnote{With the limits on portability of different IC approaches, Question 1 and 2 are studied based on reactive IC methodology}
 
-The contributions done to the address the research questions in this thesis are:
-\begin{itemize}
-  \item[1.] Exploration and analysis of the energy storage sizing effect on reactive intermittent computing system, where we quantify and explain the relationship between energy storage capacity and forward progress.
-  \item[2.] A method and a simulation tool for sizing energy storage in deploying IPSs, where forward progress, dimensions, and interruption periods are traded off in a cost function.
-  \item[3.] A runtime energy profiling and voltage threshold adaptation approach for efficiently performing atomic operations in cases of variable runtime energy consumption. 
-  % \item[4.] A configurable model of reactive IC systems, including the interrelationship among energy harvesting supply, energy storage, and a processing load.
-\end{itemize}
+The contributions that address the research questions in this thesis are:
+\begin{enumerate}
+
+\item Exploration and analysis of the energy storage sizing effect on IPS performance, where a reactive IPS model is proposed and validated to quantify and illustrate the relationship between energy storage capacitance and forward progress. 
+The exploration shows adding a relatively small amount of energy storage can significantly improve forward progress. 
+The proposed model demonstrates its potential for design exploration of IPSs.
+(Addressing Research Question 1, reported in \cref{chapter:sizingeffect})
+
+\item An energy storage sizing approach for deploying IPSs, which accepts real-world energy availability data and trade off multiple design factors.
+A cost function can be incorporated, allowing various properties of the system to be traded off. 
+A simulation tool is available to download\footnote{\url{https://git.soton.ac.uk/energy-driven/energy-storage-sizing}}, enabling researchers to experiment with energy storage sizes to optimise IPS designs.
+(Addressing Research Question 2, reported in \cref{chapter:sizingapproach})
+
+\item A runtime energy profiling and adaptation method, named as \nn{}, for efficiently performing atomic tasks in cases of runtime-variable energy consumption. 
+\nn{} enables runtime energy profiling of tasks, so alleviates manual profiling efforts in development.
+Owing to the ability of runtime energy profiling and setting a barely sufficient energy budget, \nn{} is able to: (i) adapt its threshold for a new task on a new device, (ii) adapt to a higher threshold in cases of increased energy consumption or device ageing, (iii) lower operating voltage and improve energy efficiency and forward progress. 
+\nn{}, along with its software design tools and experimental comparisons, is open-source\footnote{\url{https://git.soton.ac.uk/jz8u17/atom-energy}}, hence facilitating future development and research.
+(Addressing Research Question 3, reported in \cref{chapter:opta})
+
+\end{enumerate}
 
 
 \section{Publications}

@@ -10,9 +10,9 @@ We then investigate how existing approaches fail or become inefficient under thi
 Design-time profiling of workloads' energy consumption in the prior work can be potentially violated by the variability of IPSs.
 To study and demonstrate the variability, we chose the built-in AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
 The example AES function encrypts data in the cypher block chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
-In the following experiments, we measured $\Delta \symb{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy meanwhile}, which directly determines the minimum voltage threshold that safely guarantees the completion of an atomic operation. 
+In the following experiments, we measured $\Delta \nmm{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy meanwhile}, which directly determines the minimum voltage threshold that safely guarantees the completion of an atomic operation. 
 We used Device 1 in Table~\ref{tab:device}, which has \SI{11.5}{\micro\farad} energy buffering capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
-We explored four factors that can possibly change $\Delta \symb{V}{task}$, which are variable data amounts, variable peripheral configurations, devices variability, and capacitor degradation and tolerance. 
+We explored four factors that can possibly change $\Delta \nmm{V}{task}$, which are variable data amounts, variable peripheral configurations, devices variability, and capacitor degradation and tolerance. 
 Besides the above four, energy consumption can also change with other factors, such as temperature, clock frequency, and silicon ageing, but we have found them either insignificant or hard to validate on our experimental platform. 
 
 
@@ -24,9 +24,9 @@ Besides the above four, energy consumption can also change with other factors, s
 
 A peripheral function can accept a runtime variable amount of data, such as a variable data size to encrypt or different lengths of packets for a radio to transmit. 
 An example of this is plotted in Figure~\ref{fig:variable_datasize}, where the size of the square dots represent a \SI{5}{\milli\volt} precision error of the scope and the lines represent linear regression. 
-We observed that $\Delta \symb{V}{task}$ has a linear relationship with the data size, with an offset energy consumption that accounts for the initialisation. 
-%The dynamic range of $\Delta \symb{V}{task}$ is \SIrange{17}{194}{\milli\volt}.
-In this case, the linearly scaled $\Delta \symb{V}{task}$ comes from linearly scaled run time. 
+We observed that $\Delta \nmm{V}{task}$ has a linear relationship with the data size, with an offset energy consumption that accounts for the initialisation. 
+%The dynamic range of $\Delta \nmm{V}{task}$ is \SIrange{17}{194}{\milli\volt}.
+In this case, the linearly scaled $\Delta \nmm{V}{task}$ comes from linearly scaled run time. 
 
 \input{ch5_optic/figures/variable_data/variable_data.tex}
 
@@ -35,17 +35,17 @@ In this case, the linearly scaled $\Delta \symb{V}{task}$ comes from linearly sc
 A peripheral can run with variable configurations at runtime, and demonstrate variable performance and energy consumption. 
 For example, as shown in Table~\ref{tab:configurations}, an AES accelerator can encrypt data with 128-, 192-, or 256-bit keys. 
 A longer key provides higher security, but also takes more time and energy to complete.
-The dynamic range of configuration variability in this case can be a 26\% increase in $\Delta \symb{V}{task}$ and a 33\% increase in run time.
+The dynamic range of configuration variability in this case can be a 26\% increase in $\Delta \nmm{V}{task}$ and a 33\% increase in run time.
 % Can refer to "A control flow" for the need of runtime configurations
 
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{$\Delta \symb{V}{task}$ Varying with Configurations in AES 4KB Encryption}
+    \caption{$\Delta \nmm{V}{task}$ Varying with Configurations in AES 4KB Encryption}
     \label{tab:configurations}
     \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{Configuration} & \textbf{$\Delta \symb{V}{task}$} & \textbf{Run Time} \\
+    \textbf{Configuration} & \textbf{$\Delta \nmm{V}{task}$} & \textbf{Run Time} \\
     \hline
     128-bit key & \SI{583}{\milli\volt} & \SI{6.479}{\milli\second} \\
     192-bit key & \SI{690}{\milli\volt} & \SI{7.638}{\milli\second} \\
@@ -59,18 +59,18 @@ The dynamic range of configuration variability in this case can be a 26\% increa
 Devices have their variation in power consumption, even with the same part number. 
 A threshold profiled on one device can be inadequate on another. 
 We did a test on three developments boards of the same MCU, where it runs 128-bit AES encryption on 4KB data. 
-As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \symb{V}{task}$ is up to 9\% among the three devices, though with almost the same run time (0.5\% variation). 
+As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \nmm{V}{task}$ is up to 9\% among the three devices, though with almost the same run time (0.5\% variation). 
 % This has been moderated by the larger on-board capacitance on Device 1 -- the actual charge consumption is supposed to be 31\% larger than Device 3.
 It should be noticed that device variability can also present across platforms that can run the same or similar code. 
 
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{$\Delta \symb{V}{task}$ Varying among Devices in AES 128-bit 4KB Encryption}
+    \caption{$\Delta \nmm{V}{task}$ Varying among Devices in AES 128-bit 4KB Encryption}
     \label{tab:device}
     \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{Device No.} & \textbf{$\Delta \symb{V}{task}$} & \textbf{Run Time} \\
+    \textbf{Device No.} & \textbf{$\Delta \nmm{V}{task}$} & \textbf{Run Time} \\
     \hline
     % 1 & \SI{764}{\micro\ampere}\\
     % 2 & \SI{773}{\micro\ampere}\\
@@ -88,11 +88,11 @@ It should be noticed that device variability can also present across platforms t
 As the component for buffering energy in IPSs, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in many commercial capacitors. 
 Capacitors also age over time. 
 It is shown that capacitance can decrease by 7.2\% in 3000 hours (125 days) under a \SI{25}{\celsius} ambient temperature in experiments~\cite{kulkarni2010experimental}, and by 50\% within 10 years under \SI{40}{\celsius} as manufacturers stated~\cite{vishaycapacitor}.
-A degraded capacitor does not change the load consumption, but can increase $\Delta \symb{V}{task}$, and hence makes the pre-defined voltage threshold unsafe or inefficient. 
+A degraded capacitor does not change the load consumption, but can increase $\Delta \nmm{V}{task}$, and hence makes the pre-defined voltage threshold unsafe or inefficient. 
 
 
-The above four examples present that the variability in IPSs can potentially make a predefined $\Delta \symb{V}{task}$ insufficient. 
-It is unrealistic to profile the $\Delta \symb{V}{task}$ in each scenario at design time in practice considering the complexity of the variations, and still cannot encompass unexpected situations, necessitating a runtime energy profiling approach. 
+The above four examples present that the variability in IPSs can potentially make a predefined $\Delta \nmm{V}{task}$ insufficient. 
+It is unrealistic to profile the $\Delta \nmm{V}{task}$ in each scenario at design time in practice considering the complexity of the variations, and still cannot encompass unexpected situations, necessitating a runtime energy profiling approach. 
 
 
 % Simulation
