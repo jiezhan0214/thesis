@@ -33,9 +33,6 @@ We set four cells in series (with \nm{V}{oc} = 3.56V) to match the operating vol
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    % \caption{PV Cell Properties under AM1.5 1000W/m$^2$ Light Conditions.}
-    \caption{PV cell properties under a \SI{1000}{\watt\per\square\centi\meter}, AM-1.5 light source}
-    \label{tab:pvcell}
     \begin{tabular}{|c|c|}
     \hline
     \textbf{Parameter} & \textbf{Value}\\
@@ -46,6 +43,8 @@ We set four cells in series (with \nm{V}{oc} = 3.56V) to match the operating vol
     Maximum Power Current & \SI{12.1}{\milli\ampere\per\square\centi\meter}\\
     \hline
     \end{tabular}
+    \caption{PV cell properties under a \SI{1000}{\watt\per\square\centi\meter}, AM-1.5 light source.}
+    \label{tab:pvcell}
 \end{table}
 
 Our simulation tool can perform two simulation processes: (a) sort and process the time distribution of environmental conditions, and (b) simulate system state chronologically with a fine-grained time step. 

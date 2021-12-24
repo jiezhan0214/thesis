@@ -12,28 +12,29 @@ In order to appropriately size and designate energy harvesters for sensor nodes,
 % , with their power features and current applications.
 % power level/amount, features, variability
 
-\begin{table}[!htb]
+\begin{table}
+    \renewcommand{\arraystretch}{1.2}
     \centering
     \begin{tabular}{|c|c|}
-    \toprule
-    \multirow{2}{*}{\textbf{Energy source}} & \multirow{2}{*}{\textbf{Energy harvester}} \\
-     & \\ 
-    \midrule
+    \hline
+    \multirow{2}{*}{\textbf{Energy Source}} & \multirow{2}{*}{\textbf{Energy Harvester}} \\
+    & \\ 
+    \hline
     Light & \multirow{2}{*}{Photovoltaic cells} \\
     (solar, artificial) & \\ 
-    \midrule
+    \hline
     \multirow{2}{*}{Radio waves} & Radio frequency harvester \\ 
-    & (antenna) \\ 
-    \midrule
+    & (rectenna) \\ 
+    \hline
     Flow & Wind turbine, \\ 
     (air, liquid) & hydrogenerator \\ 
-    \midrule
+    \hline
     Mechanical & Electromagnetic, electrostatic, \\ 
     (vibrations, pressure, stress-strain) & piezoelectric harvester \\ 
-    \midrule
-    \multirow{2}{*}{Heat} & \multirow{2}{*}{Theomo electric generator} \\
-     & \\  
-    \bottomrule
+    \hline
+    \multirow{2}{*}{Heat} & \multirow{2}{*}{Theomal electric generator} \\
+    & \\  
+    \hline
     \end{tabular}
     \caption{Classification of energy sources and energy harvesters in IoT.}
     \label{Table:energysources}
@@ -47,10 +48,10 @@ Given a fixed intensity of light, the output current from PV cells manifests an 
 
 Typical current-voltage curves of PV cells are shown in~\fref{Figure:solar_vi}, with an example of a monocrystalline cell given five values of illumination intensity from 200 W/m$^{2}$ to 1000 W/m$^{2}$. When the voltage is under 15V, the PV cell is similar to a current generator (so when the voltage increases, the power increases almost linearly). When the output voltage increases above 15V, the output current drops significantly and reaches zero at around 22V. According to this phenomenon, there is a voltage point where the cell produces the maximum power, which is named Maximum Power Point (MPP) as indicated by black dots in~\fref{Figure:solar_vi}. 
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=10cm]{ch2_review/figures/solar_vi}
-    \caption{Typical current-voltage curve of a solar module (monocrystalline, adapted from~\cite{xiao2004novel})}
+    \includegraphics[width=0.9\columnwidth]{ch2_review/figures/solar_iv_pic.png}
+    \caption{Typical I-V curves of a PV panel at a constant temperature and different irradiance (adapted from~\cite{ciulla2014comparison})}
     \label{Figure:solar_vi}
 \end{figure}
 % This figure is rubbish, can you replace it with a better one if possible!!!!!
@@ -62,16 +63,16 @@ Outdoor sunlight and indoor artificial light are two main sources for light ener
 
 Solar energy is an uncontrollable but partially predictable source~\cite{heinemann2006forecasting, buchli2014dynamic}. Solar irradiance demonstrates daily and annual periodicity due to the regularity of celestial movements, as well as irregular variations due to cloud movements, air mass, etc. A 3-year trace of diurnal global horizontal solar energy available measured in Los Angeles from 2012 to 2014 is presented in~\fref{Figure:solar_calendar}, and an example of daily dynamics of global horizontal solar irradiance of the same location is presented in~\fref{Figure:solar_plots}. As shown in both figures, the predictability is reflected from the roughly annual and daily periodicity, and the uncontrollability and randomness relates to the irregular variations, which include both daily variations in an annual scale and variations over a few seconds and minutes on a daily scale. 
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/solar_calendar}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/solar_calendar}
     \caption{Daily global horizontal solar energy available in Los Angeles 2012-2014~\cite{nreldata}.}
     \label{Figure:solar_calendar}
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/solar_plots}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/solar_plots}
     \caption{One-day dynamics of global horizontal solar irradiance in Los Angeles 29 April 2016~\cite{lmu}.}
     \label{Figure:solar_plots}
 \end{figure}
@@ -94,9 +95,9 @@ Flow-based energy harvesting utilises turbines and rotors to collect the kinetic
 % Wind turbines are another kind of mature energy harvesters besides PV techniques. 
 Wind turbines are manufactured in a wide spectrum in terms of dimensions, from a large-scale wind farm (arrays of large turbines) to a portable micro wind turbine. Micro wind turbines are suitable for battery charging and powering autonomous electronic devices. 
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/micro_wind_turbine}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/micro_wind_turbine}
     \caption{Dynamics of a micro wind harvester (reproduced from~\cite{balsamo2016graceful}).}
     \label{Figure:micro_wind_turbine}
 \end{figure}
@@ -136,7 +137,7 @@ Hydrogenerators harness the energy in moving liquids, such as water or a mix of 
 
 % Thermoelectric generators can produce electricity from a temperature difference utilizing the Seebeck effect. This thermal difference can come from human body, industrial devices, geological effects, etc~\cite{beeby2010energy}. 
 
-\section{Energy Storage for Sensor Nodes} \label{Section:ES}
+\section{Energy Storage for Energy-Harvesting Systems} \label{Section:ES}
 % if this is the tile, should I mention primary batteries?
 
 Energy harvesting supply is variable and intermittent over time, causing disparity between power supply and power consumption. In order to deliver stable power output from a varying source, a critical component in an energy harvesting power unit is energy storage, which buffers the harvested energy and powers the load when needed. Besides its ability to buffer energy and its effect on overall efficiency, energy storage has a dominant effect on the size, cost, and lifetime of sensor nodes~\cite{akhtar2015energy}. Therefore, how to design energy storage is a critical concern in deploying energy harvesting sensor nodes. 
@@ -150,12 +151,13 @@ Batteries are more energy-dense than capacitors and manifest a stable voltage ou
 % NiMH and Li-ion, their advantages and disadvantages. Comparison with a table. 
  Compared to SLA and NiCd batteries, NiMH and Li-ion batteries show a strength in energy density in both weight and volume, and hence, are more suitable for energy harvesting applications~\cite{raghunathan2005design, taneja2008design, akhtar2015energy, prauzek2018energy}. A comparison of two commercial NiMH and Li-ion batteries is listed in~\tref{Table:nimhliion} with a variety of perspectives and features. Li-ion batteries are typical lighter than NiMH batteries, with weight energy density 2-3x and volume energy density 1-2x to NiMH batteries. Also, Li-ion batteries significantly outperform NiNH batteries in terms of charging efficiency and self-discharge rate. However, Li-ion batteries are normally more expensive than NiMH batteries, and require more complicated pulse charging circuits~\cite{raghunathan2005design}. NiMH batteries also provide a relatively constant voltage supply during discharging~\cite{kansal2007power}. 
 
-\begin{table}[!htb]
+\begin{table}
+    \renewcommand{\arraystretch}{1.2}
     \centering
-    \begin{tabular}{ccc}
-    \toprule
-    & NiMH (Panasonic BK150AA) & Li-ion (EEMB LIR14500) \\
-    \midrule
+    \begin{tabular}{|c|c|c|}
+    \hline
+     & NiMH (Panasonic BK150AA) & Li-ion (EEMB LIR14500) \\
+    \hline
     Nominal voltage & 1.2 V & 3.7 V \\
     Charge capacity & 1500 mAh & 750 mAh \\
     Energy capacity & 1.80 Wh & 2.775 Wh \\
@@ -170,7 +172,7 @@ Batteries are more energy-dense than capacitors and manifest a stable voltage ou
     Charging efficiency~\cite{prauzek2018energy} & 66\% & 99.9\% \\
     Self-discharge~\cite{prauzek2018energy} & 30\% per month & 10\% per month \\
     Charging Method~\cite{prauzek2018energy} & Trickle & Pulse \\
-    \bottomrule
+    \hline
     \end{tabular}
     \caption{Comparison between commercial NiMH and Li-ion rechargeable batteries.}
     \label{Table:nimhliion}
@@ -279,9 +281,9 @@ Instead of instrumenting checkpoints at compile time, reactive IC does not set p
 
 Hibernus~\cite{balsamo2015hibernus} saves only one snapshot before a power interruption and then enter the sleep mode. Two fixed voltage thresholds, $V_H$ and $V_R$, are predefined for hibernation (save a snapshot and sleep) and restoring a snapshot. An on-chip voltage comparator and an on-chip voltage reference generator are used for monitoring the supply voltage and triggering hibernation when the supply voltage drops to $V_H$ or restoration when the supply voltage recovers to $V_R$. A voltage trace is shown in~\fref{Figure:hibernus} to explain Hibernus behaviours, and this trace is representative for a reactive IC system behaviours. To adapt thresholds to variable energy sources, Hibernus++~\cite{balsamo2016hibernus++} implements dynamic self-calibration for suspend and restore thresholds by executing a hibernation test. By using adaptive thresholds instead of fixed thresholds as in Hibernus, Hibernus++ makes itself compatible with a variety of energy sources. Compared to Hibernus, Hibernus++ improves application execution time by reducing the overheads of suspend and restore operations.
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/hibernus}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/hibernus}
     \caption{Voltage trace with hibernation and restoration points in Hibernus (taken from \cite{balsamo2015hibernus}).}
     \label{Figure:hibernus}
 \end{figure}
@@ -298,9 +300,9 @@ The RAM usage varies at run time, so the size of snapshots in reactive IC also v
 Harvest-store-use IC systems perform a complete task in one consecutive period when the harvested energy in energy storage is enough. A complete task typically includes sensing, processing, and transmitting actions. In order to sustain a successful task execution, the required capacity of energy storage is larger than the minimum required storage in other IC methodologies. Harvest-store-use systems need to calibrate the energy consumption of the task at design time and set an energy threshold to trigger execution based on that energy consumption. When the threshold is reached, which means there is enough energy for a task, the system performs one task and sleeps until the next threshold trigger. As shown in~\fref{Figure:saveanduse}, the behaviours of the amount of stored energy can be seen as alternating in turn between two states: the collecting state and the executing state.
 % These systems work during the sporadic energy bursts.
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/saveanduse}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/saveanduse}
     \caption{Harvest-Store-Use execution (taken from~\cite{hester2017new}).}
     \label{Figure:saveanduse}
 \end{figure}
@@ -328,9 +330,9 @@ Also, like checkpointing IC, task-based IC inevitably involves re-execution. Alp
 
 Non-Volatile Processors (NVPs) incorporate automatic backup and restore hardware within the chips. A comparison of memory architecture between traditional processors and NVPs is shown in~\fref{Figure:nvp}. The traditional volatile elements are replaced with non-volatile elements to achieve efficient backup and restore operations with a faster speed and lower energy consumption than the conventional memory architecture. To be specific, the registers and cache are equipped with built-in additional non-volatile backup and restore circuits, so that when the supply power is going to disappear, the computing state can be saved locally just beside the elements, rather than being copied out into an external NVM. It is reported that the backup and restore speed of NVPs can be 2-4$\times$ magnitudes faster than the state-of-the-art NVM based commercial processors~\cite{liu2015ambient}. 
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=12cm]{ch2_review/figures/nvp}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/nvp}
     \caption{Memory architectures of traditional processors and NVPs (taken from~\cite{liu2015ambient}).}
     \label{Figure:nvp}
 \end{figure}
@@ -372,9 +374,9 @@ In order to achieve power neutrality, a system has to adapt its performance and 
 
 The concept of PN computing is proposed in~\cite{balsamo2016graceful} and implemented on a Texas Instrument MSP430FR5739 MCU without an external energy buffer. As shown in~\fref{Figure:graceful_schematic}, the executing load is directly connected to a regulated energy harvesting source. The control scheme in~\cite{balsamo2016graceful} utilises DFS with a voltage feedback. Specifically, two voltage thresholds, $V_{dec}$ and $V_{inc}$, are set for detecting voltage variance caused by power inequality and then scaling performance accordingly. In order to respond fast to power difference, the capacitance is reduced to 19$\mu$F, which is only the parasitic and on-board decoupling capacitance. When $P_h(t) > P_c(t)$ and the operating voltage $V_{cc}$ increases rapidly due to the small capacitance and reaches $V_{inc}$, the MCU increases its operating frequency resulting in faster computing speed and higher power consumption, and also increases the thresholds between which the new voltage value is contained; and vice versa, a reverse procedure is executed for $P_h(t) < P_c(t)$. In a word, this control scheme is trying to make the operating voltage stable around a desired value so that $P_h(t)$  equals $P_c(t)$ approximately.
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/graceful_schematic}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/graceful_schematic}
     \caption{Architecture of an example power neutral system based on TI MSP430FR platform (taken from \cite{balsamo2016graceful}).}
     \label{Figure:graceful_schematic}
 \end{figure}
@@ -382,9 +384,9 @@ The concept of PN computing is proposed in~\cite{balsamo2016graceful} and implem
 
 A similar control scheme is adopted in~\cite{fletcher2017power} where the platform is an MP-SoC adopting DVFS and DPM, which leads to higher performance, higher power consumption, and more operating points than the MCU in~\cite{balsamo2016graceful}. A 47mF supercapacitor is used for safely overcoming performance switching where the power consumption of the board is normally above 2W. As an illustration for how to scale performance by DVFS and DPM, \fref{Figure:dvfs} presents an example application profile of 'power consumption vs performance' when DVFS and DPM applied on a heterogeneous multi-processor system-on-chip (MP-SoC) platform. The SoC used in this platform is the Samsung Exynos5422 big.LITTLE SoC with four 'big' high-performance A15 cores and four 'LITTLE' low-power A7 cores. In this case, the performance refers to the speed of executing this application for one time and is proportional to the operating frequency under a certain core configuration. As shown in the figure, each performance level (a pair of frequency and core status, also named as an operating point) requires a certain power consumption. At run-time, the system dynamically switch its performance among these operating points so as to timely match $P_c(t)$ with $P_h(t)$.
 
-\begin{figure}[!htb]
+\begin{figure}
     \centering
-    \includegraphics[width=14cm]{ch2_review/figures/dvfs}
+    \includegraphics[width=\columnwidth]{ch2_review/figures/dvfs}
     \caption{Board power consumption of ODROID XU4 vs operating frequency and core configurations, running CPU intensive application Raytrace (taken from \cite{fletcher2017power}).}
     \label{Figure:dvfs}
 \end{figure}

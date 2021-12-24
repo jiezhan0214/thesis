@@ -5,11 +5,9 @@ Parameters of this model are listed in \tref{tab:parameter}.
 The model assumes that all configuration parameters remain constant. 
 We assume that all input and configuration parameters remain constant in this model derivation, but later provide a dynamic process for cases where parameters change dynamically. 
 
-\begin{table}[!t]
+\begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{Model parameters of reactive IPS} 
-    \label{tab:parameter}
     \begin{tabular}{|c|c|}
         % \hline
         % \textbf{Parameter} & \textbf{Description} \\
@@ -36,6 +34,8 @@ We assume that all input and configuration parameters remain constant in this mo
         \nm{\alpha}{exe} & Normalised forward progress \\ 
         \hline
     \end{tabular}
+    \caption{Model parameters of reactive IPS.}
+    \label{tab:parameter}
 \end{table}
 
 % Since supply current \nm{I}{harv} and leakage current \nm{I}{leak} constantly exist (though could be zero), 

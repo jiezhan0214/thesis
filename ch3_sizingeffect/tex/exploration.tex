@@ -55,11 +55,9 @@ This guarantees that a save and restore operation can complete even if the incom
 Moreover, the model parameters in \tref{tab:load} are given as an example, and can be changed for different load characteristics. 
 For example, \nm{T}{r} and \nm{T}{s} can be tuned for different volatile state sizes.
 
-\begin{table}[!t]
+\begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{Profiled MCU parameters}
-    \label{tab:load}
     \begin{tabular}{|c|c|}
     \hline
     \textbf{Parameter} & \textbf{Value}\\
@@ -83,6 +81,8 @@ For example, \nm{T}{r} and \nm{T}{s} can be tuned for different volatile state s
     % \nm{I}{lpm} & 0.01 mA\\
     \hline
     \end{tabular}
+    \caption{Profiled MCU parameters.}
+    \label{tab:load}
 \end{table}
 
 
@@ -145,19 +145,19 @@ As these time overheads are expected to be linear to the state size~\cite{sliper
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
     \centering
-    \caption{Linear scaling range of volatile state size and restore/save time overheads}
-    \label{tab:ramscale}
     \begin{tabular}{|c|cc|}
-    \hline
-    \textbf{State Size} & \multirow{2}{*}{\textbf{Restore Time}} & \multirow{2}{*}{\textbf{Save Time}}\\
-    \textbf{(Registers + SRAM)} & & \\
-    \hline
-    64B + 160B (lower bound) & \SI{232}{\micro\second} & \SI{208}{\micro\second}\\
-    % 64B registers + 160B stack
-    64B + 2048B (upper bound) & \SI{2.298}{\milli\second} & \SI{2.274}{\milli\second} \\
-    % 64B registers + 2048B RAM
-    \hline
+        \hline
+        \textbf{State Size} & \multirow{2}{*}{\textbf{Restore Time}} & \multirow{2}{*}{\textbf{Save Time}}\\
+        \textbf{(Registers + SRAM)} & & \\
+        \hline
+        64B + 160B (lower bound) & \SI{232}{\micro\second} & \SI{208}{\micro\second}\\
+        % 64B registers + 160B stack
+        64B + 2048B (upper bound) & \SI{2.298}{\milli\second} & \SI{2.274}{\milli\second} \\
+        % 64B registers + 2048B RAM
+        \hline
     \end{tabular}
+    \caption{Linear scaling range of volatile state size and restore/save time overheads.}
+    \label{tab:ramscale}
 \end{table}
 
 An example of this is plotted in \fref{fig:ram}. 
