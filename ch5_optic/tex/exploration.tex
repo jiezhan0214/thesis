@@ -85,8 +85,8 @@ It should also be noticed that device variability can present across platforms t
 \subsubsection{Capacitor Ageing and Tolerance}
 \label{subsubsec:capacitance_variability}
 
-As the component for buffering energy in IPSs, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in many commercial capacitors. 
-Capacitors also age over time. 
+As the component for buffering energy in IPSs, capacitors typically present a $\pm$10-20\% tolerance on rated capacitance as reported in many commercial capacitors~\cite{tancap1, tancap2, tancap3, alcapacitor}. 
+Capacitors also age over time~\cite{teverovsky2014insulation}. 
 It is shown that capacitance can decrease by 7.2\% in 3000 hours (125 days) under a \SI{25}{\celsius} ambient temperature in experiments~\cite{kulkarni2010experimental}, and by 50\% within 10 years under \SI{40}{\celsius} as manufacturers stated~\cite{vishaycapacitor}.
 A degraded capacitor does not change the load consumption, but can increase $\Delta \nmm{V}{task}$, and hence makes the pre-defined voltage threshold unsafe or inefficient. 
 
@@ -104,13 +104,13 @@ Having presented the variability in IPSs, we explore in modelling and simulation
 
 \subsubsection{Power Analysis}
 
-As suggested in prior work, operating at a lower voltage can improve system energy efficiency due to a higher charging efficiency and a lower power consumption.
+As suggested in prior work~\cite{gomez2016dynamic, pan2017maximize}, operating at a lower voltage can improve system energy efficiency due to a higher charging efficiency and a lower power consumption.
 
 To validate this, we analysed the charging characteristic of a glass-type amorphous PV panel in an white LED lighting environment. 
-We used the PV panel to charge a \SI{103}{\micro\farad} capacitor from \SI{0}{\volt} to \SI{3.05}{\volt} where the capacitor cannot be charged up anymore. 
-The voltage-time charging trace is then differentiated to gain an I-V curve that represents the PV panel (\fref{fig:pv_iv}). 
+We used the PV panel to charge a capacitor with \SI{103}{\micro\farad} capacitance as measured from \SI{0}{\volt} to \SI{3.05}{\volt}, at which point the capacitor cannot be charged further. 
+The voltage-time charging trace was then differentiated to gain an I-V curve that represents the PV panel in the model (\fref{fig:pv_iv}). 
 % The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
-To model this curve, we did a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
+To model this curve, we performed a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
 The model function of this I-V curve is then expressed as:
 \begin{equation}
     \nmm{I}{in} = \left\{
@@ -127,8 +127,8 @@ where we set \nm{I}{sc} = \SI{276}{\micro\ampere}, \nm{V}{oc} = \SI{3.05}{\volt}
 
 \input{ch5_optic/figures/pv_curve/pv_curve.tex}
 
-In the MSP430FR5994 platform, we did not observe a significant change in current consumption with supply voltage (up to 2\%). 
-This is majorly due to an on-chip LDO that droops down the external supply voltage to a constant internal supply voltage, and hence maintaining a relatively stable current draw as the external supply voltage changes. 
+In the MSP430FR5994 platform, we did not observe a significant change in current consumption with supply voltage (only up to 2\%). 
+This is majorly due to an on-chip LDO that lowers down the external supply voltage to a constant internal supply voltage, and hence maintains a relatively stable current draw as the external supply voltage changes. 
 Hence, we omitted the voltage effect on current consumption in this simulation. 
 
 We used the energy and time overheads of AES encryption presented in \sref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 
@@ -136,7 +136,7 @@ In simulation, the current draw remains constant during one operation, but chang
 
 \subsubsection{Runtime Control Models}
 
-We modelled an ideal adaptive threshold scheme against two SoA fixed-threshold schemes.
+We modelled an ideal adaptive threshold scheme against two State-of-the-Art fixed-threshold schemes, i.e. \debs{}~\cite{gomez2016dynamic} and Samoyed~\cite{maeng2019supporting}.
 We focussed on modelling the control logic and threshold settings, and omitted the state management overhead as it can be dependent on the actual implementation. 
 
 In the ideal adaptive scheme, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold that suffices the energy budget. 
@@ -163,7 +163,7 @@ The shutdown threshold is \SI{1.8}{\volt}, against which \debs{} and the adaptiv
 The system consumes \SI{10}{\micro\ampere} when it is inactive.
 To evaluate the performance of the three schemes, we conducted two tests that simulate a variable workload and capacitance reduction respectively.  
 The variable workload test runs a random data amount from 16B to 4080B (1 to 255 blocks of data, 16B per block), and also a random 128-, 192-, or 256-bit key length, both uniformly distributed. 
-The energy harvesting characteristics presented in \fref{fig:pv_iv} is used as the supply for this test. 
+The energy harvesting characteristics presented in \fref{fig:pv_iv} are used as the supply for this test. 
 All the schemes take the same random series of data sizes and configurations.
 The capacitance reduction test runs with 0-60\% reduced capacitance, in line with the maximum possible reduction shown in \sref{subsubsec:capacitance_variability}.
 The system in this test is supplied with a \SI{50}{\micro\ampere} constant current and runs only the most energy-hungry operation, in order to examine whether the system can avoid non-termination even under the worst case.  
