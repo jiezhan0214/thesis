@@ -1,4 +1,4 @@
-\section{Design Exploration} 
+\section{Motivation} 
 \label{sec:design_exploration}
 
 In this section, we study the variability in IPSs that can violate a predefined fixed threshold. 
@@ -58,10 +58,10 @@ The dynamic range of configuration variability in this case can be a 26\% increa
 
 Devices have their variation in power consumption, even with the same part number. 
 A threshold profiled on one device can be inadequate on another. 
-We did a test on three developments boards of the same MCU, where it runs 128-bit AES encryption on 4KB data. 
+We did a test on the same three development boards, where they run 128-bit AES encryption on 4KB data. 
 As listed in Table~\ref{tab:device}, the effect of device variability on $\Delta \nmm{V}{task}$ is up to 9\% among the three devices, though with almost the same run time (0.5\% variation). 
 % This has been moderated by the larger on-board capacitance on Device 1 -- the actual charge consumption is supposed to be 31\% larger than Device 3.
-It should be noticed that device variability can also present across platforms that can run the same or similar code. 
+It should also be noticed that device variability can present across platforms that run the same or similar code. 
 
 \begin{table}
     \renewcommand{\arraystretch}{1.2}
