@@ -10,7 +10,7 @@
         enlarge y limits=0.2,
         tick align=inside,
         ytick style={draw=none},
-        yticklabels={,\debs{} Low,Samoyed, \debs{} High, Adaptive},
+        yticklabels={,\debs{} Low,Samoyed, \debs{} High, \nn{} Oracle},
         ]
         \nextgroupplot[xmax=600,xlabel={No. of Completions}]
         \addplot
@@ -27,6 +27,6 @@
 
     \end{groupplot}
     \end{tikzpicture}
-    \caption{Numbers of completed and failed operations of \debs{} Low, Samoyed, \debs{} High, and Adaptive given random data sizes and configurations and a PV supply in a \SI{10}{\second} simulation. }
+    \caption{Numbers of completed and failed operations of \debs{} Low, Samoyed, \debs{} High, and \nn{} Oracle given random data sizes and configurations and a PV supply in a \SI{10}{\second} simulation. }
     \label{fig:simulation_perf}
 \end{figure} 

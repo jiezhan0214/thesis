@@ -136,10 +136,10 @@ In simulation, the current draw remains constant during one operation, but chang
 
 \subsubsection{Runtime Control Models}
 
-We modelled an ideal adaptive threshold scheme against two State-of-the-Art fixed-threshold schemes, i.e. \debs{}~\cite{gomez2016dynamic} and Samoyed~\cite{maeng2019supporting}.
+We modelled an ideal adaptive threshold scheme, named as \nn{} Oracle, against two State-of-the-Art fixed-threshold schemes, i.e. \debs{}~\cite{gomez2016dynamic} and Samoyed~\cite{maeng2019supporting}.
 We focussed on modelling the control logic and threshold settings, and omitted the state management overhead as it can be dependent on the actual implementation. 
 
-In the ideal adaptive scheme, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold that suffices the energy budget. 
+In \nn{} Oracle, the system knows exactly how much energy is needed for the next operation and sets the lowest threshold that suffices the energy budget. 
 
 \debs{} sets a minimum threshold for a fixed operation. 
 We explored two cases of \debs{}, labelled as \debs{} Low and \debs{} High.
@@ -149,7 +149,7 @@ We then modelled \debs{} High in a case where it foresees the possible dynamic i
 % Unfortunately, \debs{} Low fails to achieve any progress except for few operations at the beginning of the simulation given origin capacitance.
 % Thus, we use \debs{} High to represent \debs{} in the following results.
 
-Samoyed differs from \debs{} and the adaptive scheme in its control, where, when completing an operation, it keeps executing until it dies rather than sleeps and waits for the next threshold.
+Samoyed differs from \debs{} and \nn{} Oracle in its control, where, when completing an operation, it keeps executing until it dies rather than sleeps and waits for the next threshold.
 Samoyed suggests allocating an abundant energy budget, so its threshold is also set to the highest possible operating voltage.
 
 % DEBS High is probably not the most efficient DEBS. 
@@ -158,8 +158,9 @@ Samoyed suggests allocating an abundant energy budget, so its threshold is also 
 
 \subsubsection{Simulation Setup}
 
+The above models were implemented as a numeric simulation program in Python.
 In simulation, the system has \SI{10}{\micro\farad} system capacitance without charge at the start. 
-The shutdown threshold is \SI{1.8}{\volt}, against which \debs{} and the adaptive scheme set their threshold, with a \SI{10}{\milli\volt} small margin. 
+The shutdown threshold is \SI{1.8}{\volt}, against which \debs{} and \nn{} Oracle set their threshold, with a \SI{10}{\milli\volt} small margin. 
 The system consumes \SI{10}{\micro\ampere} when it is inactive.
 To evaluate the performance of the three schemes, we conducted two tests that simulate a variable workload and capacitance reduction respectively.  
 The variable workload test runs a random data amount from 16B to 4080B (1 to 255 blocks of data, 16B per block), and also a random 128-, 192-, or 256-bit key length, both uniformly distributed. 
@@ -184,11 +185,11 @@ We ran 10 rounds of simulations for each setup, and each round simulates for \SI
 \debs{} Low cannot terminate once it encounters an operation that consumes more than what it is profiled for and the supply is too weak to provide the energy gap. 
 \debs{} Low can only occasionally get progress on lightweight operations before non-termination. 
 Samoyed also suffers performance loss from waiting for a high energy threshold (\SI{2.9}{\volt} in this case), and failing an operation at the end of an active cycle. 
-\debs{} High is relatively efficient because it does not usually fail due to a suffcient energy budget and a sleep-after-completion control. 
-The adaptive scheme runs the most efficiently among these four.
+\debs{} High is relatively efficient because it does not usually fail due to a sufficient energy budget and a sleep-after-completion control. 
+\nn{} Oracle runs the most efficiently among these four.
 It runs at reduced operating voltage that improves system energy efficiency, and also guarantees the completion of every task by setting a minimised but safe threshold.
-As an example voltage trace shown in \fref{fig:simulation_voltage}, the adaptive scheme runs with \SI{2.11}{\volt} mean voltage, while the ones for Samoyed and \debs{} High are \SI{2.36}{\volt} and \SI{2.40}{\volt} respectively. 
-Due to the above reasons, the adaptive scheme completes more operations over Samoyed by 50\% and \debs{} High by 15\% on average.
+As an example voltage trace shown in \fref{fig:simulation_voltage}, \nn{} Oracle runs with \SI{2.11}{\volt} mean voltage, while the ones for Samoyed and \debs{} High are \SI{2.36}{\volt} and \SI{2.40}{\volt} respectively. 
+Due to the above reasons, \nn{} Oracle completes more operations over Samoyed by 50\% and \debs{} High by 15\% on average.
 
 \input{ch5_optic/figures/exploration_results/perf.tex}
 
@@ -201,10 +202,10 @@ Due to the above reasons, the adaptive scheme completes more operations over Sam
 
 \input{ch5_optic/figures/exploration_results/cap.tex}
 
-\fref{fig:simulation_cap} shows the results of the capacitance reduction test, where we have omitted \debs{} Low as it has already failed in non-termination with origin capacitance (so will still fail with reduced capacitance). 
+\fref{fig:simulation_cap} shows the results of the capacitance reduction test, where we have omitted \debs{} Low as it has already failed in non-termination with original capacitance (so will still fail with reduced capacitance). 
 With the capacitance decreased, \debs{} High also falls into non-termination like \debs{} Low. 
 Samoyed, where its threshold is set to \SI{3.6}{\volt} in this case, can still progress until a 60\% reduction of capacitance because its abundant energy budget can support at least one or a few operations in one active cycle.
-The adaptive scheme still maintains the highest forward progress among these control scheme. 
+\nn{} Oracle still maintains the highest forward progress among these control scheme. 
 
 
 The above exploration presents that using a fixed low threshold can leave the system in non-termination (e.g. \debs{} Low and \debs{} High) but allocating an abundant energy budget compromises system efficiency (\debs{} High and Samoyed). 

@@ -34,16 +34,16 @@ Three common peripheral tasks in IoT sensors were used as the benchmarks for eva
 
 We first measured the profiling accuracy of \nn{}'s runtime energy profiling ability. 
 A hundred profiling results were obtained for each workload. 
-Manual profiling was also conducted by disconnecting the power supply during task execution and reading $\Delta\nmm{V}{task}$ from a scope, and used as a reference that we evaluate the profiling results against. 
+Manual profiling was also conducted by disconnecting the power supply during task execution and reading $\Delta\nmm{V}{task}$ from an oscilloscope, and used as a reference that we evaluate the profiling results against. 
 The results are divided in a \SI{5}{\milli\volt} step because the resolution of our scope is \SI{5}{\milli\volt}, below which the manual profiled reference is not even accurate. 
 
-As shown in \fref{fig:profiling_accuracy}, the profiling errors are low and relatively consistent (mostly within \SI{5}{\milli\volt}) across the three workload with different levels of energy consumption. 
-The error becomes insignificant with energy-hungry tasks, e.g. RF. 
+As shown in \fref{fig:profiling_accuracy}, the profiling errors are within \SI{5}{\milli\volt} and relatively consistent across the three workload with different levels of energy consumption. 
+The error becomes insignificant with energy-hungry tasks, e.g. \SI{0.7}{\percent} with RF. 
 Compared to the step of voltage thresholds in our implementation (around \SI{30}{\milli\volt}), this \SI{5}{\milli\volt} error is acceptable as it can convert to a relatively stable threshold assuming a fixed energy consumption. 
 
 Additionally, the average profiling results are shown to be a slightly higher than the reference, which 
 seems to contradict the theoretical error that is supposed to make the profiling undershoot.
-This is majorly due to a positive error in the MCU's internal 1/2 \nm{V}{cc} divider from an observation that the Naive approach produced a higher reading. 
+This is due to a positive error in the MCU's internal 1/2 \nm{V}{cc} divider from an observation that the Naive approach produced a higher reading. 
 This also evidences that the theoretical error is insignificant and easily compensated by other factors. 
 
 
@@ -69,7 +69,7 @@ To reduce similar results, we show one example in each category to illustrate \n
 \end{figure}
 
 \fref{fig:v_trace} shows an example of how \nn{} adapts its threshold to a new workload and a new device. 
-The system runs an AES-128 encryption on 1KB data repetitively . 
+The system runs an AES-128 encryption on 1KB data repetitively. 
 The algorithm does not have any knowledge on the energy consumption of the platform or the workload.
 The system first waits for the initial profiling threshold, which is set at \SI{2.7}{\volt} in this case. 
 Then it performs energy profiling as this is the first time it executes this task. 
@@ -123,7 +123,7 @@ Owing to the threshold adaptation, \nn{} can still survive with much lower capac
 % Setup: randomised data sizes, 
 % improvement
 A task may have runtime variable data sizes and configurations, which frequently change $\Delta\nmm{V}{task}$.
-While \debs{} and Samoyed can set a high threshold that suffices the most energy-hungry task, \nn can also adapts its threshold to frequently changing $\Delta\nmm{V}{task}$ so as to lower operating voltage and increase forward progress.
+While \debs{} and Samoyed can set a high threshold that suffices the most energy-hungry task, \nn{} can also adapt its threshold to frequently changing $\Delta\nmm{V}{task}$ so as to lower operating voltage and increase forward progress.
 
 We demonstrate \nn{}'s linear threshold adaptation on workloads that have variable data sizes, where AES encrypts 512B to 4KB data with a 256-bit key length, and RF sends 16B to 96B data. 
 An array of randomised numbers was generated to switch the data sizes. 
