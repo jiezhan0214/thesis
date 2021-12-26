@@ -1,6 +1,23 @@
 \begin{abstract}
-\todo[inline]{Abstract to be done}
-% A growing number of autonomous sensor nodes are expected to be deployed in the Internet of Things. Energy harvesting has gained increasing attention for powering these nodes due to its features of long lifetime and energy independence. However, energy harvesting sources manifest intrinsic temporal and spatial variability, which conflicts with the requirement of stable power supply for conventional electronic designs. Energy-driven computing has recently developed to adapt system architecture to only ambient energy sources, with various specifications, such as prolonging active time, increasing energy efficiency, and ensuring forward execution, for different scenarios. While energy storage and energy harvester are critical components in terms of application performance and device dimensions, considerations on how to size energy storage and energy harvester have not been fully studied.
+% Background: IoT and energy harvesting
+Energy harvesting has become a promising power solution for the Internet of Things, liberating numerous wireless sensors from batteries and the power grid. 
+Environmentally harvested power, however, is intrinsic variable and intermittent, which conflicts with conventional electronics. 
+Conventionally, energy-harvesting devices buffer energy in large energy storage devices, such as rechargeable batteries or supercapacitors, to smooth out supply variability.
+Unfortunately, these increase costs and device dimensions, raise pollution concerns, and have constrained lifespans.
+% IPS
+To work with only a small energy buffering capacitor, Intermittent-Powered Systems (IPSs) have been studied for intermittent supply. 
+In IPSs, application forward progress, i.e. execution beneficial to the active application, is maintained by saving volatile computing state into non-volatile memory before power interruptions, and restored afterwards.
 
-% This thesis presents a study on the sizing issue of energy storage and energy harvester in deploying self-powered computing devices. A sizing method is proposed with respect to real-world energy conditions. A configurable system model is built to represent a typical execution process in energy harvesting computing. Based on this model, the sizing method is implemented. This sizing method suggests an efficient range of energy harvester sizes that balance average application performance and harvester dimensions. In this range of harvester sizes, results show that properly sizing energy storage leads to an execution speedup by 5.7-22.2\% under real-world deployment. Furthermore, exploration extends to the sizing effect of energy storage on a recent-published power adaptation method for storage-less energy-driven computing. 
+% Problem statement
+While IPS research has focussed on efficiently sustaining computing state at the load side, system-wise energy budgeting in IPSs has not yet been widely studied.
+% This thesis
+This thesis investigates the energy budget of IPSs in order to improve forward progress. 
+We studies the issues on sizing energy storage and setting voltage thresholds, both of which determine an energy budget. 
+% 3 main contributions
+The main contributions are:
+(i) exploration and analysis of the energy storage sizing effect on IPS performance, where a reactive IPS model is proposed and validated to quantify and illustrate the relationship between energy storage capacitance and forward progress, showing up to 65\% forward progress improvement by sizing energy storage;
+(ii) an energy storage sizing approach that recommends an appropriate energy storage size after analysing real-world energy availability data and trading off multiple design factors, achieving 93\% of the maximum forward progress while saving 83\% capacitor volume and 91\% interruption periods;
+(iii) a runtime energy profiling and adaptation method for efficiently and reliably performing atomic tasks in cases of runtime-variable energy consumption, with results showing it can save manual profiling effort (within \SI{5}{\milli\volt} error), alleviates non-termination with even 68\% capacitance reduction, and improve forward progress by up to 98\% with runtime-variable workloads. 
+% Concluding remark
+
 \end{abstract}
