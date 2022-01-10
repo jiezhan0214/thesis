@@ -16,7 +16,7 @@ In the context of IPSs, an atomic operation should not be checkpointed during ex
 A peripheral operation is considered atomic because it is usually problematic to checkpoint and restore the operation later, even if the intermediate peripheral state is also checkpointed.
 For example, checkpointing during a sensor reading and resuming it later can cause incorrect results or an infinite wait as the initialisation is lost, and violate timeliness as the sensor does not render the latest and consecutive results~\cite{maeng2019supporting}. 
 % disable checkpoints during execution
-As presented in \sref{Section:IC}, prior works on intermittent peripheral operations either customise a design-time calibrated energy budget for each peripheral operation individually~\cite{gomez2016dynamic}, or allocate a universal and large energy budget that ensure the most energy-hungry operation can finish in one active cycle~\cite{maeng2019supporting}.
+As presented in \sref{sec:ips}, prior works on intermittent peripheral operations either customise a design-time calibrated energy budget for each peripheral operation individually~\cite{gomez2016dynamic}, or allocate a universal and large energy budget that ensure the most energy-hungry operation can finish in one active cycle~\cite{maeng2019supporting}.
 
 
 % *** Offline profiling and fixed threshold is impractical due to variability ***

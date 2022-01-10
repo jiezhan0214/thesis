@@ -1,0 +1,87 @@
+\section{Energy Storage for Energy-Harvesting Systems} \label{sec:es}
+% if this is the tile, should I mention primary batteries?
+
+Energy harvesting supply is variable and intermittent over time, causing disparity between power supply and power consumption. In order to deliver stable power output from a varying source, a critical component in an energy harvesting power unit is energy storage, which buffers the harvested energy and powers the load when needed. Besides its ability to buffer energy and its effect on overall efficiency, energy storage has a dominant effect on the size, cost, and lifetime of sensor nodes~\cite{akhtar2015energy}. Therefore, how to design energy storage is a critical concern in deploying energy harvesting sensor nodes. 
+
+Technologies of energy storage used in sensor nodes are generally divided into two categories: rechargeable batteries and capacitors, which are different from each other in terms of energy density, power density, lifetime, discharging features, leakage, etc. In general, batteries have higher energy density (containing more energy with the same volume/weight), lower leakage, and a more stable discharging curve (a stable voltage output while discharging), while capacitors have higher power density (higher limits for charging/discharging current), and longer lifetime in terms of charge-discharge cycles~\cite{raghunathan2005design, akhtar2015energy}. The choice of these two forms of energy storage depends on application requirements. These two technologies and their implementations will be briefly reviewed in the following subsections.
+
+\subsection{Rechargeable Batteries}
+
+Batteries are more energy-dense than capacitors and manifest a stable voltage output when discharging. Rechargeable batteries have been widely adopted in mobile devices. Rechargeable batteries are generally made in the following techniques: Sealed Lead Acid (SLA), Nickel Cadmium (NiCd), Nickel Metal Hydride (NiMH), Lithium Ion (Li-ion), and Lithium ion Polymer (Li-Po). Due to the similar techniques and features of Li-ion and Li-Po batteries, Li-ion will be used to represent Li-ion and Li-Po batteries in this subsection. SLA and NiCd batteries are less likely to be implemented in energy harvesting sensor nodes~\cite{raghunathan2005design, akhtar2015energy}. SLA batteries suffer from low energy density and are normally bulky and heavy, which is unfavorable for sensor nodes. NiCd batteries involve memory effect, i.e. decrease of energy capacity after repeated partially discharging and recharging, which is a common situation in energy harvesting implementations. 
+
+% NiMH and Li-ion, their advantages and disadvantages. Comparison with a table. 
+ Compared to SLA and NiCd batteries, NiMH and Li-ion batteries show a strength in energy density in both weight and volume, and hence, are more suitable for energy harvesting applications~\cite{raghunathan2005design, taneja2008design, akhtar2015energy, prauzek2018energy}. A comparison of two commercial NiMH and Li-ion batteries is listed in~\tref{Table:nimhliion} with a variety of perspectives and features. Li-ion batteries are typical lighter than NiMH batteries, with weight energy density 2-3x and volume energy density 1-2x to NiMH batteries. Also, Li-ion batteries significantly outperform NiNH batteries in terms of charging efficiency and self-discharge rate. However, Li-ion batteries are normally more expensive than NiMH batteries, and require more complicated pulse charging circuits~\cite{raghunathan2005design}. NiMH batteries also provide a relatively constant voltage supply during discharging~\cite{kansal2007power}. 
+
+\begin{table}
+    \renewcommand{\arraystretch}{1.2}
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+     & NiMH (Panasonic BK150AA) & Li-ion (EEMB LIR14500) \\
+    \hline
+    Nominal voltage & 1.2 V & 3.7 V \\
+    Charge capacity & 1500 mAh & 750 mAh \\
+    Energy capacity & 1.80 Wh & 2.775 Wh \\
+    Weight & 26 g & 20 g \\
+    Dimensions & \diameter14.5mm $\times$ 50.5mm & \diameter14.1mm $\times$ 48.5mm \\
+    Weight energy density & 69 Wh/Kg & 139 Wh/Kg \\
+    Volume energy density & 216 Wh/L & 366 Wh/L \\
+    Operating temperature & -20$^\circ$C to 65$^\circ$C & -20$^\circ$C to 60$^\circ$C \\
+    Charging cycles & \multirow{2}{*}{$>$500} & \multirow{2}{*}{$>$300} \\
+    (until 80\% capacity) & & \\
+    Reference price & $\pounds$2.91 & $\pounds$3.25 \\
+    Charging efficiency~\cite{prauzek2018energy} & 66\% & 99.9\% \\
+    Self-discharge~\cite{prauzek2018energy} & 30\% per month & 10\% per month \\
+    Charging Method~\cite{prauzek2018energy} & Trickle & Pulse \\
+    \hline
+    \end{tabular}
+    \caption{Comparison between commercial NiMH and Li-ion rechargeable batteries.}
+    \label{Table:nimhliion}
+\end{table}
+
+NiMH and Li-ion batteries have been widely implemented in energy harvesting sensor nodes. Heliomote~\cite{raghunathan2005design} uses two NiMH batteries in series to match the charging voltage (2.2-2.8V) with the MPP of the solar panel. HydroSolar~\cite{taneja2008design} also adopts two NiMH batteries to avoid the Li-ion charging hardware. Jiang \textit{et al.}~\cite{jiang2005perpetual} design a hybrid storage system including a lithium based rechargeable battery as the secondary buffer, due to its high efficiency and charge density.
+
+Despite the high energy density and stable discharging voltage, batteries still show a typical drawback at short lifetime (less than 5 years~\cite{simjee2008efficient}), which involves manual replacement of batteries or devices after the battery lifetime expires. Also, batteries raise environmental concerns due to the heavy metals and toxic chemicals within. If not properly charged, Li-ion batteries can cause safety issues, i.e. explosion and fire, which are problematic when deployed in distant and wild places. In addition, rechargeable batteries are susceptible to temperature. Most batteries only exhibit their rated characteristics around 20$^\circ$C, and lose their efficiency and capacity when operating at extreme temperatures (around their rated limits)~\cite{prauzek2018energy}. 
+
+ % mention the two new papers from Neal Jackson?
+
+\subsection{Capacitors}
+% leakage and lifetime of supercapacitors???
+
+Due to the lifetime limits and pollution issues of batteries, capacitors, typically supercapacitors, are considered as an alternative to replace rechargeable batteries as energy storage. Supercapacitor (also known as ultracapacitors or electrostatic double-layer capacitors) are capacitors with higher energy density than electrolytic capacitors. Unlike conventional capacitors, where charges are stored and separated by solid dielectric, supercapacitors maintain charges based on double-layer or pseudo-capacitive charging phenomena~\cite{bueno2019nanoscale}. Supercapacitors are still much less energy-dense than batteries, but act as a transition from capacitors to batteries. 
+
+Compared to rechargeable batteries, supercapacitors exhibit strengths in a large number of charge/discharge cycles, long lifetime (20 years), high charge/discharge efficiency (98\%). The self-discharge rate of supercapacitors is higher than batteries, with 5.9-11\% of maximum capacity per day~\cite{libich2018supercapacitors, renner2009lifetime}, but this leakage is insignificant compared to the small capacity and the total energy gained per day. The main constraint of supercapacitors is still the low energy density, which results in large storage dimensions if the aim were to achieve a comparable capacity with batteries. In order to maintain the same form factors of sensor nodes, designers have to adapt system architecture to a small storage (compared to batteries).
+
+Prometheus~\cite{jiang2005perpetual} introduces supercapacitors into energy storage for sensor nodes whereby two 22F supercapacitors are used in combine with a Li-Po battery. AmbiMax~\cite{park2006ambimax} also proposes a hybrid storage design similar to Prometheus, but with two more 10F supercapacitors for wind energy harvesters. To achieve longer lifetime than battery-based sensor nodes, Everlast~\cite{simjee2006everlast} demonstrates the feasibility of replacing batteries with supercapacitors in energy harvesting sensor nodes, designing a power system that adopts a 100F supercapacitor as the only energy reservoir. 
+
+However, farad-level supercapacitors occupy a significant part of device volume. The advent of energy-driven computing~\cite{merrett2017energy} introduces the application and design scenario where execution happens only if there is energy available. Within this scenario, energy storage using millifarad-level supercapacitors are investigated in energy harvesting sensing applications~\cite{naderiparizi2015wispcam, gomez2016dynamic}. Furthermore, intermittent computing, which will be illustrated in the next section, enables computation given intermittent power, making progress with electrolytic capacitors or even without dedicated storage (only microfarad-level parasitic capacitance).
+
+\subsection{Discussion}
+
+To summarise, due to the requirements on lifetime, environmental-friendliness, and form factors in energy harvesting sensor nodes, the energy storage designs have transformed from batteries to supercapacitors, and eventually eliminated the need for dedicated storage. 
+
+Batteries have been the preferable choice for buffering harvested energy and powering sensor nodes because they make sensor nodes easy to program and operate reliably until the battery lifetime expires. However, the environmental issues and short lifetime of batteries limit the deployment of ubiquitous sensors. Supercapacitors avoid the problems of batteries and have been used to replace batteries, but the low energy density of supercapacitors also makes sensor nodes bulky and heavy in order to achieve sufficient capacity for uninterrupted operations. Recent development of intermittent computing enables forward execution over power outages and encourages storage-less designs in energy harvesting sensor nodes.
+
+Although the minimum need for storage capacity to operate sensor nodes decreases with the evolution of computing techniques, decreased storage does limit the flexibility of energy usage. A storage-less system has to consume the incoming power immediately, otherwise the energy is wasted. This fact consequently restricts the application scenarios of storage-less systems to energy-driven applications, where execution needs to run only when there is available energy sources to harvest. However, energy-driven applications do not cover all the demands in IoT, so simply reducing the storage need is not always desirable. A wider spectrum of storage designs should be explored to suit and optimise for different application scenarios.
+
+% \begin{center}
+%     \begin{tabular}{|c|c|c|c|} 
+%     \hline
+%     Capacitance ($\mu F$) & Aluminum(10V)[1] & Aluminum(10V)[2]  & Tantalum(10V)[3]\\ [1ex] 
+%     \hline\hline
+%     22 & 5$\times$11 & 5$\times$11 & 5.5$\times$10.5\\ 
+%     \hline
+%     47 & 5$\times$11 & 5$\times$11 & 6.5$\times$11.5\\
+%     \hline
+%     100 & 5$\times$11 & 5$\times$11 & 8.5$\times$14\\
+%     \hline
+%     220 & 6.3$\times$11 & 6.3$\times$11 & 10$\times$17\\
+%     \hline
+%     330 & 8$\times$11.5 & 8$\times$11.5 & 10$\times$18.5\\
+%     \hline
+%     470 & 8$\times$11.5 & 8$\times$11.5 & N/A\\
+%     \hline
+%     1000 & 10$\times$12.5 & 10$\times$16 & N/A\\
+%     \hline
+%     \end{tabular}
+% \end{center}
