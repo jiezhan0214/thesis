@@ -1,22 +1,13 @@
 \chapter{Energy-Harvesting Intermittent Systems} \label{chapter:review}
 
-The development of energy harvesters provides diversified prospects for wireless IoT sensors to operate with power autonomy~\cite{miorandi2012internet}. 
-This chapter first provides a background of various ambient energy sources and corresponding energy harvesters in \sref{sec:eh}, as well as the types of energy storage used in energy-harvesting systems in \sref{sec:es}. 
-Energy-neutral operation, a traditional design of energy-harvesting systems, is reviewed in \sref{sec:en}. 
-Finally, the recent research towards IPSs is reviewed in \sref{sec:ips} with an illustration of proposed methodologies.
+The development of energy harvesters and low power electronics provides the potential for wireless IoT sensors to operate with power autonomy, with their designs adapted to variable harvested power rather than reliable power supply~\cite{miorandi2012internet}. 
+This chapter first provides a background of various ambient energy sources and their corresponding energy harvesters in \sref{sec:eh}, as well as the types of energy storage used in energy-harvesting systems in \sref{sec:es}. 
+Energy-neutral operation, a traditional design of energy-harvesting systems, is introduced in \sref{sec:en}. 
+The recent research towards IPSs is then reviewed in \sref{sec:ips} with an illustration of proposed methodologies.
+Finally, \sref{sec:ch2_summary} summarises this chapter. 
 
 \input{ch2_review/tex/energyharvester}
 \input{ch2_review/tex/energystorage}
 \input{ch2_review/tex/eno}
 \input{ch2_review/tex/ips}
-
-\section{Summary}
-
-This chapter introduces a background of energy harvesting techniques, summarises the evolution of energy storage used in energy harvesting computing, and reviews the existing methodologies of battery-less energy harvesting computing. 
-
-EN computing emphasizes the continuous activity of devices over a long-term duration (e.g. several days, one year) by buffering harvested energy in large energy storage and adapting energy consumption "reluctantly". However, large energy buffers, usually in the form of batteries or large supercapacitors, are demanded for EN operations, whereas such large energy storage limits device lifespans, increases the cost, mass, dimensions of devices, and bring pollution and maintenance issues. This contradicts the design requirements of ubiquitous sensor deployments. 
-% Besides, EN operations rely heavily on a predictable power source otherwise it is hard to identify how much energy is required and how long such energy should be balanced for. 
-
-To circumvent the limitations in EN computing, intermittent computing is recently developed. Intermittent computing continues computation after the supply fails rather than restarts from the beginning of programs. Hence, intermittent computing devices can achieve forward execution despite frequent power failures with only minimum storage (e.g. a decoupling capacitor) to secure successful saving and restoring operations of computing states between volatile and non-volatile components. Based on intermittent computing, PN computing introduces run-time performance adaptation to match power consumption with harvested power, such that the number of saving and restoring operations can be reduced and application execution speed is increased. 
-
-However, with minimised storage, an intermittent computing device has to frequently wake up, execute for a short time, and halt when the harvested power is less than the load power consumption, consuming much energy in managing system states. As for PN computing, volatile power from environment results in significant performance variations, which then cause performance loss. The remaining part of this thesis reports a study on how to mitigate these two problems and improve system execution speed by adding a small amount of energy storage without significantly affect device dimensions. 
+\input{ch2_review/tex/summary}
