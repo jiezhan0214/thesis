@@ -2,12 +2,14 @@
 % how to relate this to my research
 
 Although all kinds of energy harvesters can extract energy from ambient sources, they have various output characteristics in terms of the amount and dynamics of the harvested power depending on the ambient energy conditions and energy harvesting techniques. 
-To select a energy harvester for powering sensor nodes, one important concern is whether the supply power level matches the consumption of the load~\cite{shaikh2016energy}. 
-For one certain type of energy harvesters, the amount of energy harvesting supply can be scaled within an extent by the amount of energy sources or scaling the energy harvesters. 
-The amount of energy sources is determined by the deploying environment, which cannot be controlled by the harvesting devices, but the size of energy harvesters can be decided at design-time with considerations on systems requirements, such as energy utilization, form factors, performance, etc. 
-% On the other hand, to design sensor nodes that utilise one kind of energy harvesters, it is also necessary to match the power consumption of sensor nodes to the supply level. 
+To select an energy harvester for powering sensor nodes, one important concern is whether the supply power level matches the consumption of the load~\cite{shaikh2016energy}. 
+For one certain type of energy harvesters, the harvested power can be scaled by the power density of an environmental energy source and the size of an energy harvester. 
+The power density of environmental energy sources is determined by the deploying environment, which cannot be controlled by the harvesting devices, but the size of energy harvesters can be determined at design-time with considerations on systems requirements, such as energy utilization, form factors, performance, etc.  
 
-In order to appropriately size and designate energy harvesters for sensor nodes, the power features of different energy harvesters are widely considered by researchers and engineers~\cite{moss2015scaling}. A classification of common energy harvesting sources and corresponding energy harvesters used in IoT is presented in~\tref{Table:energysources}. The voltage and current features of different energy harvesters largely differ from each other, due to the intrinsic differences in temporal distributions of the available amount of different energy sources and the physical principles of power conversion. The following part of this section introduces each kind of energy sources and energy harvesting techniques listed in~\tref{Table:energysources}.
+In order to appropriately size and designate energy harvesters for sensor nodes, the power features of different energy harvesters are widely considered by researchers and engineers~\cite{moss2015scaling}. 
+A classification of common energy harvesting sources and corresponding energy harvesters used in IoT is presented in~\tref{tab:energysources}. 
+The voltage and current features of different energy harvesters largely differ from each other, due to the intrinsic differences in temporal distributions of the available amount of different energy sources and the physical principles of power conversion. 
+The following part of this section introduces three kinds of energy sources and energy harvesting techniques listed in~\tref{tab:energysources}.
 % , with their power features and current applications.
 % power level/amount, features, variability
 
@@ -36,12 +38,14 @@ In order to appropriately size and designate energy harvesters for sensor nodes,
     \hline
     \end{tabular}
     \caption{Classification of energy sources and energy harvesters in IoT.}
-    \label{Table:energysources}
+    \label{tab:energysources}
 \end{table}
 
 \subsection{Light Energy Harvesting}
 
-Due to the abundant energy amount of light, whether from outdoor sunlight or indoor artificial light, light energy becomes a feasible source to powering sensor nodes and is historically treated as a substitute for battery supplies~\cite{raghunathan2005design, seah2009wireless}. Light energy can be converted to DC power by photovoltaic (PV) cells, which consist of semiconducting materials, e.g. silicon. When PV cells absorb light, electrons are excited by the photovoltaic effect, producing an electric potential by the separation of electrons and holes.
+Due to the abundant energy amount of light, whether from outdoor sunlight or indoor artificial light, light becomes a feasible energy source to power sensor nodes and is historically treated as a substitute for battery supplies~\cite{raghunathan2005design, seah2009wireless}. 
+Light energy can be converted to DC power by photovoltaic (PV) cells, which consist of silicon semiconducting materials. 
+When PV cells absorb light, electrons are excited by the photovoltaic effect, producing an electric potential by the separation of electrons and holes.
 
 Given a fixed intensity of light, the output current from PV cells manifests an inverse relationship with the output voltage, as there is a semiconducting bypass within the PV cells. Although the power conversion efficiency may vary among different PV cell techniques (such as monocrystalline, polycrystalline, thin film), the curve shapes of current-voltage relationships are similar. Obviously, higher irradiance leads to higher current output when the output voltage is fixed, because there is more intensive light sources provided. More importantly, the output feature of PV cells can be summarised like "an inverse semiconductor" ------ when the terminal voltage is low, the output current is almost constant and close to short-circuit current; when the terminal voltage gets close to open-circuit voltage, the output current significantly decreases and finally terminates at the open-circuit voltage. 
 
