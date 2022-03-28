@@ -69,7 +69,7 @@ Other advantages could include (i) a lower control overhead as the IPS software 
 
 A conceptual architecture of such an EMU-centred IPS is depicted in \fref{fig:emuips}.
 The central control unit is responsible for the configuration of input power regulation (e.g. MPPT), control of which module to power, and the data flow among modules through a shared NVM. 
-Each load module is connected to the EMU through a power gate (PG). 
+\correct{The load modules, such as accelerators, sensors, and wireless transceivers (TRX), are connected to the EMU through a power gate (PG). }
 The central control unit opens a corresponding PG when a load module is supposed to work.
 The load modules communicate through the shared NVM, where the volatile state and shared data are saved. 
 The concept could be possibly achieved by incorporating IPS functions (e.g. state consistency) into existing EMUs.

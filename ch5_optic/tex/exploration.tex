@@ -10,7 +10,7 @@ We then investigate how existing approaches fail or become inefficient under thi
 Design-time profiling of workloads' energy consumption in the prior work can be potentially violated by the variability of IPSs.
 To study and demonstrate the variability, we chose the built-in AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
 The example AES function encrypts data in the cypher block chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
-In the following experiments, we measured $\Delta \nmm{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy meanwhile}, which directly determines the minimum voltage threshold that safely guarantees the completion of an atomic operation. 
+As mentioned, we measured $\Delta \nmm{V}{task}$ as the energy budget of these tasks.
 We used Device 1 in Table~\ref{tab:device}, which has \SI{11.5}{\micro\farad} energy buffering capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
 We explored four factors that can possibly change $\Delta \nmm{V}{task}$, which are variable data amounts, variable peripheral configurations, devices variability, and capacitor degradation and tolerance. 
 Besides the above four, energy consumption can also change with other factors, such as temperature, clock frequency, and silicon ageing, but we have found them either insignificant or hard to validate on our experimental platform. 
@@ -112,23 +112,25 @@ The voltage-time charging trace was then differentiated to gain an I-V curve tha
 % The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
 To model this curve, we performed a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
 The model function of this I-V curve is then expressed as:
+\correct{
 \begin{equation}
     \nmm{I}{in} = \left\{
     \begin{aligned}
-        & -16.25 \nmm{V}{in} + 276.10 & , & \quad \SI{0}{\volt} < \nmm{V}{in} <= \SI{2.3}{\volt} \\
-        & \nmm{I}{sc} (1 - e ^ {ln(1 - \frac{\nmm{I}{mpp}}{\nmm{I}{sc}}) \frac{\nmm{V}{in} - \nmm{V}{oc}}{\nmm{V}{mpp} - \nmm{V}{oc}}}) & , & \quad \SI{2.3}{\volt} < \nmm{V}{in} <= \SI{3.05}{\volt}
+        & (-16.25 \nmm{V}{in} + 276.10) \times 10^{-6}  & , & \quad \SI{0}{\volt} < \nmm{V}{in} <= \SI{2.3}{\volt} \\
+        & \nmm{I}{sc} (1 - (1 - \frac{\nmm{I}{mpp}}{\nmm{I}{sc}})^{\frac{\nmm{V}{in} - \nmm{V}{oc}}{\nmm{V}{mpp} - \nmm{V}{oc}}}) & , & \quad \SI{2.3}{\volt} < \nmm{V}{in} <= \SI{3.05}{\volt}
 %         I_sc * (1 - math.exp(math.log(1 - I_mpp / I_sc) * (v - V_oc) / (V_mpp - V_oc)))
     \end{aligned}
     \right. 
-    \quad (\SI{}{\micro\ampere})
+    \quad (\SI{}{\ampere})
     \label{eq:pv_iv}
 \end{equation}
+}
 where we set \nm{I}{sc} = \SI{276}{\micro\ampere}, \nm{V}{oc} = \SI{3.05}{\volt}, \nm{I}{mpp} = \SI{237}{\micro\ampere}, and \nm{V}{mpp} = \SI{2.3}{\volt}.
 
 \input{ch5_optic/figures/pv_curve/pv_curve.tex}
 
 In the MSP430FR5994 platform, we did not observe a significant change in current consumption with supply voltage (only up to 2\%). 
-This is majorly due to an on-chip LDO that lowers down the external supply voltage to a constant internal supply voltage, and hence maintains a relatively stable current draw as the external supply voltage changes. 
+This is \correct{mostly} due to an on-chip LDO that lowers down the external supply voltage to a constant internal supply voltage, and hence maintains a relatively stable current draw as the external supply voltage changes. 
 Hence, we omitted the voltage effect on current consumption in this simulation. 
 
 We used the energy and time overheads of AES encryption presented in \sref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 

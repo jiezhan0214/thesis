@@ -36,10 +36,11 @@ Hence, setting a high wake-up voltage threshold results in a longer charging tim
 
 % *** What we do to address it ***
 
-To address the above issue, we propose \nn{}\footnote{\nn{}: \underline{O}nline Energy \underline{P}rofiling and \underline{T}hreshold Adaptation for \underline{I}ntermittent \underline{C}omputers. }, a methodology that profiles energy consumption of operations at runtime and dynamically adapts energy thresholds based on newly profiled consumption and user-defined parameters. 
-A naive approach of runtime energy profiling can be disconnecting the power supply during profiling and taking two readings of supply voltage before and after an operation~\cite{zhan2020adaptive}, but this can waste the energy harvested during the operation. 
-In contrast, \nn{} profiles the maximum drop of supply voltage that an operation can cause while the energy harvesting supply is connected. 
-The profiling strategy is to measure the input current in the charging cycle so as to calculate the maximum drop of supply voltage in the discharging cycle. 
+To address the above issues, we propose \nn{}\footnote{\nn{}: \underline{O}nline Energy \underline{P}rofiling and \underline{T}hreshold Adaptation for \underline{I}ntermittent \underline{C}omputers. }, which profiles energy consumption of operations at runtime and dynamically adapts energy thresholds based on newly profiled energy consumption and user-defined parameters. 
+A naive approach of runtime energy profiling can be disconnecting the power supply during profiling and taking two readings of supply voltage before and after a task~\cite{zhan2020adaptive}, but this can waste the energy harvested during the operation. 
+\correct{
+In contrast, \nn{}'s energy profiling operates with the energy harvesting supply connected. 
+The profiling strategy is to measure the input current in the charging cycle so as to estimate the energy budget $\Delta \nmm{V}{task}$, \textit{the drop of supply voltage caused by an operation without any incoming energy meanwhile}, which directly determines the minimum voltage threshold that safely guarantees the completion of an atomic operation. } 
 The runtime profiled energy budget can thus, compared to a design-time profiled one, closely match with the latest energy consumption. 
 Based on the profiling results, \nn{} dynamically adapts the threshold for each atomic operation, with an option of scaling thresholds by user-defined parameters, e.g. a variable data size.
 Therefore, \nn{} enables IPSs to allocate a barely sufficient energy budget despite runtime energy variations, and hence mitigates non-termination while achieves high energy efficiency, eventually improving the workload throughput.
