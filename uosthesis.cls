@@ -356,7 +356,8 @@
     \cleardoublepage
 }\end{spacing}
 }
-\newcommand\listsymbolname{Definitions and Abbreviations}
+% \newcommand\listsymbolname{Definitions and Abbreviations}
+\newcommand\listsymbolname{Acronyms}
 \usepackage{longtable}
 \newcommand\listofsymbols[2]{
 \btypeout{\listsymbolname}
