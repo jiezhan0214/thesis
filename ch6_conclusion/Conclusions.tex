@@ -1,7 +1,5 @@
 \chapter{Conclusions and Future Work} \label{chapter:conclusion}
 
-\section{Conclusions}
-
 Enabled by energy harvesting and low-power computing techniques, IPSs are expected to be a promising system paradigm for numerous IoT sensors in the near future, with forecasts of hundreds of billions being installed~\cite{sparks2017trillion}.
 IPSs adapt to the intrinsically variable and uncontrollable power input of energy harvesters, and thus, circumvent large volume, environmental impact, and limited lifespan of large energy buffers, i.e. batteries and supercapacitors, that contradict with the requirements of future IoT sensors.
 
@@ -9,7 +7,17 @@ While existing IPS technology has mainly focussed on the computing part, i.e. ef
 The energy budget in an IPS is represented as the energy allocated for an active cycle when the load wakes up and executes program. 
 As the energy budget is determined by the energy storage size and the voltage threshold that wakes up the load, this thesis has conducted the research following the two aspects, where \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach} explored the energy storage sizing effect and \cref{chapter:opta} proposed runtime profiling and adaptation of voltage thresholds. 
 
+\correct{
+\section{Answers to Research Questions}
+}
 % Recap of main work and findings in this thesis
+
+\begin{enumerate}
+
+\correct{
+\item \textbf{What is the effect of sizing the energy storage capacity on IPS performance?}
+}
+
 To minimise device dimensions and interruption periods, most IPSs have adopted only a minimum amount of energy storage. 
 However, as found in \cref{chapter:sizingeffect}, this can be energy inefficient as the system has to frequently save and restore the state. 
 Hence, a reactive IPS model was proposed to explore the sizing effect of energy storage on forward progress. 
@@ -21,6 +29,10 @@ The forward progress improvement from sizing energy storage becomes significant 
 Additionally, the energy storage capacitance that achieves the maximum forward progress improvement (i.e. \nm{C}{$\alpha$\_max} as denoted in \cref{chapter:sizingeffect}) can be 3.2$\times$ as large as the one that gains a 95\% improvement. 
 With considerations on volume and charging time of a large capacitor, this indicates that an energy storage sizing approach is in need to comprehend multiple design factors in IPSs instead of maximising forward progress only.
 
+\correct{
+\item \textbf{How may the energy storage of IPSs be sized to trade off multiple design factors, such as forward progress, device dimensions, interruption periods?}
+}
+
 As indicated in \cref{chapter:sizingeffect}, an energy storage sizing approach for recommending an energy storage size considering multiple design factors when deploying IPSs was proposed in \cref{chapter:sizingapproach}.
 Following a modelling and simulation process, the sizing approach is able to output forward progress, capacitor volume, and interruption periods given long-term energy source data, energy harvester configurations, and energy storage capacitance.
 Through iterations with different capacitance values, the sizing approach trades off various properties of the system with a cost function and recommends an appropriate energy storage size. 
@@ -29,6 +41,10 @@ The results showed up to a 43\% annual forward progress gain by sizing energy st
 Corresponding to \cref{chapter:sizingeffect}, this improvement is more significant with weaker power input, e.g. a smaller PV panel size. 
 With an example cost function, the results showed that the suggested energy storage capacitance achieves 93\% of the maximum forward progress while saving 83\% capacitor volume and 91\% interruption periods, compared to the one that solely maximises forward progress.
 Combining the findings in \cref{chapter:sizingeffect} and \cref{chapter:sizingapproach}, the conclusion is that energy storage should be carefully designed, rather than minimised or indiscriminately picked, to efficiently operate IPSs. 
+
+\correct{
+\item \textbf{How can an IPS run safely and efficiently when executing tasks with runtime-variable energy consumption?}
+}
 
 While the energy storage size studied, \cref{chapter:opta} has focussed on the voltage thresholds of an energy budget. 
 With the runtime variability of energy consumption, the prior SoA approaches can cause non-termination or reduce system energy efficiency.
@@ -44,6 +60,8 @@ The experimental results has shown multiple findings as follows.
 \nn{} can adapt its threshold for a new task or on a new device. 
 \nn{} is also able to cope with an increased $\Delta\nmm{V}{task}$ from increased energy consumption or capacitor ageing, where it survived with up to 68\% capacitance reduction while the SoA failed, allowing IPSs to operate beyond capacitor lifetime. 
 Finally, \nn{} efficiently adjusts to a barely sufficient threshold with variable data sizes, which lowers operating voltage and improves energy efficiency, thus improving up to 98\% progress over the SoA approaches.
+
+\end{enumerate}
 
 % \section{Answers to Research Questions}
 % \todo[inline]{Answers to research questions?}
@@ -67,6 +85,13 @@ With an EMU-centred IPS, each load module is power-gated and only powered when i
 Thus, the system can work with a lower input current, ensuring the operation of IPSs in a poor energy condition. 
 Other advantages could include (i) a lower control overhead as the IPS software could be offloaded to hardware, (ii) each module can independently work without a processor being active immediately before and after the operation of a module, and (iii) an integral IPS hardware that saves the area overhead of external components. 
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\columnwidth]{ch6_conclusion/figures/EMUIPSarch.pdf}
+    \caption{A conceptual architecture of an EMU-centred IPS.}
+    \label{fig:emuips}
+\end{figure}
+
 A conceptual architecture of such an EMU-centred IPS is depicted in \fref{fig:emuips}.
 The central control unit is responsible for the configuration of input power regulation (e.g. MPPT), control of which module to power, and the data flow among modules through a shared NVM. 
 \correct{The load modules, such as accelerators, sensors, and wireless transceivers (TRX), are connected to the EMU through a power gate (PG). }
@@ -74,13 +99,6 @@ The central control unit opens a corresponding PG when a load module is supposed
 The load modules communicate through the shared NVM, where the volatile state and shared data are saved. 
 The concept could be possibly achieved by incorporating IPS functions (e.g. state consistency) into existing EMUs.
 This may reconstruct the hardware architecture of existing IPSs.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\columnwidth]{ch6_conclusion/figures/EMUIPSarch.pdf}
-  \caption{A conceptual architecture of an EMU-centred IPS.}
-  \label{fig:emuips}
-\end{figure}
 
 Some potential subdivided research questions related to this topic could be:
 \begin{enumerate}
@@ -93,7 +111,13 @@ Some potential subdivided research questions related to this topic could be:
     \item Could an EMU-centred IPS condition the supply voltage for each module such that modules with different operating voltage levels can cooperate? 
 \end{enumerate}
 
-% Final conclusion?
-% In conclusion, this thesis has presented extensive research work towards the energy budgeting for efficient operation of IPSs.
+\correct{
+\section{Conclusion}
 
-
+This thesis has presented extensive research work towards the energy budgeting for efficient operation of IPSs.
+A reactive IPS model was proposed to reveal the sizing effect of energy storage on forward progress, emphasizing that adding a small amount of energy storage beyond the minimum can improve IPS performance.
+A simulation tool was provided to estimate forward progress of IPSs given real environmental energy conditions, allowing an appropriate energy storage to be picked considering multiple design factors. 
+To safely and efficiently execute atomic tasks, a method of runtime energy profiling and adaptation was presented, enabling IPSs to adapt wake-up voltage thresholds to variable energy consumption and future device degradation.
+All software related to the research work in this thesis was open-source available, facilitating reproduction of results and future research.
+To summarise, this thesis has contributed methods of energy budgeting to improve IPS performance alongside the existing research work on efficient state-retention techniques.
+}
