@@ -18,8 +18,13 @@ Further capacitance was added to provide extra energy storage up to a maximum of
 % The leakage current of these capacitors was measured to be less than \SI{10}{\nano\ampere} at \SI{3}{\volt}, which is negligible compared to the \SI{}{\micro\ampere}-level current consumption of the platform; hence we omit capacitor leakage in the following experiment and model output. However, this is only applicable to the capacitors and the capacitance range in this experiment; we consider that a leakage model is still necessary for general application.
 % the specific leakage current we measured does not deny that \SI{}{\micro\ampere}-level leakage may exist in most electrolytic capacitors;
 
-In the experiment, the task completion rate, i.e. the number of tasks completed per second, is used as the metric of forward progress rather than the effective execution time ratio. 
-To gain the task completion rate from the model, we multiply the normalised forward progress (execution time ratio) generated from our model by the completion rate when the system executes constantly. 
+\correct{
+In practical IPSs, the effective execution time ratio (the metric of forward progress in this chapter) that contributes to the effective output is not easy to differentiate from the execution time that is wasted.
+Therefore, in the experiment, the task completion rate, i.e. the number of tasks completed per second, was measured because it directly reflects forward progress and closely relates to the effective execution time ratio.
+A task completion was indicated by a positive output pulse from the MCU at the end of a task.
+The task completion rate was then obtained by giving an observation window in the oscilloscope that covers a number of output pulses and measuring the frequency of these pulses. 
+The task complete rate in the \textit{Intermittent} mode was divided by the one in the \textit{On} mode to obtain the experimental normalised forward progress.
+}
 
 \subsection{Model Validation} 
 
