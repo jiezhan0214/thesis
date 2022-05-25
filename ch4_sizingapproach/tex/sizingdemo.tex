@@ -22,7 +22,7 @@ The output current \nm{I}{o} of the PV cell model can then be described as:
 \begin{equation} \label{eq:pvcell}
     \nmm{I}{o} = \frac{G}{\nmm{G}{ref}} \nmm{I}{sc} (1 - (1 - \frac{\nmm{I}{mpp}}{\nmm{I}{sc}}) ^ {\frac{\nmm{V}{o}-\nmm{V}{oc}}{\nmm{V}{mpp} - \nmm{V}{oc}}})
 \end{equation}
-where \nm{V}{o} is the output voltage of the PV cell, $G$ is the ambient irradiance, \nm{G}{ref} is the reference irradiance (normally \SI{1000}{\watt\per\square\centi\meter}), and \nm{I}{sc}, \nm{V}{oc}, \nm{I}{mpp}, \nm{V}{mpp} are respectively short-circuit current, open-circuit voltage, and the current and voltage at maximum power point (MPP) given the reference irradiance. 
+where \nm{V}{o} is the output voltage of the PV cell, $G$ is the ambient irradiance, \nm{G}{ref} is the reference irradiance (normally \SI{1000}{\watt\per\square\centi\meter}), and \nm{I}{sc}, \nm{V}{oc}, \nm{I}{mpp}, \nm{V}{mpp} are respectively short-circuit current, open-circuit voltage, and the current and voltage at the MPP given the reference irradiance. 
 \nm{V}{o} and $G$ are dynamic at run time, while other parameters in this model are constant. 
 We refer to Panasonic Amorton glass type solar cells~\cite{solarcell} for PV cell properties as shown in \tref{tab:pvcell}. 
 We set four cells in series (with \nm{V}{oc} = 3.56V) to match the operating voltage of the MCU (maximum 3.6V), and model energy harvester sizing by scaling the cell area. 

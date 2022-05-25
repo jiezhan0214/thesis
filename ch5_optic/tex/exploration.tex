@@ -8,7 +8,7 @@ We then investigate how existing approaches fail or become inefficient under thi
 \label{subsec:dynamic_energy_consumption}
  
 Design-time profiling of workloads' energy consumption in the prior work can be potentially violated by the variability of IPSs.
-To study and demonstrate the variability, we chose the built-in AES accelerator on the TI MSP430FR5994 microcontroller unit (MCU) as an example peripheral workload.  
+To study and demonstrate the variability, we chose the built-in AES accelerator on the TI MSP430FR5994 MCU as an example peripheral workload.  
 The example AES function encrypts data in the cypher block chain mode, and can process up to 4KB data with a 128-, 192-, or 256-bit key length. 
 As mentioned, we measured $\Delta \nmm{V}{task}$ as the energy budget of these tasks.
 We used Device 1 in Table~\ref{tab:device}, which has \SI{11.5}{\micro\farad} energy buffering capacitance, for the tests for variable data sizes and peripheral configurations, whereas in the device variability test we tested 3 devices.
