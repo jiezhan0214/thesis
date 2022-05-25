@@ -70,13 +70,14 @@ To reduce similar results, we show one example in each category to illustrate \n
 
 \fref{fig:v_trace} shows an example of how \nn{} adapts its threshold to a new workload and a new device. 
 The system runs an AES-128 encryption on 1KB data repetitively. 
-The algorithm does not have any knowledge on the energy consumption of the platform or the workload.
-The system first waits for the initial profiling threshold, which is set at \SI{2.7}{\volt} in this case. 
-Then it performs energy profiling as this is the first time it executes this task. 
-The next threshold for the task is then adapted to a lower one.
-In the following execution, the system is able to maintain the same threshold that guarantees the completion of the task. 
+The energy adaptation algorithm does not have any knowledge on the energy consumption of the platform or the workload.
+
+The system first waits for the initial profiling threshold, which was set at \SI{2.7}{\volt} in this case. 
+Then it performs energy profiling as this was the first time it executes this task. 
+The next threshold for the task was then adapted to a lower one.
+In the following execution, the system was able to maintain the same threshold that guarantees the completion of the task. 
 The end voltage after completing a task matches closely with the target \nm{V}{end}, with a small margin that comes from both the round-up threshold and the energy harvested during the task execution. 
-The above example shows \nn{}'s ability to adapt to a new workload or device, obviating the need for manual energy profiling for various scenarios, e.g. updating workloads or deploying new devices. 
+Hence, the above example shows \nn{}'s ability to adapt to a new workload or device, obviating the need for manual energy profiling for various scenarios, e.g. updating workloads or deploying new devices. 
 
 \subsubsection{Changing infrequently}
 % Variability in capacitance due to ageing / tolerance (slowly changing)
@@ -123,9 +124,9 @@ Owing to the threshold adaptation, \nn{} can still survive with much lower capac
 % Setup: randomised data sizes, 
 % improvement
 A task may have runtime variable data sizes and configurations, which frequently change $\Delta\nmm{V}{task}$.
-While \debs{} and Samoyed can set a high threshold that suffices the most energy-hungry task, \nn{} can also adapt its threshold to frequently changing $\Delta\nmm{V}{task}$ so as to lower operating voltage and increase forward progress.
+While \debs{} and Samoyed can set a high threshold that suffices the most energy-hungry task, \nn{} adapts its threshold to frequently changing $\Delta\nmm{V}{task}$ so as to lower operating voltage and increase forward progress.
 
-We demonstrate \nn{}'s linear threshold adaptation on workloads that have variable data sizes, where AES encrypts 512B to 4KB data with a 256-bit key length, and RF sends 16B to 96B data. 
+We demonstrate \nn{}'s linear threshold adaptation on workloads that have variable data sizes, where AES encrypts 512B to 4KB data with a 256-bit key length, and RF transmits 16B to 96B data to an always-on receiver. 
 An array of randomised numbers was generated to switch the data sizes. 
 The average completion rate in a \SI{30}{\second} window was recorded as a performance metric.
 As shown in \fref{fig:datasize}, \nn{} managed to make 64\% and 98\% more progress compared to Samoyed and \debs{} respectively on the AES workload. On the RF workload, the improvement compared to \debs{} is 10\% while Samoyed failed because the radio cannot reset to the correct state after a power failure and draws large current. 

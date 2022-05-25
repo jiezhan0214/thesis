@@ -7,8 +7,13 @@ Also, a larger capacitor takes longer to recharge, hence prolonging the period o
 A systematic method is in need to decide the energy storage size for deploying IPSs, considering a trade-off of multiple design factors. 
 
 % The need for long-term simulation, reflecting micro operation, but fast design exploration
-However, current tools for IPSs (reviewed in \sref{sec:c4_review}) are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
-This chapter presents an approach for sizing energy storage in IPSs, quantifying and trading off forward progress, capacitor volume, and interruption periods. 
+However, as reviewed in \sref{ssec:c2_tools}, current tools for IPSs are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
+\correct{
+Coarse-grained models cannot react to frequent power interruptions and accurately estimate forward progress, while fine-grained models become inefficient when processing long-term data and iterating for multiple system configurations.
+Hardware emulators, though reliable for repeatable experiments, are limited by hardware options and also impractical for long-term and iterative tests.
+}
+
+To address the above problem, this chapter presents an approach for sizing energy storage in IPSs, quantifying and trading off forward progress, capacitor volume, and interruption periods. 
 With the model in \sref{chapter:sizingeffect} integrated, the proposed sizing approach is able to fast explore the relationship between the energy storage size and forward progress with long-term real-world energy conditions. 
 An example cost function is also provided to trade off multiple design factors so as to recommend an energy storage size. 
 The main contributions in this chapter are as follows:
@@ -22,7 +27,6 @@ The main contributions in this chapter are as follows:
 The associated simulation tool, coded in C, is available open-source\footnote{\url{https://git.soton.ac.uk/energy-driven/energy-storage-sizing}}. 
 
 The remainder of this chapter is organised as follows. 
-\sref{sec:c4_review} reviews the current tools and models for IPSs. 
 \sref{sec:c4_approach} proposes an approach for sizing energy storage in IPS deployment 
 \sref{sec:c4_demo} configures and demonstrates the proposed sizing approach with real-world energy source data, with forward progress, capacitor volume, and interruption periods being estimated and traded off.  
 Finally, \sref{sec:c4_summary} summarises this chapter. 

@@ -3,12 +3,13 @@
 \nn{} was implemented based on an MSP430FR5994 development board.
 Its runtime is implemented as a C library and used with function calls. 
 \nn{} is available open-source\footnote{\url{https://git.soton.ac.uk/jz8u17/atom-energy}}, along with the simulation program of design exploration, comparisons of runtime (Samoyed and \debs{}), and benchmarks.
+A picture of \nn{} in experiments is shown in \fref{fig:experiment_photo}.
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{ch5_optic/figures/circuit_v2.pdf}
-    \caption{\nn{} system schematic. }
-    \label{fig:schematic}
+    \includegraphics[width=0.65\columnwidth]{ch5_optic/figures/experiment.png}
+    \caption{A picture of \nn{}'s implementation based on an MSP430FR5994 development board. The MCU is intermittently powered by a digital power supply (constant low current source), and can also be powered by a PV panel. The workload in this picture transmits wireless packets to an always-on receiver. }
+    \label{fig:experiment_photo}
 \end{figure}
 
 The system schematic is shown in \fref{fig:schematic}.
@@ -17,6 +18,12 @@ The energy harvester is decoupled from the rest of the system by a diode to prev
 The harvested energy is then buffered in a \SI{10}{\micro\farad} capacitor (\nm{C}{ext}). 
 Together with \SI{1.5}{\micro\farad} on-board decoupling capacitance, the system has an energy buffering capacity of \SI{11.5}{\micro\farad} in total. 
 
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{ch5_optic/figures/circuit_v2.pdf}
+    \caption{\nn{} system schematic. }
+    \label{fig:schematic}
+\end{figure}
 
 % Energy profiling hardware
 The energy profiling is achieved through the on-chip modules.

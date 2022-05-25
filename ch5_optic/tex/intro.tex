@@ -34,6 +34,13 @@ IPSs typically minimise operating voltage in order to lower quiescent power cons
 Also, a high operating voltage can decrease the output current of energy harvesters, making it harder to charge up the buffering capacitor~\cite{pan2017maximize}.
 Hence, setting a high wake-up voltage threshold results in a longer charging time than a linear scale of the voltage threshold, which therefore slows down the system execution or even leave the system in an infinite wait under poor energy conditions.
 
+\correct{
+As reviewed in \sref{ssec:c2_energyallocation}, existing IPS methods profile the energy consumption of atomic peripheral operations at design time to determine a voltage threshold or a capacitor size that avoids non-termination. 
+However, this does not actually guarantee the completion of every atomic operation because energy consumption can change with any runtime conditions different to the profiling setup (demonstrated in \sref{subsec:dynamic_energy_consumption}). 
+Hence, to tolerate dynamic variations, previous IPS designs should usually leave an inefficiently large margin when allocating energy budgets. 
+If this large margin is not given, they can cause either non-termination or high overheads of tracking and restoring state, where \debs{} fails, Samoyed undo-logs the NVM data, and RESTOP re-issues peripheral instructions. 
+}
+
 % *** What we do to address it ***
 
 To address the above issues, we propose \nn{}\footnote{\nn{}: \underline{O}nline Energy \underline{P}rofiling and \underline{T}hreshold Adaptation for \underline{I}ntermittent \underline{C}omputers. }, which profiles energy consumption of operations at runtime and dynamically adapts energy thresholds based on newly profiled energy consumption and user-defined parameters. 
@@ -56,7 +63,6 @@ The main contributions of this chapter can be summarised as follows:
 \end{enumerate}
 
 The rest of this chapter is organised as follows.
-\sref{sec:c5_review} reviews existing IPS work on peripheral operation and their method of energy provision.
 Runtime energy variations of workloads are explored in \sref{sec:design_exploration}, with simulated performance of an adaptive thresholding scheme compared against SoA approaches given the variations. 
 \nn{}'s runtime energy profiling method and runtime energy adaption routine are proposed in \sref{sec:method1} and \sref{sec:method2} respectively. 
 An implementation of \nn{} is presented in \sref{sec:implementation}
