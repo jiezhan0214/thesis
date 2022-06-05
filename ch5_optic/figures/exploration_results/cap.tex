@@ -18,13 +18,13 @@
         ]
         \pgfplotstableread[col sep=comma]{ch5_optic/figures/exploration_results/cap.csv}{\mytable};
         \addplot 
-            plot [Set1-A,mark=triangle*,dashed]
+            plot [Set1-A,dashed,mark=triangle*,mark size=2.5pt,mark options={solid}]
             table [x=cap_reduction,y=samoyed_perf] {\mytable};
         \addplot 
-            plot [Set1-B,mark=square*,dashed]
+            plot [Set1-B,dashed,mark=square*,mark size=2.5pt,mark options={solid}]
             table [x=cap_reduction,y=debs_perf] {\mytable};
         \addplot 
-            plot [Set1-C,mark=*,dashed]
+            plot [Set1-C,dashed,mark=*,mark size=2.5pt,mark options={solid}]
             table [x=cap_reduction,y=repa_perf] {\mytable};
         \legend{Samoyed,\debs{} High,\nn{} Oracle}
     \end{axis}

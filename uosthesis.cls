@@ -20,7 +20,7 @@
 %% Set spacing, line and paragraph options
 %% Set LaTeX builder options (work break penalties etc.)
 \def\baseclass{book}
-\RequirePackage{xcolor}
+\RequirePackage[cmyk,hyperref]{xcolor}
 \colorlet{linkBlue}{blue}
 \colorlet{custGray}{gray}
 \colorlet{chapRed}{red}
