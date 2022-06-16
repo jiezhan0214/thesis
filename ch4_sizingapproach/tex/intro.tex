@@ -8,10 +8,8 @@ A systematic method is in need to decide the energy storage size for deploying I
 
 % The need for long-term simulation, reflecting micro operation, but fast design exploration
 However, as reviewed in \sref{ssec:c2_tools}, current tools for IPSs are not practical for fast estimation of forward progress in a long-term deployment, and lack a method of sizing energy storage to improve forward progress while moderating the physical size and interruption periods. 
-\correct{
 Coarse-grained models cannot react to frequent power interruptions and accurately estimate forward progress, while fine-grained models become inefficient when processing long-term data and iterating for multiple system configurations.
 Hardware emulators, though reliable for repeatable experiments, are limited by hardware options and also impractical for long-term and iterative tests.
-}
 
 To address the above problem, this chapter presents an approach for sizing energy storage in IPSs, quantifying and trading off forward progress, capacitor volume, and interruption periods. 
 With the model in \sref{chapter:sizingeffect} integrated, the proposed sizing approach is able to fast explore the relationship between the energy storage size and forward progress with long-term real-world energy conditions. 

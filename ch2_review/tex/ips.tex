@@ -9,7 +9,7 @@ A typical characteristic of an IPS is that it starts executing whenever there is
 Due to different design considerations, IPS methodologies varies in a wide spectrum~\cite{sliper2018enabling}. 
 These methodologies include saving snapshots of system volatile state into NVM at checkpoints, breaking down execution into small atomic tasks, and hardware circuits for suspend and restore operations. 
 According to the main features in execution styles and focuses, the existing research work on IPSs can be classified into five groups: static IPSs, reactive IPSs, power-neutral computing, energy allocation methods, and tools for simulation and emulation. 
-The following part of this section explains \correct{each of the above groups of methodologies with the associated research progress}.
+The following part of this section explains each of the above groups of methodologies with the associated research progress.
 
 \subsection{Static IPS}
 
@@ -20,17 +20,17 @@ The following part of this section explains \correct{each of the above groups of
 An static checkpointing IPS require manual insertion of checkpoints into code at compile time. 
 When a checkpoint is called, the system checks the current available energy amount. 
 If this amount is less than a predefined threshold, which indicates the available energy may not be enough to sustain execution, a snapshot saving function is called at this checkpoint. 
-To save a snapshot of the system computing state, the system \correct{copies the } current stacks and heaps, local and global variables, general registers, the stack pointer, and the program counter, into the NVM. 
+To save a snapshot of the system computing state, the system copies the current stacks and heaps, local and global variables, general registers, the stack pointer, and the program counter, into the NVM. 
 A static checkpointing system continuously operates until it encounters power outages, where the supply voltage is less than the minimum operating voltage of the systems. 
-After the supply voltage recovers, \correct{the system restores its state from the last checkpoint, and hence, continues its execution from that checkpoint}. 
+After the supply voltage recovers, the system restores its state from the last checkpoint, and hence, continues its execution from that checkpoint. 
 % a figure here explaining the control flowing of checkpointing?
 
 Mementos~\cite{ransford2012mementos} first presents a static checkpointing solution in which checkpoints are placed at design time. 
-Mementos includes three strategies \correct{for placing checkpoints}, which are placing at every loop, placing at every function call, and an auxiliary timer delay to determine the minimum cycle between two adjacent checkpoints. 
+Mementos includes three strategies for placing checkpoints, which are placing at every loop, placing at every function call, and an auxiliary timer delay to determine the minimum cycle between two adjacent checkpoints. 
 Additionally, programmers can also insert or delete checkpoints manually as a custom option. 
 Two NVM blocks are used and snapshots are saved to the two blocks alternately, so there is always at least one available and complete snapshot even if the energy is depleted during saving a new snapshot. 
 One significant shortcoming of Mementos is the instrumenting strategy: with the different sizes of loops and functions, the granularity of checkpoints can be either too small, which introduces high run-time overheads, or too large, which leads to non-termination where the execution can never get to the next checkpoint. 
-\correct{Another concern in Mementos is how to set the voltage threshold so that snapshots can be saved successfully while avoiding too many redundant snapshots. }
+Another concern in Mementos is how to set the voltage threshold so that snapshots can be saved successfully while avoiding too many redundant snapshots.
 
 HarvOS~\cite{bhatti2017harvos} is proposed to improve the strategies of inserting checkpoints in Mementos. 
 HarvOS analyses the control-flow graph of a program and splits it into sub-graphs with a checkpoint inserted for each sub-graph. 
@@ -67,7 +67,7 @@ As shown in~\fref{Figure:saveanduse}, the behaviours of the amount of stored ene
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch2_review/figures/saveanduse}
-    \caption{Harvest-Store-Use execution (taken from~\cite{hester2017future}~\correct{© 2017 ACM}).}
+    \caption{Harvest-Store-Use execution (taken from~\cite{hester2017future}~© 2017 ACM).}
     \label{Figure:saveanduse}
 \end{figure}
 
@@ -130,7 +130,7 @@ Compared to Hibernus, Hibernus++ improves application execution time by reducing
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch2_review/figures/hibernus}
-    \caption{Voltage trace with hibernation and restoration points in Hibernus (taken from \cite{balsamo2015hibernus}~\correct{© 2015 IEEE}).}
+    \caption{Voltage trace with hibernation and restoration points in Hibernus (taken from \cite{balsamo2015hibernus}~© 2015 IEEE).}
     \label{Figure:hibernus}
 \end{figure}
 
@@ -161,7 +161,7 @@ It is reported that the backup and restore speed of NVPs can be 2-4$\times$ magn
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch2_review/figures/nvp}
-    \caption{Memory architectures of traditional processors and NVPs (taken from~\cite{liu2015ambient}~\correct{© 2015 ACM}).}
+    \caption{Memory architectures of traditional processors and NVPs (taken from~\cite{liu2015ambient}~© 2015 ACM).}
     \label{Figure:nvp}
 \end{figure}
 
@@ -216,7 +216,7 @@ The concept of PN computing is proposed in~\cite{balsamo2016graceful} and implem
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch2_review/figures/graceful_schematic}
-    \caption{Architecture of an example power neutral system based on TI MSP430FR platform (taken from \cite{balsamo2016graceful}~\correct{© 2016 IEEE}).}
+    \caption{Architecture of an example power neutral system based on TI MSP430FR platform (taken from \cite{balsamo2016graceful}~© 2016 IEEE).}
     \label{Figure:graceful_schematic}
 \end{figure}
 %flowchart of this control scheme is present in figure?
@@ -226,7 +226,7 @@ A similar control scheme is adopted in~\cite{fletcher2017power} where the platfo
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{ch2_review/figures/dvfs}
-    \caption{Board power consumption of ODROID XU4 vs operating frequency and core configurations, running CPU intensive application Raytrace (taken from \cite{fletcher2017power}~\correct{© 2017 IEEE}).}
+    \caption{Board power consumption of ODROID XU4 vs operating frequency and core configurations, running CPU intensive application Raytrace (taken from \cite{fletcher2017power}~© 2017 IEEE).}
     \label{Figure:dvfs}
 \end{figure}
 
@@ -236,9 +236,7 @@ Similarly, Wang \textit{et al.}~\cite{wang2016storage} propose a storage-less an
 
 One disadvantage of power neutral computing is that it has to passively scale its power consumption as well as its performance, causing large variations in performance. However, this might not be good in terms of the overall forward progress. In the next chapter, a preliminary analyse is explained about how the forward progress is improved when the capacitor size is increased, while not violating the merits of PN computing. 
 
-\correct{
 \subsection{Energy Allocation} \label{ssec:c2_energyallocation}
-}
 % Outline
 % Review the profiling methods/concepts in prior work.
 % Peripheral papers
@@ -266,7 +264,7 @@ After completing an operation, \debs{} enters a low-power mode (LPM) and waits f
 Samoyed~\cite{maeng2019supporting} utilises a custom design-time \textit{energy profiler} to identify an energy storage size that suffices to run an adequate number (hundreds, as suggested) of peripheral operations in one active cycle. 
 At runtime, Samoyed starts execution when energy is refilled to a certain threshold, and keeps executing until energy is depleted. 
 % Samoyed is a proactive approach where the program knows the boundaries of atomic operations, such that it only outputs valid data on the completion of an atomic operation and disables checkpoints during execution. 
-Samoyed differs from \correct{proactive } intermittent computing approaches, e.g. Alpaca~\cite{maeng2017alpaca}, mainly on handling computational workloads where it reactively checkpoints when the buffered energy is below a threshold, and supports user-customised subdivision of peripheral operations when the operation cannot complete in one active cycle. 
+Samoyed differs from proactive intermittent computing approaches, e.g. Alpaca~\cite{maeng2017alpaca}, mainly on handling computational workloads where it reactively checkpoints when the buffered energy is below a threshold, and supports user-customised subdivision of peripheral operations when the operation cannot complete in one active cycle. 
 % Samoyed is unlikely to fail (non-termination) because it assumes a very large capacitor and supports, but it can be inefficient due to the poor charging efficiency (or you need an EMU, like bq25504, which also consumes energy).
 
 % RESTOP (similar to re-execution)
@@ -286,9 +284,7 @@ At design time, RESTOP needs to profile the worst-case energy consumption for re
 
 % Comments: Justify Samoyed and DEBS as comparisons in this paper? 
 
-\correct{
 \subsection{Tools for Simulation and Emulation} \label{ssec:c2_tools}
-}
 
 To explore forward progress of IPSs, simulation tools need to represent transient operation (timescales of \SI{}{\micro\second}-\SI{}{\milli\second}) as well as long-term overall performance (from days up to years). 
 A number of models have been proposed for exploring system designs and parameters in IPSs.

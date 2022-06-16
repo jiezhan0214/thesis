@@ -27,7 +27,7 @@ After completing an operation, \debs{} enters a low-power mode (LPM) and waits f
 Samoyed~\cite{maeng2019supporting} utilises a custom design-time \textit{energy profiler} to identify an energy storage size that suffices to run an adequate number (hundreds, as suggested) of peripheral operations in one active cycle. 
 At runtime, Samoyed starts execution when energy is refilled to a certain threshold, and keeps executing until energy is depleted. 
 % Samoyed is a proactive approach where the program knows the boundaries of atomic operations, such that it only outputs valid data on the completion of an atomic operation and disables checkpoints during execution. 
-Samoyed differs from \correct{proactive } intermittent computing approaches, e.g. Alpaca~\cite{maeng2017alpaca}, mainly on handling computational workloads where it reactively checkpoints when the buffered energy is below a threshold, and supports user-customised subdivision of peripheral operations when the operation cannot complete in one active cycle. 
+Samoyed differs from proactive intermittent computing approaches, e.g. Alpaca~\cite{maeng2017alpaca}, mainly on handling computational workloads where it reactively checkpoints when the buffered energy is below a threshold, and supports user-customised subdivision of peripheral operations when the operation cannot complete in one active cycle. 
 % Samoyed is unlikely to fail (non-termination) because it assumes a very large capacitor and supports, but it can be inefficient due to the poor charging efficiency (or you need an EMU, like bq25504, which also consumes energy).
 
 % RESTOP (similar to re-execution)

@@ -112,7 +112,6 @@ The voltage-time charging trace was then differentiated to gain an I-V curve tha
 % The scattered dots do not line up in a smooth curve thanks to the precision error of the scope. 
 To model this curve, we performed a linear regression for the data in \SIrange{0}{2.3}{\volt}, and adapted a published PV panel model~\cite{en9050326} to represent the curve in \SIrange{2.3}{3.05}{\volt}.
 The model function of this I-V curve is then expressed as:
-\correct{
 \begin{equation}
     \nmm{I}{in} = \left\{
     \begin{aligned}
@@ -124,13 +123,12 @@ The model function of this I-V curve is then expressed as:
     \quad (\SI{}{\ampere})
     \label{eq:pv_iv}
 \end{equation}
-}
 where we set \nm{I}{sc} = \SI{276}{\micro\ampere}, \nm{V}{oc} = \SI{3.05}{\volt}, \nm{I}{mpp} = \SI{237}{\micro\ampere}, and \nm{V}{mpp} = \SI{2.3}{\volt}.
 
 \input{ch5_optic/figures/pv_curve/pv_curve.tex}
 
 In the MSP430FR5994 platform, we did not observe a significant change in current consumption with supply voltage (only up to 2\%). 
-This is \correct{predominantly } due to an on-chip LDO that lowers down the external supply voltage to a constant internal supply voltage, and hence maintains a relatively stable current draw as the external supply voltage changes. 
+This is predominantly due to an on-chip LDO that lowers down the external supply voltage to a constant internal supply voltage, and hence maintains a relatively stable current draw as the external supply voltage changes. 
 Hence, we omitted the voltage effect on current consumption in this simulation. 
 
 We used the energy and time overheads of AES encryption presented in \sref{subsec:dynamic_energy_consumption} to simulate the workload characteristics. 
