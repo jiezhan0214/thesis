@@ -2,6 +2,6 @@
 *.aux
 *.synctex.gz
 .texpadtmp/
-Thesis.pdf
+./Thesis.pdf
 test.tex
 test.pdf
