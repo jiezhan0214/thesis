@@ -460,13 +460,14 @@ details must be given, e.g.
 
 \vspace{0.5cm}
 
-Thesis: Author (Year of Submission) "Full thesis title", University of
-Southampton, name of the University Faculty or School or Department,
-PhD Thesis, pagination.
+Thesis: Jie Zhan (2022) "Energy Budgeting for Intermittently-Powered Systems", University of
+Southampton, School of Electronics and Computer Science,
+PhD Thesis, 1-102.
 
-\vspace{0.5cm}
+% \vspace{0.5cm}
 
-Data: Author (Year) Title. URI [dataset]}
+% Data: Jie Zhan (2022) Dataset for "Exploring the Effect of Energy Storage Sizing on Intermittent Computing System Performance". https://eprints.soton.ac.uk/447811 [dataset]
+}
 \end{minipage}
 \vfil\vfil\null
 \cleardoublepage
